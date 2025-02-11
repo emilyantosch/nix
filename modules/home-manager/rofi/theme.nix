@@ -1,0 +1,8 @@
+{pkgs, ...}:
+{
+  programs.rofi = {
+    theme = {
+      
+    };
+  };
+}
