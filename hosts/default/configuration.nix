@@ -201,7 +201,10 @@ security.wrappers."mount.cifs" = {
   
   security.pam.services.hyprlock = {};
   environment.systemPackages = with pkgs; [
-    openssl
+    openssl.dev
+    openssl.out
+    (callPackage ./../../packages/home-manager/dioxus-cli/default.nix {})
+    pkg-config
     gnutls
     lmstudio
     osu-lazer-bin
@@ -236,7 +239,6 @@ security.wrappers."mount.cifs" = {
     slurp
     tinymist
     vim 
-    ffmpeg
     git
     wget
     fzf
@@ -265,8 +267,7 @@ security.wrappers."mount.cifs" = {
     gnupg
     pass-wayland
     zsh
-    libgcc
-    gccgo13
+    gcc13
     clipse
     wl-clipboard
     zoxide
@@ -279,9 +280,9 @@ security.wrappers."mount.cifs" = {
     cudaPackages.cudatoolkit
     cudaPackages.cuda_opencl
     p7zip
-    #cudaPackages.cudnn
+    cudaPackages.cudnn
     xfce.thunar
-    #cudaPackages.libnpp
+    cudaPackages.libnpp
     #rocmPackages.llvm.llvm
     #rocmPackages.llvm.clang
   ];

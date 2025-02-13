@@ -13,7 +13,7 @@
 
       initExtra = 
       ''
-        alias v nvim
+        alias v=nvim
         bindkey '^p' history-search-backward
         bindkey '^n' history-search-backward
 
