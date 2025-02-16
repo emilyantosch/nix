@@ -18,11 +18,11 @@ rustPlatform.buildRustPackage rec {
 
   src = fetchCrate {
     inherit pname version;
-    hash = "";
+    hash = "sha256-wuIJq+UN1q5qYW4TXivq93C9kZiPHwBW5Ty2Vpik2oY=";
   };
 
   useFetchCargoVendor = true;
-  cargoHash = "";
+  cargoHash = "sha256-L9r/nJj0Rz41mg952dOgKxbDS5u4zGEjSA3EhUHfGIk=";
   buildFeatures = [ "optimizations" ];
 
   nativeBuildInputs = [

@@ -15,6 +15,7 @@
     ./../../modules/home-manager/hypridle.nix
     ./../../modules/home-manager/hyprland/default.nix
     ./../../modules/home-manager/waybar.nix
+    ./../../modules/home-manager/yazi.nix
   ];
 
 programs = {
@@ -25,7 +26,8 @@ programs = {
 			window-decoration = false;
 			confirm-close-surface = false;
 			font-feature = ["-liga" "-dlig" "-calt"];
-			theme = "rose-pine-moon";
+			background-opacity = 0.95;
+			theme = "gruvbox-material";
 		};
 	};
 };

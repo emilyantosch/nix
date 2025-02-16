@@ -29,7 +29,7 @@
 
       blur = {
         enabled = true;
-        size = 6;
+        size = 3;
         passes = 3;
         new_optimizations = true;
         ignore_opacity = true;

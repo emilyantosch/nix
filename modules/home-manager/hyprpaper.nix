@@ -7,12 +7,12 @@
         splash = "false";
         splash_offset = 2.0;
         preload = [
-          "~/.config/nixos/assets/wallpapers/wallpaper.jpg"
+          "~/.config/nixos/assets/wallpapers/Kita.png"
         ];
 
         wallpaper = [
-        "DP-1, ~/.config/nixos/assets/wallpapers/wallpaper.jpg"
-        "HDMI-A-1, ~/.config/nixos/assets/wallpapers/wallpaper.jpg"
+        "DP-1, ~/.config/nixos/assets/wallpapers/Kita.png"
+        "HDMI-A-1, ~/.config/nixos/assets/wallpapers/Kita.png"
         ];
       };
     };
