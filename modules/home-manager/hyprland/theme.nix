@@ -18,8 +18,8 @@
     };
 
     group = {
-      "col.border_active" = "rgba(ca9ee6ff) rgba(f2d5cfff) 45deg";
-      "col.border_inactive" = "rgba(b4befecc) rgba(6c7086cc) 45deg";
+      "col.border_active" = "rgb(ebdbb2) rgb(d65d0e) 60deg";
+      "col.border_inactive" = "rgb(272727)";
       "col.border_locked_active" = "rgba(ca9ee6ff) rgba(f2d5cfff) 45deg";
       "col.border_locked_inactive" = "rgba(b4befecc) rgba(6c7086cc) 45deg";
     };

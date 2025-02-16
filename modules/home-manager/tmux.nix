@@ -33,16 +33,23 @@
       '';
       plugins = with pkgs;
       [
+        # {
+        #   plugin = tmuxPlugins.rose-pine;
+        #   extraConfig = 
+        #   ''
+        #     set -g @rose_pine_variant 'moon'
+        #
+        #     set -g @rose_pine_host 'on'
+        #     set -g @rose_pine_date_time 'on'
+        #     set -g @rose_pine_date_user 'on'
+        #     set -g @rose_pine_date_directory 'on'
+        #   '';
+        # }
         {
-          plugin = tmuxPlugins.rose-pine;
+          plugin = tmuxPlugins.gruvbox;
           extraConfig = 
           ''
-            set -g @rose_pine_variant 'moon'
-
-            set -g @rose_pine_host 'on'
-            set -g @rose_pine_date_time 'on'
-            set -g @rose_pine_date_user 'on'
-            set -g @rose_pine_date_directory 'on'
+            set -g @tmux-gruvbox 'dark'
           '';
         }
         {

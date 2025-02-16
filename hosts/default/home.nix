@@ -16,6 +16,7 @@
     ./../../modules/home-manager/hyprland/default.nix
     ./../../modules/home-manager/waybar.nix
     ./../../modules/home-manager/yazi.nix
+    ./../../modules/home-manager/zathura.nix
   ];
 
 programs = {

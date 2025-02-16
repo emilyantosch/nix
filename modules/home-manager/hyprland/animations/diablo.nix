@@ -25,10 +25,10 @@
         "fadeShadow, 1, 10, default"
         "fadeDim, 1, 10, default"
         "fadeLayers, 1, 10, default"
-        "workspaces, 1, 7, overshot, slidevert"
+        "workspaces, 1, 3, overshot, slidevert"
         "border, 1, 1, overshot"
         "layers, 1, 4, bounce, slidevert right"
-        "borderangle, 1, 20, liner, loop"
+        "borderangle, 1, 40, liner, loop"
       ];
     };
   };
