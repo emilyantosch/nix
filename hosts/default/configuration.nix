@@ -206,6 +206,7 @@ security.wrappers."mount.cifs" = {
     (callPackage ./../../packages/home-manager/dioxus-cli/default.nix {})
     hyprpanel
     nautilus
+    virtualgl
     pkg-config
     gnutls
     lmstudio
