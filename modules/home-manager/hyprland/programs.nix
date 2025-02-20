@@ -2,8 +2,10 @@
 {
   wayland.windowManager.hyprland.settings = {
     "$terminal" = "ghostty";
-    "$fileManager" = "dolphin";
-    "$menu" = "rofi -show drun";
+    "$fileManager" = "nautilus";
+    "$run-menu" = "rofi -show drun";
+    "$file-menu" = "rofi -show window";
+    "$window-menu" = "rofi -show filebrowser";
     "$browser" = "zen";
     "$notes" = "obsidian";
   };

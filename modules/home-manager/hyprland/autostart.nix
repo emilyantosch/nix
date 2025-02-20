@@ -2,7 +2,7 @@
 {
   wayland.windowManager.hyprland.settings = {
     exec-once = [
-      "waybar & hyprpaper"
+      "hyprpanel & hyprpaper"
       "clipse -listen"
     ];
   };

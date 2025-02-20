@@ -29,6 +29,7 @@ programs = {
 			font-feature = ["-liga" "-dlig" "-calt"];
 			background-opacity = 0.95;
 			theme = "gruvbox-material";
+      custom-shader = "../../assets/shaders/crt.glsl";
 		};
 	};
 };

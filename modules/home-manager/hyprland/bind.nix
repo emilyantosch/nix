@@ -11,7 +11,9 @@
       "$mainMod, M, exit,"
       "$mainMod, E, exec, $fileManager"
       "$mainMod, F, togglefloating,"
-      "$mainMod, R, exec, $menu"
+      "$mainMod, R, exec, $run-menu"
+      "ALT, TAB, exec, $window-menu"
+      "$mainMod ALT, E, exec, $file-menu"
       ''$mainMod, C, exec, grim -g "$(slurp)" - | swappy -f -''
 
       #"$mainMod, P, pseudo, # dwindle"
@@ -23,18 +25,18 @@
       "$mainMod, k, movefocus, u"
       "$mainMod, j, movefocus, d"
 
-      "$mainMod ALT, h, swapwindow, l"
-      "$mainMod ALT, l, swapwindow, r"
-      "$mainMod ALT, k, swapwindow, u"
-      "$mainMod ALT, j, swapwindow, d"
+      "$mainMod SHIFT, h, swapwindow, l"
+      "$mainMod SHIFT, l, swapwindow, r"
+      "$mainMod SHIFT, k, swapwindow, u"
+      "$mainMod SHIFT, j, swapwindow, d"
 
       "$mainMod CTRL, j, workspace, e+1"
       "$mainMod CTRL, k, workspace, e-1"
 
       # Group Bindings
       "$mainMod, g, togglegroup"
-      "$mainMod ALT, t, changegroupactive, f"
-      "$mainMod ALT, b, changegroupactive, b"
+      "$mainMod ALT, l, changegroupactive, f"
+      "$mainMod ALT, h, changegroupactive, b"
 
       "$mainMod ALT SHIFT, h, moveintogroup, l"
       "$mainMod ALT SHIFT, l, moveintogroup, r"

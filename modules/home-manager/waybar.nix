@@ -15,11 +15,11 @@ mainBar = {
 
 
 
-	modules-left = ["custom/padd" "custom/l_end" "custom/power" "custom/cliphist" "custom/wbar" "hyprland/workspaces" "custom/theme" "custom/wallchange" "custom/r_end" "custom/l_end" "wlr/taskbar" "custom/spotify" "custom/r_end" "custom/padd"];
+	modules-left = ["hyprland/workspaces" "custom/spotify"];
 
-	modules-center = ["custom/padd" "custom/l_end" "idle_inhibitor" "clock" "custom/r_end" "custom/padd"];
+	modules-center = [];
 
-	modules-right= ["custom/padd" "custom/l_end" "tray" "battery" "custom/r_end" "custom/l_end" "backlight" "network" "pulseaudio" "pulseaudio#microphone" "custom/notifications" "custom/keybindhint" "custom/r_end" "custom/padd"];
+	modules-right= ["clock#time" "clock#date"];
 
 "hyprland/workspaces" = {
         "disable-scroll"= true;
@@ -32,6 +32,18 @@ mainBar = {
         "persistent-workspaces"= {
         };
     };
+ "clock#time" = {
+        "interval"= 10;
+        "format" = "  {:%H:%M}";
+        "tooltip" = false;
+    };
+    "clock#date" = {
+        "interval" = 20;
+        "format" = "{:%d.%m.%Y}";
+          #"tooltip-format" = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+          #"today-format" = "<b>{}</b>";
+        "on-click" = "gnome-calendar";
+    };    
 
     "custom/power" = {
         "format"= "{}";
@@ -309,191 +321,196 @@ mainBar = {
     };
 
     style = ''
-    * {
-      border: none;
-      border-radius: 0px;
-      font-family: "JetBrainsMono Nerd Font";
-      font-weight: bold;
-      font-size: 10px;
-      min-height: 10px;
-    }
+* {
+  border: none;
+  border-radius: 8;
+  font-family: "JetbrainsMono Nerd Font";
+  font-size: 16px;
+  min-height: 20px;
+}
 
-    @define-color bar-bg rgba(0, 0, 0, 0);
+window#waybar {
+  background: transparent;
+}
 
-    @define-color main-bg #11111b;
-    @define-color main-fg #cdd6f4;
+window#waybar.hidden {
+  opacity: 0.2;
+}
 
-    @define-color wb-act-bg #a6adc8;
-    @define-color wb-act-fg #313244;
+#window {
+  margin-top: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 10px;
+  transition: none;
+  color: transparent;
+  background: transparent;
+}
 
-    @define-color wb-hvr-bg #f5c2e7;
-    @define-color wb-hvr-fg #313244;
-
-    window#waybar {
-      background: @bar-bg;
-    }
-
-    tooltip {
-      background: @main-bg;
-      color: @main-fg;
-      border-radius: 7px;
-      border-width: 0px;
-    }
+#workspaces {
+  margin-top: 6px;
+  margin-left: 12px;
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 0px;
+  border-radius: 10px;
+  background: #282828;
+  /* default: background: #161320; */
+  transition: none;
+}
 
 #workspaces button {
-      box-shadow: none;
-      text-shadow: none;
-      padding: 0px;
-      border-radius: 9px;
-      margin-top: 3px;
-      margin-bottom: 3px;
-      margin-left: 0px;
-      padding-left: 3px;
-      padding-right: 3px;
-      margin-right: 0px;
-      color: @main-fg;
-      animation: ws_normal 20s ease-in-out 1;
-    }
+  transition: none;
+  color: #fbf1c7;
+  /* default: color: #b5e8e0; */
+  background: transparent;
+  border-radius: 2px;
+}
 
 #workspaces button.active {
-      background: @wb-act-bg;
-      color: @wb-act-fg;
-      margin-left: 3px;
-      padding-left: 12px;
-      padding-right: 12px;
-      margin-right: 3px;
-      animation: ws_active 20s ease-in-out 1;
-      transition: all 0.4s cubic-bezier(.55,-0.68,.48,1.682);
-    }
+  color: #fe8019;
+}
 
 #workspaces button:hover {
-      background: @wb-hvr-bg;
-      color: @wb-hvr-fg;
-      animation: ws_hover 20s ease-in-out 1;
-      transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682);
-    }
+  transition: none;
+  box-shadow: inherit;
+  text-shadow: inherit;
+  color: #d65d0e;
+  border-color: #d65d0e;
+  /* border-color: #e8a2af; */
+  /* color: #e8a2af; */
+}
 
-#taskbar button {
-      box-shadow: none;
-    text-shadow: none;
-      padding: 0px;
-      border-radius: 9px;
-      margin-top: 3px;
-      margin-bottom: 3px;
-      margin-left: 0px;
-      padding-left: 3px;
-      padding-right: 3px;
-      margin-right: 0px;
-      color: @wb-color;
-      animation: tb_normal 20s ease-in-out 1;
-    }
+#network {
+  margin-top: 6px;
+  margin-left: 8px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 0px;
+  border-radius: 10px;
+  transition: none;
+  color: #161320;
+  background: #fb4934;
+  /*default: background: #bd93f9;*/
+}
 
-#taskbar button.active {
-      background: @wb-act-bg;
-      color: @wb-act-color;
-      margin-left: 3px;
-      padding-left: 12px;
-      padding-right: 12px;
-      margin-right: 3px;
-      animation: tb_active 20s ease-in-out 1;
-      transition: all 0.4s cubic-bezier(.55,-0.68,.48,1.682);
-    }
+#wireplumber {
+  margin-top: 6px;
+  margin-left: 8px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 0px;
+  border-radius: 10px;
+  transition: none;
+  color: #1a1826;
+  background: #fae3b0;
+}
 
-#taskbar button:hover {
-      background: @wb-hvr-bg;
-      color: @wb-hvr-color;
-      animation: tb_hover 20s ease-in-out 1;
-      transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682);
-    }
+#battery {
+  margin-top: 6px;
+  margin-left: 8px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 0px;
+  border-radius: 10px;
+  transition: none;
+  color: #161320;
+  background: #b5e8e0;
+}
 
-#tray menu * {
-      min-height: 16px
-    }
+#battery.critical:not(.charging) {
+  background-color: #b5e8e0;
+  color: #161320;
+  animation-name: blink;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
 
-#tray menu separator {
-      min-height: 10px
-    }
+@keyframes blink {
+  to {
+    background-color: #bf616a;
+    color: #b5e8e0;
+  }
+}
 
-#backlight,
-#battery,
-#bluetooth,
-#custom-cliphist,
-#clock,
-#custom-cpuinfo,
-#cpu,
-#custom-gpuinfo,
-#idle_inhibitor,
-#custom-keybindhint,
-#language,
-#memory,
-#mpris,
-#network,
-#custom-notifications,
-#custom-power,
-#pulseaudio,
-#custom-spotify,
-#taskbar,
-#custom-theme,
-#tray,
-#custom-updates,
-#custom-wallchange,
-#custom-wbar,
-#window,
-#workspaces,
-#custom-l_end,
-#custom-r_end,
-#custom-sl_end,
-#custom-sr_end,
-#custom-rl_end,
-#custom-rr_end {
-      color: @main-fg;
-      background: @main-bg;
-      opacity: 1;
-      margin: 4px 0px 4px 0px;
-      padding-left: 4px;
-      padding-right: 4px;
-    }
+#backlight {
+  margin-top: 6px;
+  margin-left: 8px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 0px;
+  border-radius: 10px;
+  transition: none;
+  color: #161320;
+  background: #f8bd96;
+}
 
-#workspaces,
-#taskbar {
-      padding: 0px;
-    }
+#clock {
+  margin-top: 6px;
+  margin-left: 8px;
+  margin-right: 8px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 0px;
+  border-radius: 10px;
+  transition: none;
+  color: #161320;
+  background: #8ec07c;
+  /*default: background: #abe9b3; */
+}
 
-#custom-r_end {
-      border-radius: 0px 21px 21px 0px;
-      margin-right: 9px;
-      padding-right: 3px;
-    }
+#memory {
+  margin-top: 6px;
+  margin-left: 8px;
+  padding-left: 10px;
+  margin-bottom: 0px;
+  padding-right: 10px;
+  border-radius: 10px;
+  transition: none;
+  color: #161320;
+  background: #fabd2f;
+  /*default: background: #ddb6f2; */
+}
 
-#custom-l_end {
-      border-radius: 21px 0px 0px 21px;
-      margin-left: 9px;
-      padding-left: 3px;
-    }
+#cpu {
+  margin-top: 6px;
+  margin-left: 8px;
+  padding-left: 10px;
+  margin-bottom: 0px;
+  padding-right: 10px;
+  border-radius: 10px;
+  transition: none;
+  color: #161320;
+  background: #b8bb26;
+  /*default: background: #96cdfb; */
+}
 
-#custom-sr_end {
-      border-radius: 0px;
-      margin-right: 9px;
-      padding-right: 3px;
-    }
+#custom-launcher {
+  font-size: 24px;
+  margin-top: 6px;
+  margin-left: 8px;
+  padding-left: 10px;
+  padding-right: 5px;
+  border-radius: 10px;
+  transition: none;
+  color: #fe8019;
+  /*default: color: #89dceb; */
+  background: #161320;
+}
 
-#custom-sl_end {
-      border-radius: 0px;
-      margin-left: 9px;
-      padding-left: 3px;
-    }
-
-#custom-rr_end {
-      border-radius: 0px 7px 7px 0px;
-      margin-right: 9px;
-      padding-right: 3px;
-    }
-
-#custom-rl_end {
-      border-radius: 7px 0px 0px 7px;
-      margin-left: 9px;
-      padding-left: 3px;
-    }
+#custom-media {
+  margin-top: 6px;
+  margin-left: 8px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 0px;
+  border-radius: 10px;
+  transition: none;
+  color: #161320;
+  background: #f2cdcd;
+}
     '';
 
   };

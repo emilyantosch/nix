@@ -204,6 +204,8 @@ security.wrappers."mount.cifs" = {
     openssl.dev
     openssl.out
     (callPackage ./../../packages/home-manager/dioxus-cli/default.nix {})
+    hyprpanel
+    nautilus
     pkg-config
     gnutls
     lmstudio

@@ -1,7 +1,14 @@
 {...}:
 
 {
-  programs.yazi.theme = {
-    flavor = "gruvbox-dark";
+  programs.yazi = {
+    enable = true;
+    settings = {
+      theme = {
+        flavor = {
+          dark = "gruvbox-dark";
+        };
+      };
+    };
   };
 }
