@@ -29,16 +29,14 @@ programs = {
 			font-feature = ["-liga" "-dlig" "-calt"];
 			background-opacity = 0.95;
 			theme = "gruvbox-material";
-      custom-shader = "./assets/shaders/crt.glsl";
+      # custom-shader = "./assets/shaders/bettercrt.glsl";
 		};
 	};
 };
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "emmi";
-  home.homeDirectory = "/home/emmi";
-
-  
+  home.homeDirectory = "/home/emmi";  
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release

@@ -12,6 +12,7 @@
       ./../../modules/nixos/proton.nix
       ./../../modules/nixos/sddm.nix
       ./../../modules/nixos/smb.nix
+      ./../../modules/nixos/ollama.nix
       inputs.home-manager.nixosModules.default 
       ];
     
@@ -198,12 +199,14 @@ security.wrappers."mount.cifs" = {
       setuid = true;
     };
 
+  programs.kdeconnect.enable = true;
   
   security.pam.services.hyprlock = {};
   environment.systemPackages = with pkgs; [
     openssl.dev
     openssl.out
     (callPackage ./../../packages/home-manager/dioxus-cli/default.nix {})
+    aider-chat
     hyprpanel
     nautilus
     virtualgl
@@ -224,7 +227,12 @@ security.wrappers."mount.cifs" = {
     hyprlock
     hypridle
     zathura
+    godot_4
+    matugen
+    aseprite
+    python313
     typst
+    kdePackages.kdeconnect-kde
     typst-fmt
     typst-lsp
     ollama
@@ -305,6 +313,9 @@ security.wrappers."mount.cifs" = {
     ollama = {
       enable = true;
       acceleration = "cuda";
+      package = pkgs.ollama.override {
+        acceleration = "cuda";
+      };
     };
   };
 

@@ -19,6 +19,8 @@
       #"$mainMod, P, pseudo, # dwindle"
       "$mainMod, J, togglesplit, # dwindle"
 
+      "$mainMod, V, fullscreen"
+
       # Move focus with mainMod + arrow keys
       "$mainMod, h, movefocus, l"
       "$mainMod, l, movefocus, r"
