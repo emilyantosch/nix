@@ -8,11 +8,11 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./../../modules/nixos/blender.nix
       ./../../modules/nixos/tailscale.nix
       ./../../modules/nixos/proton.nix
       ./../../modules/nixos/sddm.nix
       ./../../modules/nixos/smb.nix
-      ./../../modules/nixos/ollama.nix
       inputs.home-manager.nixosModules.default 
       ];
     
@@ -100,6 +100,16 @@ fonts.packages = with pkgs; [
   };
 
 
+
+
+networking.nat = {
+enable = true;
+internalInterfaces = ["ve-+"];
+externalInterface = "ens3";
+# Lazy IPv6 connectivity for the container
+enableIPv6 = true;
+};
+
 # Enable Hyprland
 programs.hyprland.enable = true;
 
@@ -113,14 +123,18 @@ hardware = {
       enable32Bit = true;
     };
   };
+
   # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = ["nvidia"];
 
-  hardware.nvidia = {
+  virtualisation.docker.enable = true;
+  hardware.nvidia-container-toolkit = {
+    enable = true;
+  };
 
+  hardware.nvidia = {
     # Modesetting is required.
     modesetting.enable = true;
-
     # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
     # Enable this if you have graphical corruption issues or application crashes after waking
     # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead 
@@ -169,9 +183,6 @@ nix.settings.experimental-features = ["nix-command" "flakes"];
   };
   };
 
-  virtualisation.docker = {
-    enable = true;
-  };
 
   home-manager = {
     extraSpecialArgs = { inherit inputs;};
@@ -200,10 +211,12 @@ security.wrappers."mount.cifs" = {
     };
 
   programs.kdeconnect.enable = true;
-  
+ 
   security.pam.services.hyprlock = {};
   environment.systemPackages = with pkgs; [
     openssl.dev
+    nvidia-container-toolkit
+    ollama
     openssl.out
     (callPackage ./../../packages/home-manager/dioxus-cli/default.nix {})
     aider-chat
@@ -235,7 +248,6 @@ security.wrappers."mount.cifs" = {
     kdePackages.kdeconnect-kde
     typst-fmt
     typst-lsp
-    ollama
     docker
     lazydocker
     lazygit
@@ -273,7 +285,11 @@ security.wrappers."mount.cifs" = {
     tmux
     waybar
     obsidian
-    rustup
+    rustc
+    clippy
+    rustfmt
+    cargo
+    blender
     nix-init
     gnupg
     pass-wayland
@@ -297,7 +313,7 @@ security.wrappers."mount.cifs" = {
     #rocmPackages.llvm.llvm
     #rocmPackages.llvm.clang
   ];
-
+  
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
    programs.mtr.enable = true;
@@ -310,13 +326,6 @@ security.wrappers."mount.cifs" = {
 
   services = {
     openssh.enable = true;
-    ollama = {
-      enable = true;
-      acceleration = "cuda";
-      package = pkgs.ollama.override {
-        acceleration = "cuda";
-      };
-    };
   };
 
   # Open ports in the firewall.

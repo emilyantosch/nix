@@ -146,11 +146,11 @@
       "locked": {
         "lastModified": 1,
         "narHash": "sha256-SqHuEFIMn+OUxP1aR4waZ4/+ZfLUqBmAoY8yvEoqDTA=",
-        "path": "/nix/store/yn7g38c5v9k01akmpr8vk3dya96nd49c-source/packages/home-manager/zen-browser",
+        "path": "/nix/store/0i19hgnbazs6qz37crxr05ragj650l1j-source/packages/home-manager/zen-browser",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/yn7g38c5v9k01akmpr8vk3dya96nd49c-source/packages/home-manager/zen-browser",
+        "path": "/nix/store/0i19hgnbazs6qz37crxr05ragj650l1j-source/packages/home-manager/zen-browser",
         "type": "path"
       }
     }
