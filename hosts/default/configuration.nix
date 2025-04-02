@@ -8,7 +8,6 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./../../modules/nixos/blender.nix
       ./../../modules/nixos/tailscale.nix
       ./../../modules/nixos/proton.nix
       ./../../modules/nixos/sddm.nix
@@ -220,6 +219,8 @@ security.wrappers."mount.cifs" = {
     openssl.out
     (callPackage ./../../packages/home-manager/dioxus-cli/default.nix {})
     aider-chat
+    zed-editor
+    code-cursor
     hyprpanel
     nautilus
     virtualgl
@@ -244,11 +245,14 @@ security.wrappers."mount.cifs" = {
     matugen
     aseprite
     python313
-    typst
+    blender
+    bun
+    vtsls
+    tailwindcss-language-server
+    libreoffice
     kdePackages.kdeconnect-kde
-    typst-fmt
-    typst-lsp
     docker
+    typst
     lazydocker
     lazygit
     pandoc
@@ -278,7 +282,6 @@ security.wrappers."mount.cifs" = {
     bluez
     bluez-tools
     kitty
-    felix-fm
     ghostty
     chromium
     rofi
@@ -289,7 +292,6 @@ security.wrappers."mount.cifs" = {
     clippy
     rustfmt
     cargo
-    blender
     nix-init
     gnupg
     pass-wayland
@@ -310,8 +312,6 @@ security.wrappers."mount.cifs" = {
     cudaPackages.cudnn
     xfce.thunar
     cudaPackages.libnpp
-    #rocmPackages.llvm.llvm
-    #rocmPackages.llvm.clang
   ];
   
   # Some programs need SUID wrappers, can be configured further or are

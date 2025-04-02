@@ -30,7 +30,7 @@ rustPlatform.buildRustPackage rec {
     cacert
   ];
 
-  buildInputs = [ openssl ];
+ buildInputs = [ openssl ];
 
   OPENSSL_NO_VENDOR = 1;
 
