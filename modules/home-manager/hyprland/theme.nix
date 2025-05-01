@@ -7,6 +7,10 @@
       "exec = gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'"
     ];
 
+    experimental = {
+      "xx_color_management_v4" = "true";
+    };
+
     general = {
       gaps_in = 3;
       gaps_out = 8;
