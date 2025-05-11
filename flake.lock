@@ -145,12 +145,12 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-SqHuEFIMn+OUxP1aR4waZ4/+ZfLUqBmAoY8yvEoqDTA=",
-        "path": "/nix/store/57m8zndrd2f43r51gwifh60fysm1897h-source/packages/home-manager/zen-browser",
+        "narHash": "sha256-RRXBKb0QX88V0WTN9O3+32BDaLBrrzZeXixZty3ba8k=",
+        "path": "/nix/store/jaij7fkrl735ry6irv2hn1mjbrj4glva-source/packages/home-manager/zen-browser",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/57m8zndrd2f43r51gwifh60fysm1897h-source/packages/home-manager/zen-browser",
+        "path": "/nix/store/jaij7fkrl735ry6irv2hn1mjbrj4glva-source/packages/home-manager/zen-browser",
         "type": "path"
       }
     }

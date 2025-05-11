@@ -13,7 +13,7 @@
 
         wallpaper = [
         "DP-1, ~/.config/nixos/assets/wallpapers/golden_bloom.jpeg"
-        "HDMI-A-1, ~/.config/nixos/assets/wallpapers/Kita.png"
+        "DP-2, ~/.config/nixos/assets/wallpapers/Kita.png"
         ];
       };
     };
