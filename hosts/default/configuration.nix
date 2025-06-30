@@ -202,6 +202,7 @@ nix.settings.experimental-features = ["nix-command" "flakes"];
 
   # Allow unfree packages
   nixpkgs.config.cudaSupport = true;
+  nixpkgs.config.allowUnfree = true;
 
 security.wrappers."mount.cifs" = {
       program = "mount.cifs";
