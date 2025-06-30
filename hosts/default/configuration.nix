@@ -201,12 +201,8 @@ nix.settings.experimental-features = ["nix-command" "flakes"];
   programs.firefox.enable = true;
 
   # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
   nixpkgs.config.cudaSupport = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  #
 security.wrappers."mount.cifs" = {
       program = "mount.cifs";
       source = "${lib.getBin pkgs.cifs-utils}/bin/mount.cifs";
