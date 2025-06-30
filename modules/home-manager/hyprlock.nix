@@ -1,11 +1,11 @@
 {pkgs, ...}:
 {
   programs.hyprlock = {
-    enable = true;
+    enable = false;
     settings = {
 general = {
     disable_loading_bar = true;
-    grace = 300;
+    grace = 1200;
     hide_cursor = true;
     no_fade_in = false;
   };
