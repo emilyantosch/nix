@@ -238,7 +238,9 @@
     virtualgl
     pkg-config
     prettierd
-    vencord
+    vesktop
+    killall
+    swww
     nodePackages.prettier
     lua
     stylua
@@ -338,6 +340,7 @@
     intiface-central
     winetricks
     wine
+    sass
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

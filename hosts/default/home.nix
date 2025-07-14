@@ -5,6 +5,7 @@
   imports = [
     ./../../modules/home-manager/tmux.nix
     ./../../modules/home-manager/hyprpaper.nix
+    ./../../modules/home-manager/quickshell
     ./../../modules/home-manager/neovim.nix
     ./../../modules/home-manager/starship.nix
     ./../../modules/home-manager/zsh.nix
@@ -19,24 +20,28 @@
     ./../../modules/home-manager/zathura.nix
   ];
 
-programs = {
-	ghostty = {
-		enable = true;
-		settings = {
-			font-size = 18;
-			window-decoration = false;
-			confirm-close-surface = false;
-			font-feature = ["-liga" "-dlig" "-calt"];
-			background-opacity = 0.95;
-			theme = "gruvbox-material";
-      # custom-shader = "./assets/shaders/bettercrt.glsl";
-		};
-	};
-};
+  programs = {
+    ghostty = {
+      enable = true;
+      settings = {
+        font-size = 18;
+        window-decoration = false;
+        confirm-close-surface = false;
+        font-feature = [
+          "-liga"
+          "-dlig"
+          "-calt"
+        ];
+        background-opacity = 0.95;
+        theme = "gruvbox-material";
+        # custom-shader = "./assets/shaders/bettercrt.glsl";
+      };
+    };
+  };
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "emmi";
-  home.homeDirectory = "/home/emmi";  
+  home.homeDirectory = "/home/emmi";
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -100,7 +105,7 @@ programs = {
   #  /etc/profiles/per-user/emmi/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-     EDITOR = "nvim";
+    EDITOR = "nvim";
   };
 
   # Let Home Manager install and manage itself.
