@@ -1,4 +1,4 @@
-{...}:
+{ ... }:
 {
   wayland.windowManager.hyprland.settings = {
 
@@ -80,7 +80,7 @@
       # Scroll through existing workspaces with mainMod + scroll
       "$mainMod, mouse_down, workspace, e+1"
       "$mainMod, mouse_up, workspace, e-1"
-  ];
+    ];
 
     bindm = [
       # Move/resize windows with mainMod + LMB/RMB and dragging

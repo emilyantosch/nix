@@ -2,27 +2,32 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, lib, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  lib,
+  ...
+}:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./../../modules/nixos/tailscale.nix
-      ./../../modules/nixos/proton.nix
-      ./../../modules/nixos/sddm.nix
-      ./../../modules/nixos/smb.nix
-      inputs.home-manager.nixosModules.default 
-      ];
-    
-  # Bootloader.
-    boot = {
-      loader.systemd-boot.enable = true;
-      loader.efi.canTouchEfiVariables = true;
-    };
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./../../modules/nixos/tailscale.nix
+    ./../../modules/nixos/proton.nix
+    ./../../modules/nixos/sddm.nix
+    ./../../modules/nixos/smb.nix
+    inputs.home-manager.nixosModules.default
+  ];
 
-  systemd.sleep.extraConfig = 
-  ''
+  # Bootloader.
+  boot = {
+    loader.systemd-boot.enable = true;
+    loader.efi.canTouchEfiVariables = true;
+  };
+
+  systemd.sleep.extraConfig = ''
     AllowSuspend=yes
     AllowHibernation=yes
   '';
@@ -54,7 +59,7 @@
     LC_TIME = "de_DE.UTF-8";
   };
 
-fonts.packages = with pkgs; [ 
+  fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
     roboto
     source-sans
@@ -104,22 +109,19 @@ fonts.packages = with pkgs; [
     #media-session.enable = true;
   };
 
+  networking.nat = {
+    enable = true;
+    internalInterfaces = [ "ve-+" ];
+    externalInterface = "ens3";
+    # Lazy IPv6 connectivity for the container
+    enableIPv6 = true;
+  };
 
+  # Enable Hyprland
+  programs.hyprland.enable = true;
 
-
-networking.nat = {
-enable = true;
-internalInterfaces = ["ve-+"];
-externalInterface = "ens3";
-# Lazy IPv6 connectivity for the container
-enableIPv6 = true;
-};
-
-# Enable Hyprland
-programs.hyprland.enable = true;
-
-# Enable OpenGL
-hardware = {
+  # Enable OpenGL
+  hardware = {
     wooting = {
       enable = true;
     };
@@ -130,7 +132,7 @@ hardware = {
   };
 
   # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   virtualisation.docker.enable = true;
   hardware.nvidia-container-toolkit = {
@@ -142,7 +144,7 @@ hardware = {
     modesetting.enable = true;
     # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
     # Enable this if you have graphical corruption issues or application crashes after waking
-    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead 
+    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
     # of just the bare essentials.
     powerManagement.enable = true;
 
@@ -152,22 +154,25 @@ hardware = {
 
     # Use the NVidia open source kernel module (not to be confused with the
     # independent third-party "nouveau" open source driver).
-    # Support is limited to the Turing and later architectures. Full list of 
-    # supported GPUs is at: 
-    # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
+    # Support is limited to the Turing and later architectures. Full list of
+    # supported GPUs is at:
+    # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus
     # Only available from driver 515.43.04+
     # Currently alpha-quality/buggy, so false is currently the recommended setting.
     open = false;
 
     # Enable the Nvidia settings menu,
-	# accessible via `nvidia-settings`.
+    # accessible via `nvidia-settings`.
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
-nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -175,22 +180,29 @@ nix.settings.experimental-features = ["nix-command" "flakes"];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
-  defaultUserShell = pkgs.zsh;
-	  users.emmi = {
-	    isNormalUser = true;
-	    description = "Emmi";
-	    extraGroups = [ "networkmanager" "wheel" "video" "input" "uinput" "libvirtd" "docker" ];
-	    shell = pkgs.zsh;
-	    packages = with pkgs; [
-	      kdePackages.kate
-	    #  thunderbird
-    ];
+    defaultUserShell = pkgs.zsh;
+    users.emmi = {
+      isNormalUser = true;
+      description = "Emmi";
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+        "video"
+        "input"
+        "uinput"
+        "libvirtd"
+        "docker"
+      ];
+      shell = pkgs.zsh;
+      packages = with pkgs; [
+        kdePackages.kate
+        #  thunderbird
+      ];
+    };
   };
-  };
-
 
   home-manager = {
-    extraSpecialArgs = { inherit inputs;};
+    extraSpecialArgs = { inherit inputs; };
     backupFileExtension = "bak";
     users = {
       "emmi" = import ./home.nix;
@@ -204,47 +216,38 @@ nix.settings.experimental-features = ["nix-command" "flakes"];
   nixpkgs.config.cudaSupport = true;
   nixpkgs.config.allowUnfree = true;
 
-security.wrappers."mount.cifs" = {
-      program = "mount.cifs";
-      source = "${lib.getBin pkgs.cifs-utils}/bin/mount.cifs";
-      owner = "root";
-      group = "root";
-      setuid = true;
-    };
+  security.wrappers."mount.cifs" = {
+    program = "mount.cifs";
+    source = "${lib.getBin pkgs.cifs-utils}/bin/mount.cifs";
+    owner = "root";
+    group = "root";
+    setuid = true;
+  };
 
   programs.kdeconnect.enable = true;
 
-  security.pam.services.hyprlock = {};
+  security.pam.services.hyprlock = { };
   environment.systemPackages = with pkgs; [
     openssl.dev
     claude-code
     nvidia-container-toolkit
-    ollama
     openssl.out
-    (callPackage ./../../packages/home-manager/dioxus-cli/default.nix {})
-    aider-chat
+    (callPackage ./../../packages/home-manager/dioxus-cli/default.nix { })
     zed-editor
-    code-cursor
     hyprpanel
-    nautilus
     virtualgl
     pkg-config
-    glow
     prettierd
     vencord
     nodePackages.prettier
     lua
     stylua
     gnutls
-    lmstudio
     osu-lazer-bin
     obs-studio
-    helix
     hwinfo
     btop
     yazi
-    bacon
-    bacon-ls
     pywal
     pywalfox-native
     webex
@@ -253,7 +256,7 @@ security.wrappers."mount.cifs" = {
     cmake
     kdePackages.dolphin
     protonplus
-    protontricks 
+    protontricks
     wootility
     markdownlint-cli2
     hyprlock
@@ -263,8 +266,6 @@ security.wrappers."mount.cifs" = {
     matugen
     aseprite
     python313
-    ferium
-    blender
     bun
     vtsls
     tailwindcss-language-server
@@ -284,7 +285,7 @@ security.wrappers."mount.cifs" = {
     grim
     slurp
     tinymist
-    vim 
+    vim
     git
     wget
     fzf
@@ -294,8 +295,8 @@ security.wrappers."mount.cifs" = {
     neovim
     wayland
     hyprland
-    hyprlandPlugins.hyprsplit
     nmap
+    alacritty
     marksman
     hyprpaper
     hyprcursor
@@ -338,56 +339,56 @@ security.wrappers."mount.cifs" = {
     winetricks
     wine
   ];
-  
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
-   programs.mtr.enable = true;
-   programs.gnupg.agent = {
-     enable = true;
-     enableSSHSupport = true;
-   };
+  programs.mtr.enable = true;
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
 
   # List services that you want to enable:
-services.printing.browsing = true;
-services.printing.browsedConf = ''
-BrowseDNSSDSubTypes _cups,_print
-BrowseLocalProtocols all
-BrowseRemoteProtocols all
-CreateIPPPrinterQueues All
+  services.printing.browsing = true;
+  services.printing.browsedConf = ''
+    BrowseDNSSDSubTypes _cups,_print
+    BrowseLocalProtocols all
+    BrowseRemoteProtocols all
+    CreateIPPPrinterQueues All
 
-BrowseProtocols all
-    '';
-services.avahi = {
-  enable = true;
-  nssmdns = true;
-};
+    BrowseProtocols all
+  '';
+  services.avahi = {
+    enable = true;
+    nssmdns = true;
+  };
   services = {
     openssh.enable = true;
     udev.extraRules = ''
-    # Rules for Oryx web flashing and live training
-    KERNEL=="hidraw*", ATTRS{idVendor}=="16c0", MODE="0664", GROUP="plugdev"
-    KERNEL=="hidraw*", ATTRS{idVendor}=="3297", MODE="0664", GROUP="plugdev"
+      # Rules for Oryx web flashing and live training
+      KERNEL=="hidraw*", ATTRS{idVendor}=="16c0", MODE="0664", GROUP="plugdev"
+      KERNEL=="hidraw*", ATTRS{idVendor}=="3297", MODE="0664", GROUP="plugdev"
 
-    # Legacy rules for live training over webusb (Not needed for firmware v21+)
-      # Rule for all ZSA keyboards
-      SUBSYSTEM=="usb", ATTR{idVendor}=="3297", GROUP="plugdev"
-      # Rule for the Moonlander
-      SUBSYSTEM=="usb", ATTR{idVendor}=="3297", ATTR{idProduct}=="1969", GROUP="plugdev"
-      # Rule for the Ergodox EZ
-      SUBSYSTEM=="usb", ATTR{idVendor}=="feed", ATTR{idProduct}=="1307", GROUP="plugdev"
-      # Rule for the Planck EZ
-      SUBSYSTEM=="usb", ATTR{idVendor}=="feed", ATTR{idProduct}=="6060", GROUP="plugdev"
+      # Legacy rules for live training over webusb (Not needed for firmware v21+)
+        # Rule for all ZSA keyboards
+        SUBSYSTEM=="usb", ATTR{idVendor}=="3297", GROUP="plugdev"
+        # Rule for the Moonlander
+        SUBSYSTEM=="usb", ATTR{idVendor}=="3297", ATTR{idProduct}=="1969", GROUP="plugdev"
+        # Rule for the Ergodox EZ
+        SUBSYSTEM=="usb", ATTR{idVendor}=="feed", ATTR{idProduct}=="1307", GROUP="plugdev"
+        # Rule for the Planck EZ
+        SUBSYSTEM=="usb", ATTR{idVendor}=="feed", ATTR{idProduct}=="6060", GROUP="plugdev"
 
-    # Wally Flashing rules for the Ergodox EZ
-    ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789B]?", ENV{ID_MM_DEVICE_IGNORE}="1"
-    ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789A]?", ENV{MTP_NO_PROBE}="1"
-    SUBSYSTEMS=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789ABCD]?", MODE:="0666"
-    KERNEL=="ttyACM*", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789B]?", MODE:="0666"
+      # Wally Flashing rules for the Ergodox EZ
+      ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789B]?", ENV{ID_MM_DEVICE_IGNORE}="1"
+      ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789A]?", ENV{MTP_NO_PROBE}="1"
+      SUBSYSTEMS=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789ABCD]?", MODE:="0666"
+      KERNEL=="ttyACM*", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789B]?", MODE:="0666"
 
-    # Keymapp / Wally Flashing rules for the Moonlander and Planck EZ
-    SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", MODE:="0666", SYMLINK+="stm32_dfu"
-    # Keymapp Flashing rules for the Voyager
-    SUBSYSTEMS=="usb", ATTRS{idVendor}=="3297", MODE:="0666", SYMLINK+="ignition_dfu"
+      # Keymapp / Wally Flashing rules for the Moonlander and Planck EZ
+      SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", MODE:="0666", SYMLINK+="stm32_dfu"
+      # Keymapp Flashing rules for the Voyager
+      SUBSYSTEMS=="usb", ATTRS{idVendor}=="3297", MODE:="0666", SYMLINK+="ignition_dfu"
     '';
   };
 
