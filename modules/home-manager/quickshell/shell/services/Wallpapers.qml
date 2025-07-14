@@ -10,7 +10,7 @@ Singleton {
     id: root
 
     readonly property string currentNamePath: `${Paths.state}/wallpaper/last.txt`.slice(7)
-    readonly property string path: `${Paths.pictures}/Wallpapers`.slice(7)
+    readonly property string path: `${Paths.pictures}/Wallpapers/`.slice(7)
 
     readonly property list<Wallpaper> list: wallpapers.instances
     property bool showPreview: false
