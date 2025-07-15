@@ -32,7 +32,7 @@
           "-dlig"
           "-calt"
         ];
-        background-opacity = 0.95;
+        background-opacity = 0.96;
         theme = "gruvbox-material";
         # custom-shader = "./assets/shaders/bettercrt.glsl";
       };

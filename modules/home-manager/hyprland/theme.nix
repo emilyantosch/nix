@@ -1,4 +1,4 @@
-{...}:
+{ ... }:
 {
   wayland.windowManager.hyprland.settings = {
     exec = [
@@ -14,9 +14,9 @@
     general = {
       gaps_in = 3;
       gaps_out = 8;
-      border_size = 2;
-      "col.active_border" = "rgba(ca9ee6ff) rgba(f2d5cfff) 45deg";
-      "col.inactive_border" = "rgba(b4befecc) rgba(6c7086cc) 45deg";
+      border_size = 1;
+      "col.active_border" = "rgba(282828ff) rgba(ea6962ff) 45deg";
+      "col.inactive_border" = "rgba(202020ff) rgba(32302fff) 45deg";
       layout = "dwindle";
       resize_on_border = true;
     };
