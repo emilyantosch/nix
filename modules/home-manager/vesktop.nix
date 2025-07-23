@@ -3,8 +3,10 @@
   programs.vesktop = {
     enable = true;
     vencord = {
-      settings.enabledThemes = [ "gruvbox.theme.css" ];
-      themes = "../../assets/themes/vesktop/gruvbox.theme.css";
+      settings.enabledThemes = [ "gruvbox" ];
+      themes = {
+        gruvbox = "../../assets/themes/vesktop/gruvbox.theme.css";
+      };
     };
   };
 }
