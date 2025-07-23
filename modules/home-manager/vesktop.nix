@@ -5,7 +5,7 @@
     vencord = {
       settings.enabledThemes = [ "gruvbox" ];
       themes = {
-        gruvbox = "../../assets/themes/vesktop/gruvbox.theme.css";
+        gruvbox = "/home/emmi/.config/nixos/assets/themes/vesktop/gruvbox.theme.css";
       };
     };
   };

@@ -21,6 +21,7 @@
     ./../../modules/home-manager/alacritty.nix
     ./../../modules/home-manager/nushell.nix
     ./../../modules/home-manager/vesktop.nix
+    ./../../modules/home-manager/spicetify.nix
   ];
 
   programs = {
