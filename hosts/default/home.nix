@@ -18,6 +18,8 @@
     ./../../modules/home-manager/waybar.nix
     ./../../modules/home-manager/yazi.nix
     ./../../modules/home-manager/zathura.nix
+    ./../../modules/home-manager/alacritty.nix
+    ./../../modules/home-manager/nushell.nix
   ];
 
   programs = {

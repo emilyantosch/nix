@@ -241,6 +241,8 @@
     vesktop
     killall
     swww
+    nushell
+    onlyoffice-desktopeditors
     nodePackages.prettier
     lua
     stylua

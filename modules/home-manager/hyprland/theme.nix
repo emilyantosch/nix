@@ -29,7 +29,7 @@
     };
 
     decoration = {
-      rounding = 10;
+      rounding = 22;
 
       blur = {
         enabled = true;
