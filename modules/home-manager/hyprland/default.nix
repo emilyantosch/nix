@@ -1,16 +1,21 @@
-{pkgs, ...}:
+{
+  config,
+  pkgs,
+  inputs,
+  lib,
+}:
 {
   wayland.windowManager.hyprland.enable = true;
-  wayland.windowManager.hyprland.plugins = [
-    pkgs.hyprlandPlugins.hyprsplit
+  wayland.windowManager.hyprland.plugins = with pkgs; [
+    (callPackage ./../../../packages/hyprland-plugins/default.nix { }).hyprsplit
   ];
   imports = [
-    ./animations.nix 
+    ./animations.nix
     ./autostart.nix
     ./bind.nix
     ./env.nix
     ./monitor.nix
-    ./nvidia.nix 
+    ./nvidia.nix
     ./programs.nix
     ./theme.nix
     ./windowrules.nix

@@ -1,8 +1,15 @@
-{ config, pkgs, ... }:
+{
+  inputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 {
 
   imports = [
+    inputs.spicetify-nix.homeManagerModules.spicetify
     ./../../modules/home-manager/tmux.nix
     ./../../modules/home-manager/hyprpaper.nix
     ./../../modules/home-manager/quickshell
@@ -44,6 +51,7 @@
   };
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
+  nixpkgs.config.allowUnfree = true;
   home.username = "emmi";
   home.homeDirectory = "/home/emmi";
 

@@ -1,7 +1,9 @@
 {
   description = "Nixos config flake";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs = {
+      url = "github:nixos/nixpkgs/nixos-unstable";
+    };
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     zen-browser.url = "./packages/home-manager/zen-browser";
     hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
