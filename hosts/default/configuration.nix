@@ -230,6 +230,7 @@
   security.pam.services.hyprlock = { };
   environment.systemPackages = with pkgs; [
     openssl.dev
+    audacity
     claude-code
     nvidia-container-toolkit
     openssl.out

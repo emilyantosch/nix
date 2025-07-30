@@ -15,7 +15,7 @@ mkHyprlandPlugin hyprland rec {
     owner = "shezdy";
     repo = "hyprsplit";
     rev = "refs/tags/v${version}";
-    hash = "";
+    hash = "sha256-D0zfdUJXBRnNMmv/5qW+X4FJJ3/+t7yQmwJFkBuEgck=";
   };
 
   nativeBuildInputs = [
