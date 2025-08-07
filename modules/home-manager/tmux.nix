@@ -1,4 +1,7 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
+let
+  nu = lib.getExe pkgs.nushell;
+in
 {
   programs.tmux = {
     enable = true;
@@ -22,6 +25,7 @@
       bind C-c display-popup -E "claude"
       bind C-g display-popup -E "tmux attach -t notes"
 
+      set-option -g default-shell ${nu}
       set -g base-index 1
       set -g pane-base-index 1
       set-window-option -g pane-base-index 1

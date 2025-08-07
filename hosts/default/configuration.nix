@@ -159,7 +159,7 @@
     # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus
     # Only available from driver 515.43.04+
     # Currently alpha-quality/buggy, so false is currently the recommended setting.
-    open = false;
+    open = true;
 
     # Enable the Nvidia settings menu,
     # accessible via `nvidia-settings`.
@@ -193,7 +193,7 @@
         "libvirtd"
         "docker"
       ];
-      shell = pkgs.zsh;
+      shell = pkgs.nushell;
       packages = with pkgs; [
         kdePackages.kate
         #  thunderbird
@@ -271,10 +271,12 @@
     godot_4
     matugen
     aseprite
+    foot
     python313
     bun
     vtsls
     tailwindcss-language-server
+    deno
     libreoffice
     kdePackages.kdeconnect-kde
     docker
@@ -343,7 +345,12 @@
     intiface-central
     winetricks
     wine
+    prismlauncher
+    nix-ld
+    ferium
     sass
+    davinci-resolve
+    blender
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -353,6 +360,7 @@
     enable = true;
     enableSSHSupport = true;
   };
+  programs.nix-ld.enable = true;
 
   # List services that you want to enable:
   services.printing.browsing = true;
