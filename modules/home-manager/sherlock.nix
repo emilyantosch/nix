@@ -28,6 +28,13 @@
           priority = 1;
           home = true;
         }
+        {
+          name = "Pomodoro Timer";
+          type = "pomodoro";
+          priority = 0;
+          home = true;
+          spawn_focus = false;
+        }
       ];
       style = null;
     };

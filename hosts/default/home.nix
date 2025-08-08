@@ -30,6 +30,8 @@
     ./../../modules/home-manager/vesktop.nix
     ./../../modules/home-manager/spicetify.nix
     ./../../modules/home-manager/gtk.nix
+    ./../../modules/home-manager/sherlock.nix
+    ./../../modules/home-manager/carapace.nix
   ];
 
   programs = {
