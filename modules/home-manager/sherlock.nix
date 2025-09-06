@@ -1,8 +1,5 @@
 { inputs, ... }:
 {
-  imports = [
-    inputs.sherlock.homeManagerModules.default
-  ];
 
   programs.sherlock = {
     enable = true;
@@ -36,7 +33,6 @@
           spawn_focus = false;
         }
       ];
-      style = null;
     };
   };
 }

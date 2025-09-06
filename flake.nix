@@ -4,6 +4,18 @@
     nixpkgs = {
       url = "github:nixos/nixpkgs/nixos-unstable";
     };
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    qs-caelestia-shell = {
+      url = "github:caelestia-dots/shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    qs-caelestia-cli = {
+      url = "github:caelestia-dots/cli";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     zen-browser.url = "./packages/home-manager/zen-browser";
     hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
@@ -33,9 +45,13 @@
       home-manager,
       bacon,
       bacon-ls,
+      niri,
+      qs-caelestia-cli,
+      qs-caelestia-shell,
       ...
     }@inputs:
     let
+      system = "x86_64-linux";
       modulePath = ./hosts/. + ("/" + builtins.getEnv "TEST") + "/configuration.nix";
     in
     {
@@ -43,6 +59,7 @@
         specialArgs = {
           inherit inputs;
           inherit modulePath;
+          inherit system;
         };
         modules = [
           {

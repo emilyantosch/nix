@@ -16,6 +16,7 @@
     ./../../modules/home-manager/neovim.nix
     ./../../modules/home-manager/starship.nix
     ./../../modules/home-manager/zsh.nix
+    ./../../modules/home-manager/niri/default.nix
     ./../../modules/home-manager/zen-browser.nix
     ./../../modules/home-manager/rofi/default.nix
     ./../../modules/home-manager/hyprlock.nix

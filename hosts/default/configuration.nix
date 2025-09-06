@@ -7,6 +7,7 @@
   pkgs,
   inputs,
   lib,
+  system,
   ...
 }:
 
@@ -18,6 +19,7 @@
     ./../../modules/nixos/proton.nix
     ./../../modules/nixos/sddm.nix
     ./../../modules/nixos/smb.nix
+    ./../../modules/nixos/niri.nix
     inputs.home-manager.nixosModules.default
   ];
 
@@ -226,17 +228,24 @@
   };
 
   programs.kdeconnect.enable = true;
+  programs.dconf.enable = true;
 
   security.pam.services.hyprlock = { };
   environment.systemPackages = with pkgs; [
+    inkscape
+    adwaita-icon-theme
+    unixtools.netstat
     openssl.dev
+    cura-appimage
+    super-slicer
     audacity
     claude-code
     nvidia-container-toolkit
     openssl.out
-    (callPackage ./../../packages/home-manager/dioxus-cli/default.nix { })
     zed-editor
     hyprpanel
+    inputs.qs-caelestia-shell.packages.${system}.default
+    inputs.qs-caelestia-cli.packages.${system}.default
     virtualgl
     pkg-config
     prettierd
@@ -350,11 +359,13 @@
     ferium
     sass
     davinci-resolve
+    mosh
     blender
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
+  programs.mosh.enable = true;
   programs.mtr.enable = true;
   programs.gnupg.agent = {
     enable = true;
