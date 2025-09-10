@@ -12,7 +12,8 @@
     inputs.spicetify-nix.homeManagerModules.spicetify
     ./../../modules/home-manager/tmux.nix
     ./../../modules/home-manager/hyprpaper.nix
-    ./../../modules/home-manager/quickshell
+    #./../../modules/home-manager/quickshell
+    ./../../modules/home-manager/qs-caelestia.nix
     ./../../modules/home-manager/neovim.nix
     ./../../modules/home-manager/starship.nix
     ./../../modules/home-manager/zsh.nix

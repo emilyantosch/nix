@@ -233,6 +233,7 @@
   security.pam.services.hyprlock = { };
   environment.systemPackages = with pkgs; [
     inkscape
+    sqlite
     adwaita-icon-theme
     unixtools.netstat
     openssl.dev
