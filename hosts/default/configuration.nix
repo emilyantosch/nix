@@ -15,7 +15,7 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ./../../modules/nixos/tailscale.nix
+    # ./../../modules/nixos/tailscale.nix
     ./../../modules/nixos/proton.nix
     ./../../modules/nixos/sddm.nix
     ./../../modules/nixos/smb.nix
@@ -234,12 +234,17 @@
   environment.systemPackages = with pkgs; [
     inkscape
     sqlite
+    warp-terminal
+    libxcb
+    libxcb-wm
+    libxcb-util
     adwaita-icon-theme
     unixtools.netstat
     openssl.dev
     cura-appimage
     super-slicer
     audacity
+    (callPackage ./../../packages/home-manager/claude-code/default.nix { })
     claude-code
     nvidia-container-toolkit
     openssl.out
@@ -280,7 +285,7 @@
     zathura
     godot_4
     matugen
-    aseprite
+    #Might be broken, will need to reinstall later for Ascend: aseprite
     foot
     python313
     bun
@@ -318,7 +323,7 @@
     hyprpaper
     hyprcursor
     discord
-    tailscale
+    #tailscale
     bluez
     bluez-tools
     kitty

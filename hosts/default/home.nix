@@ -25,6 +25,7 @@
     ./../../modules/home-manager/hypridle.nix
     ./../../modules/home-manager/hyprland/default.nix
     ./../../modules/home-manager/waybar.nix
+    ./../../modules/home-manager/foot.nix
     ./../../modules/home-manager/yazi.nix
     ./../../modules/home-manager/zathura.nix
     ./../../modules/home-manager/alacritty.nix
@@ -44,11 +45,11 @@
         window-decoration = false;
         confirm-close-surface = false;
         font-feature = [
-          "-liga"
-          "-dlig"
-          "-calt"
+          "liga"
+          "dlig"
+          "calt"
         ];
-        background-opacity = 0.96;
+        background-opacity = 1;
         theme = "gruvbox-material";
         # custom-shader = "./assets/shaders/bettercrt.glsl";
       };

@@ -803,7 +803,7 @@ binds {
     Alt+Shift+Slash { show-hotkey-overlay; }
 
     Super+Escape { spawn "hyprlock"; }
-    Super+Return { spawn "ghostty"; }
+    Super+Return { spawn "foot"; }
     Super+B { spawn "zen-twilight"; }
     Super+A { spawn "sherlock"; }
     Super+R { spawn "sh -c caelestia shell drawers toggle launcher"; }
@@ -838,7 +838,7 @@ binds {
     Alt+Return { maximize-column; }
     Super+Ctrl+Return { move-window-to-monitor-next; }
 
-    Print { screenshot; }
+    Super+Shift+C { screenshot; }
     Alt+Print { screenshot-screen; }
     Alt+Shift+S { screenshot-window; }
 

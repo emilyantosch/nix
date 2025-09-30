@@ -146,7 +146,7 @@
             "variants": true,
             "wallpapers": true
         },
-        "showOnHover": false
+        "showOnHover": true
     },
     "lock": {
         "recolourLogo": true
