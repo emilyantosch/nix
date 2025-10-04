@@ -245,8 +245,8 @@
     super-slicer
     audacity
     (callPackage ./../../packages/home-manager/claude-code/default.nix { })
-    claude-code
     nvidia-container-toolkit
+    just
     openssl.out
     zed-editor
     hyprpanel
