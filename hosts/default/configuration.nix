@@ -15,6 +15,7 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    ./../../modules/home-manager/nixvim.nix
     # ./../../modules/nixos/tailscale.nix
     ./../../modules/nixos/proton.nix
     ./../../modules/nixos/sddm.nix
