@@ -26,6 +26,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sherlock.url = "github:Skxxtz/sherlock";
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -40,6 +44,7 @@
     {
       self,
       nixpkgs,
+      nixvim,
       hyprpanel,
       zen-browser,
       home-manager,
@@ -71,6 +76,16 @@
           }
           ./hosts/default/configuration.nix
           # modulePath
+        ];
+      };
+      nixosConfigurations.macos = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs;
+          inherit modulePath;
+          inherit system;
+        };
+        modules = [
+          ./hosts/macos/configuration.nix
         ];
       };
     };
