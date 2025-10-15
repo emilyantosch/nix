@@ -300,6 +300,7 @@
     vtsls
     tailwindcss-language-server
     deno
+    inputs.nyx.packages."x86_64-linux".core
     libreoffice
     kdePackages.kdeconnect-kde
     docker
