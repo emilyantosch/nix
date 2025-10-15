@@ -746,11 +746,11 @@
         "systems": "systems_6"
       },
       "locked": {
-        "path": "./packages/nvix/",
+        "path": "./packages/nvix",
         "type": "path"
       },
       "original": {
-        "path": "./packages/nvix/",
+        "path": "./packages/nvix",
         "type": "path"
       },
       "parent": []
