@@ -10,6 +10,8 @@
 
   imports = [
     inputs.spicetify-nix.homeManagerModules.spicetify
+    inputs.nixvim.homeModules.nixvim
+    ./../../modules/home-manager/nixvim.nix
     ./../../modules/home-manager/tmux.nix
     ./../../modules/home-manager/hyprpaper.nix
     #./../../modules/home-manager/quickshell
