@@ -26,6 +26,11 @@ in
       ""
       "file/find"
     ])
+    (wKeyObj [
+      "<leader>e"
+      "󰙅"
+      "Explorer"
+    ])
   ];
 
   keymaps = [

@@ -227,10 +227,10 @@ in
                   preset = 'sidebar',
                   layout = {
                     backdrop = false,
-                    width = 40, -- Pfff.. 40. I have 60!
-                    min_width = 40,
+                    width = 35, -- Pfff.. 40. I have 60!
+                    min_width = 35,
                     height = 0,
-                    position = 'right',
+                    position = 'left',
                     border = 'none',
                     box = 'vertical',
                     { win = 'list', border = 'none' },
