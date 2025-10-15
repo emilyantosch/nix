@@ -26,11 +26,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sherlock.url = "github:Skxxtz/sherlock";
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nyx.url = "./packages/nvix/";
+    # nvix.url = "github:niksingh710/nvix";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -45,7 +42,7 @@
     {
       self,
       nixpkgs,
-      nixvim,
+      # nvix,
       nyx,
       hyprpanel,
       zen-browser,

@@ -300,9 +300,10 @@
     vtsls
     tailwindcss-language-server
     deno
-    inputs.nyx.packages."x86_64-linux".core
+    inputs.nyx.packages.${pkgs.system}.core
     libreoffice
     kdePackages.kdeconnect-kde
+    gh
     docker
     typst
     lazydocker
@@ -323,7 +324,7 @@
     fd
     ripgrep
     kdePackages.qtmultimedia
-    neovim
+    # neovim
     wayland
     hyprland
     nmap

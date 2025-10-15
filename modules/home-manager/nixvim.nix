@@ -3,7 +3,7 @@
 	programs.nixvim = {
 	enable = true;
 
-	modules = [
+	imports = [
 		inputs.nyx.nvixPlugins.common
 	];
 };

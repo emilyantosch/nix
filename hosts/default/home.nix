@@ -10,14 +10,14 @@
 
   imports = [
     inputs.spicetify-nix.homeManagerModules.spicetify
-    inputs.nixvim.homeModules.nixvim
-    ./../../modules/home-manager/nixvim.nix
+    # inputs.nixvim.homeModules.nixvim
+    # ./../../modules/home-manager/nixvim.nix
     ./../../modules/home-manager/tmux.nix
     ./../../modules/home-manager/hyprpaper.nix
     #./../../modules/home-manager/quickshell
     ./../../modules/home-manager/xdg-portal.nix
     ./../../modules/home-manager/qs-caelestia.nix
-    ./../../modules/home-manager/neovim.nix
+    # ./../../modules/home-manager/neovim.nix
     ./../../modules/home-manager/starship.nix
     ./../../modules/home-manager/zsh.nix
     ./../../modules/home-manager/niri/default.nix

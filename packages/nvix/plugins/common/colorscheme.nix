@@ -2,7 +2,7 @@
 {
   colorschemes = {
     catppuccin = {
-      enable = true;
+      enable = false;
       settings = {
         integrations.native_lsp = {
           enabled = true;
@@ -22,6 +22,13 @@
     };
   };
 
+colorschemes.gruvbox-material = {
+  enable = true;
+  settings = {
+    enable_bold = 1;
+    enable_italic = 1;
+  };
+};
   colorschemes.tokyonight = {
     enable = false;
     settings = {

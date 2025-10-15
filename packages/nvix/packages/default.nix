@@ -18,6 +18,7 @@ let
     self.nvixPlugins.buffer
     self.nvixPlugins.ux # better user experience
     self.nvixPlugins.snacks
+    self.nvixPlugins.editor
   ];
   coreModules = bareModules ++ [
     # noice for cmdline
