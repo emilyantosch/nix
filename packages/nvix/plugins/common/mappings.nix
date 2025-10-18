@@ -38,7 +38,7 @@ let
     (mkKeymap "n" "<c-a-j>" ":lua require('smart-splits').resize_down()<cr>" "Resize Down")
     (mkKeymap "n" "<c-a-k>" ":lua require('smart-splits').resize_up()<cr>" "Resize Up")
     (mkKeymap "n" "<c-a-l>" ":lua require('smart-splits').resize_right()<cr>" "Resize Right")
-    (mkKeymap "n" "?" (
+    (mkKeymap "n" "s" (
       # lua
       mkRaw ''
         function()
@@ -106,7 +106,6 @@ let
       ''
     ) "Close Window!")
 
-    (mkKeymap "n" "<leader><leader>" "<cmd>nohl<cr>" "no highlight!")
     (mkKeymap "n" "<esc>" "<esc>:nohlsearch<cr>" "escape")
     (mkKeymap "n" "<leader>A" "ggVG" "select All")
 
@@ -122,8 +121,8 @@ let
       # lua
       mkRaw ''
         function()
+        local row, col = unpack(vim.api.nvim_win_get_cursor(0))
           local date = "# " .. os.date("%d-%m-%y")
-          local row, col = unpack(vim.api.nvim_win_get_cursor(0))
           local line = vim.api.nvim_get_current_line()
 
           -- Insert date at cursor position

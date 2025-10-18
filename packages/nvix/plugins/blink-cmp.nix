@@ -10,6 +10,7 @@ in
       settings = {
         completion.menu.border = "rounded";
         keymap = {
+          preset = "enter";
           "<C-j>" = [
             "select_next"
             "fallback"
@@ -18,7 +19,6 @@ in
             "select_prev"
             "fallback"
           ];
-
           "<c-l>" = [
             "snippet_forward"
             "fallback"

@@ -113,6 +113,7 @@ in
       ''
     ) "Undo")
 
+    (mkKeymap "n" "<leader><leader>" "<cmd>:lua Snacks.picker.files()<cr>" "Find Files")
     (mkKeymap "n" "<leader>ff" "<cmd>:lua Snacks.picker.files()<cr>" "Find Files")
     (mkKeymap "n" "<leader>fF" "<cmd>:lua Snacks.picker.smart()<cr>" "Smart")
     (mkKeymap "n" "<leader>f/" "<cmd>:lua Snacks.picker.grep()<cr>" "Grep")

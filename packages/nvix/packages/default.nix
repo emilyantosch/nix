@@ -18,11 +18,11 @@ let
     self.nvixPlugins.buffer
     self.nvixPlugins.ux # better user experience
     self.nvixPlugins.snacks
-    self.nvixPlugins.editor
   ];
   coreModules = bareModules ++ [
     # noice for cmdline
     self.nvixPlugins.noice
+    self.nvixPlugins.notes
 
     # Git and version control
     self.nvixPlugins.git
