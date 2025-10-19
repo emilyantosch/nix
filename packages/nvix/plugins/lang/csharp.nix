@@ -1,3 +1,3 @@
 {
-  plugins.lsp.servers.roslyn_ls.enable = true;
+  plugins.lsp.servers.omnisharp.enable = true;
 }
