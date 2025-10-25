@@ -18,7 +18,6 @@
       qt6.qtwayland
       # plasma-polkit-agent # check if needed
       walker
-      mako # notification agent
       # seatd
       # jaq
       # brillo

@@ -311,6 +311,7 @@
     pandoc
     uv
     code-cursor
+    jdk
     starship
     zplug
     swappy

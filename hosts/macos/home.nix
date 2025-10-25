@@ -9,33 +9,6 @@
 {
 
   imports = [
-    inputs.spicetify-nix.homeManagerModules.spicetify
-    ./../../modules/home-manager/tmux.nix
-    ./../../modules/home-manager/hyprpaper.nix
-    #./../../modules/home-manager/quickshell
-    ./../../modules/home-manager/xdg-portal.nix
-    ./../../modules/home-manager/qs-caelestia.nix
-    ./../../modules/home-manager/neovim.nix
-    ./../../modules/home-manager/starship.nix
-    ./../../modules/home-manager/zsh.nix
-    ./../../modules/home-manager/niri/default.nix
-    ./../../modules/home-manager/zen-browser.nix
-    ./../../modules/home-manager/rofi/default.nix
-    ./../../modules/home-manager/hyprlock.nix
-    ./../../modules/home-manager/tidal.nix
-    ./../../modules/home-manager/hypridle.nix
-    ./../../modules/home-manager/hyprland/default.nix
-    ./../../modules/home-manager/waybar.nix
-    ./../../modules/home-manager/foot.nix
-    ./../../modules/home-manager/yazi.nix
-    ./../../modules/home-manager/zathura.nix
-    ./../../modules/home-manager/alacritty.nix
-    ./../../modules/home-manager/nushell.nix
-    ./../../modules/home-manager/vesktop.nix
-    ./../../modules/home-manager/spicetify.nix
-    ./../../modules/home-manager/gtk.nix
-    ./../../modules/home-manager/sherlock.nix
-    ./../../modules/home-manager/carapace.nix
   ];
 
   programs = {
@@ -59,8 +32,14 @@
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   nixpkgs.config.allowUnfree = true;
-  home.username = "emmi";
-  home.homeDirectory = "/home/emmi";
+  home = {
+    username = "emmi";
+    homeDirectory = "/home/emmi";
+    stateVersion = "24.11"; # Please read the comment before changing.
+    sessionVariables = {
+      EDITOR = "nvim";
+    };
+  };
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -69,64 +48,6 @@
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
-  home.stateVersion = "24.11"; # Please read the comment before changing.
-
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
-  home.packages = [
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
-
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
-  ];
-
-  # Home Manager is pretty good at managing dotfiles. The primary way to manage
-  # plain files is through 'home.file'.
-  home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
-
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
-  };
-
-  # Home Manager can also manage your environment variables through
-  # 'home.sessionVariables'. These will be explicitly sourced when using a
-  # shell provided by Home Manager. If you don't want to manage your shell
-  # through Home Manager then you have to manually source 'hm-session-vars.sh'
-  # located at either
-  #
-  #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  ~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  /etc/profiles/per-user/emmi/etc/profile.d/hm-session-vars.sh
-  #
-  home.sessionVariables = {
-    EDITOR = "nvim";
-  };
-
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }

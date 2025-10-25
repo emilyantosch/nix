@@ -27,6 +27,10 @@
     };
     sherlock.url = "github:Skxxtz/sherlock";
     nyx.url = "./packages/nvix";
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -41,6 +45,7 @@
     {
       self,
       nixpkgs,
+      nix-darwin,
       nyx,
       hyprpanel,
       zen-browser,
@@ -75,7 +80,7 @@
           # modulePath
         ];
       };
-      nixosConfigurations.macos = nixpkgs.lib.nixosSystem {
+      darwinConfigurations.macos = nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit inputs;
           inherit modulePath;
