@@ -80,7 +80,8 @@
           # modulePath
         ];
       };
-      darwinConfigurations.macos = nixpkgs.lib.nixosSystem {
+
+      darwinConfigurations.emmiMBP = nix-darwin.lib.darwinSystem {
         specialArgs = {
           inherit inputs;
           inherit modulePath;
@@ -88,6 +89,17 @@
         };
         modules = [
           ./hosts/macos/configuration.nix
+        ];
+      };
+
+      darwinConfigurations.emilyantoschMBP = nix-darwin.lib.darwinSystem {
+        specialArgs = {
+          inherit inputs;
+          inherit modulePath;
+          inherit system;
+        };
+        modules = [
+          ./hosts/emilyantoschMBP/configuration.nix
         ];
       };
     };
