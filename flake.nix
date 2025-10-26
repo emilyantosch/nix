@@ -90,7 +90,7 @@
           inherit system;
         };
         modules = [
-          ./hosts/macos/configuration.nix
+          ./hosts/emmiMBP/configuration.nix
           inputs.darwin-modules.bare.bare
           inputs.darwin-modules.bare.home
         ];

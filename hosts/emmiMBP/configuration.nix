@@ -50,8 +50,9 @@
     bun
     deno
     inputs.nyx.packages.${pkgs.system}.core
-    # inputs.darwin-modules.modules.aarch64-darwin.bare
     gh
+    rustup
+    clang
     lazygit
     pandoc
     uv

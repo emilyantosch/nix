@@ -23,6 +23,9 @@
       "chromium"
       "docker-desktop"
       "ghostty"
+      "karabiner-elements"
+      "zen"
+      "intellij-idea"
 
       "discord"
 
