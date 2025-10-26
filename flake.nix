@@ -31,6 +31,7 @@
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    darwin-modules.url = "./modules/nix_darwin";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -46,6 +47,7 @@
       self,
       nixpkgs,
       nix-darwin,
+      darwin-modules,
       nyx,
       hyprpanel,
       zen-browser,

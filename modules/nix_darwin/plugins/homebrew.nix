@@ -31,8 +31,6 @@
       "raycast"
 
       "postman"
-
-      "aerospace"
     ];
   };
 }

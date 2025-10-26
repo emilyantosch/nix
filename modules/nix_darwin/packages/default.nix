@@ -8,7 +8,10 @@ let
   inherit (flake) inputs self;
   bareModules = [
     # Core functionality and improvements
-    self.darwinPlugins.common
+    self.darwinPlugins.aerospace
+    self.darwinPlugins.homebrew
+    self.darwinPlugins.jankyborders
+    self.darwinPlugins.darwin-system
   ];
   homeModules = bareModules ++ [
   ];
