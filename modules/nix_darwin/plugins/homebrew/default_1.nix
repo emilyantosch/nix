@@ -16,12 +16,15 @@
     brews = [
       "wget"
       "curl"
+      "opencode"
     ];
 
     casks = [
       "firefox"
-      "google-chrome"
+      "chromium"
       "visual-studio-code"
+      "docker-desktop"
+      "ghostty"
 
       "discord"
 

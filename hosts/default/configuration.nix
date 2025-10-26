@@ -67,25 +67,10 @@
     source-sans
     font-awesome
   ];
-  # Enable the X11 windowing system.
-  # You can disable this if you're only using the Wayland session.
-  services.xserver.enable = true;
-
-  # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
-  #services.desktopManager.plasma6.enable = true;
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "de";
-    variant = "";
-  };
 
   # Configure console keymap
   console.keyMap = "de";
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
 
   # Enable bluetooth, like wtf
   hardware.bluetooth.enable = true;
@@ -93,23 +78,6 @@
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
 
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    jack.enable = true;
-
-    wireplumber = {
-      enable = true;
-      package = pkgs.wireplumber;
-    };
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
-  };
 
   networking.nat = {
     enable = true;
@@ -118,9 +86,6 @@
     # Lazy IPv6 connectivity for the container
     enableIPv6 = true;
   };
-
-  # Enable Hyprland
-  programs.hyprland.enable = true;
 
   # Enable OpenGL
   hardware = {
@@ -134,7 +99,6 @@
   };
 
   # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = [ "nvidia" ];
 
   virtualisation.docker.enable = true;
   hardware.nvidia-container-toolkit = {
@@ -211,8 +175,6 @@
     };
   };
 
-  # Install firefox.
-  programs.firefox.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.cudaSupport = true;
@@ -227,7 +189,6 @@
     setuid = true;
   };
 
-  programs.kdeconnect.enable = true;
   programs.dconf.enable = true;
 
   environment.sessionVariables = {
@@ -242,7 +203,6 @@
     nautilus # Required for File Chooser from xdg-desktop-portal-gnome 47.0+
     inkscape
     sqlite
-    warp-terminal
     libxcb
     libxcb-wm
     libxcb-util
@@ -256,13 +216,10 @@
     nvidia-container-toolkit
     just
     openssl.out
-    zed-editor
-    hyprpanel
     inputs.qs-caelestia-shell.packages.${system}.default
     inputs.qs-caelestia-cli.packages.${system}.default
     virtualgl
     pkg-config
-    prettierd
     vesktop
     killall
     swww
@@ -270,16 +227,11 @@
     onlyoffice-desktopeditors
     nodePackages.prettier
     lua
-    stylua
     gnutls
-    osu-lazer-bin
     obs-studio
     hwinfo
     btop
     yazi
-    pywal
-    pywalfox-native
-    webex
     xdg-utils
     librsvg
     cmake
@@ -287,22 +239,16 @@
     protonplus
     protontricks
     wootility
-    markdownlint-cli2
     hyprlock
     hypridle
     zathura
     godot_4
-    matugen
     #Might be broken, will need to reinstall later for Ascend: aseprite
     foot
     python313
     bun
-    vtsls
-    tailwindcss-language-server
     deno
     inputs.nyx.packages.${pkgs.system}.core
-    libreoffice
-    kdePackages.kdeconnect-kde
     gh
     docker
     typst
@@ -310,14 +256,12 @@
     lazygit
     pandoc
     uv
-    code-cursor
     jdk
     starship
     zplug
     swappy
     grim
     slurp
-    tinymist
     vim
     git
     wget
@@ -325,24 +269,15 @@
     fd
     ripgrep
     kdePackages.qtmultimedia
-    # neovim
     wayland
     hyprland
     nmap
-    alacritty
-    marksman
-    hyprpaper
-    hyprcursor
     discord
-    #tailscale
     bluez
     bluez-tools
-    kitty
     ghostty
     chromium
-    rofi
     tmux
-    waybar
     obsidian
     rustc
     clippy
@@ -368,21 +303,17 @@
     xfce.thunar
     cudaPackages.libnpp
     vlc
-    intiface-central
     winetricks
     wine
     prismlauncher
     nix-ld
-    ferium
     sass
     davinci-resolve
-    mosh
     blender
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
-  programs.mosh.enable = true;
   programs.mtr.enable = true;
   programs.gnupg.agent = {
     enable = true;
@@ -391,19 +322,6 @@
   programs.nix-ld.enable = true;
 
   # List services that you want to enable:
-  services.printing.browsing = true;
-  services.printing.browsedConf = ''
-    BrowseDNSSDSubTypes _cups,_print
-    BrowseLocalProtocols all
-    BrowseRemoteProtocols all
-    CreateIPPPrinterQueues All
-
-    BrowseProtocols all
-  '';
-  services.avahi = {
-    enable = true;
-    nssmdns = true;
-  };
   services = {
     openssh.enable = true;
     udev.extraRules = ''
@@ -432,6 +350,57 @@
       # Keymapp Flashing rules for the Voyager
       SUBSYSTEMS=="usb", ATTRS{idVendor}=="3297", MODE:="0666", SYMLINK+="ignition_dfu"
     '';
+
+    avahi = {
+      enable = true;
+      nssmdns = true;
+    };
+
+    printing = {
+  # Enable CUPS to print documents.
+      enable = true;
+      browsing = true;
+      browsedConf = ''
+        BrowseDNSSDSubTypes _cups,_print
+        BrowseLocalProtocols all
+        BrowseRemoteProtocols all
+        CreateIPPPrinterQueues All
+
+        BrowseProtocols all
+      '';
+    };
+
+    # Enable the X11 windowing system.
+    # You can disable this if you're only using the Wayland session.
+    xserver.enable = true;
+
+    # Enable the KDE Plasma Desktop Environment.
+    displayManager.sddm.enable = true;
+    #services.desktopManager.plasma6.enable = true;
+
+    # Configure keymap in X11
+    xserver = {
+      videoDrivers = [ "nvidia" ];
+      xkb = {
+        layout = "de";
+        variant = "";
+    };
+    };
+
+
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      # If you want to use JACK applications, uncomment this
+      jack.enable = true;
+
+      wireplumber = {
+        enable = true;
+        package = pkgs.wireplumber;
+      };
+  };
   };
 
   # Open ports in the firewall.
