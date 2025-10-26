@@ -1,26 +1,34 @@
-{ inputs, self, ... }:
+{ lib, inputs, self, ... }:
+let
+  bare = [self.darwinPlugins.aerospace self.darwinPlugins.jankyborders];
+  mapAttrsMaybe =
+    f: attrs:
+    lib.pipe attrs [
+      (lib.mapAttrsToList f)
+      (builtins.filter (x: x != null))
+      builtins.listToAttrs
+    ];
+  forAllNixFiles =
+    dir: f:
+    if builtins.pathExists dir then
+      lib.pipe dir [
+        builtins.readDir
+        (mapAttrsMaybe (
+          fn: type:
+          if type == "regular" then
+            let
+              name = lib.removeSuffix ".nix" fn;
+            in
+            lib.nameValuePair name (f "${dir}/${fn}")
+          else if type == "directory" && builtins.pathExists "${dir}/${fn}/default.nix" then
+            lib.nameValuePair fn (f "${dir}/${fn}")
+          else
+            null
+        ))
+      ]
+    else
+      { };
+in
 {
-  debug = true;
-  imports = [
-    ./devshell.nix
-  ];
-  perSystem =
-    { lib, system, ... }:
-    {
-      # Make our overlay available to the devShell
-      # "Flake parts does not yet come with an endorsed module that initializes the pkgs argument.""
-      # So we must do this manually; https://flake.parts/overlays#consuming-an-overlay
-      _module.args = {
-        flake = { inherit inputs self; };
-        pkgs = import inputs.nixpkgs {
-          inherit system;
-          overlays = lib.attrValues self.overlays;
-          config.allowUnfree = true;
-        };
-      };
-
-      imports = [
-        (self + /packages)
-      ];
-    };
+  flake.bare = builtins.groupBy (fn: "bare") bare;
 }

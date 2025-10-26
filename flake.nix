@@ -91,6 +91,7 @@
         };
         modules = [
           ./hosts/macos/configuration.nix
+          inputs.darwin-modules.bare
         ];
       };
 

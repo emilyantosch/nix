@@ -37,8 +37,6 @@
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowUnfreePrediacte = (_: true);
 
-  programs.dconf.enable = true;
-
   environment.systemPackages = with pkgs; [
     sqlite
     openssl.dev
@@ -52,7 +50,7 @@
     bun
     deno
     inputs.nyx.packages.${pkgs.system}.core
-    inputs.darwin-modules.packages.aarch64-darwin.bare
+    # inputs.darwin-modules.modules.aarch64-darwin.bare
     gh
     lazygit
     pandoc
@@ -66,23 +64,19 @@
     ripgrep
     tmux
     obsidian
-    gcc13
     zoxide
     p7zip
-    vlc
-    nix-ld
     sass
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
-  programs.mtr.enable = true;
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
   };
-  programs.nix-ld.enable = true;
-
+  
+  nixpkgs.hostPlatform = "aarch64-darwin";
   # List services that you want to enable:
   services = {
     openssh.enable = true;
@@ -100,6 +94,7 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.11"; # Did you read the comment?
+  system.stateVersion = 6; # Did you read the comment?
+  system.primaryUser = "emmi";
 
 }

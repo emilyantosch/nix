@@ -1,11 +1,8 @@
 {
-  flake,
-  inputs',
-  self',
+  self,
   ...
 }:
 let
-  inherit (flake) inputs self;
   bareModules = [
     # Core functionality and improvements
     self.darwinPlugins.aerospace
@@ -19,10 +16,7 @@ let
   ];
 in
 {
-  packages = {
-    default = self'.packages.core;
-    bare = bareModules;
-    home = homeModules;
-    moia = moiaModules;
+  darwinModules = {
+    aerospace = self.darwinPlugins.aerospace;
   };
 }

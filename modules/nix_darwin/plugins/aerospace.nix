@@ -13,13 +13,11 @@
       enable-normalization-flatten-containers = true;
       enable-normalization-opposite-orientation-for-nested-containers = true;
 
-      according-padding = 100;
-
       # Default Layout and Orientation
       default-root-container-layout = "accordion";
       default-root-container-orientation = "auto";
 
-      on-focused-monitor-changed = ["move-mouse" "monitor-lazy-center"];
+      on-focused-monitor-changed = ["move-mouse monitor-lazy-center"];
 
       automatically-unhide-macos-hidden-apps = true;
 

@@ -20,9 +20,7 @@
     ];
 
     casks = [
-      "firefox"
       "chromium"
-      "visual-studio-code"
       "docker-desktop"
       "ghostty"
 
