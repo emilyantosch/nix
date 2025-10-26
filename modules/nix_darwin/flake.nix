@@ -16,7 +16,6 @@
       {
         imports = [
           ./plugins
-          ./modules/flake
         ];
       }
     );

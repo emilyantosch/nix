@@ -1,6 +1,6 @@
 { lib, inputs, self, ... }:
 let
-  bare = [self.darwinPlugins.aerospace self.darwinPlugins.jankyborders];
+  bare = [self.darwinPlugins.aerospace];
   mapAttrsMaybe =
     f: attrs:
     lib.pipe attrs [
@@ -30,5 +30,5 @@ let
       { };
 in
 {
-  flake.bare = builtins.groupBy (fn: "bare") bare;
+  flake.darwin = bare;
 }

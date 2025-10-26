@@ -32,5 +32,5 @@ let
       { };
 in
 {
-  flake.darwinPlugins = forAllNixFiles ./. (fn: fn);
+  flake.bare = forAllNixFiles ./. (fn: fn);
 }
