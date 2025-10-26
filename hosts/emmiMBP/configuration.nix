@@ -12,8 +12,6 @@
 }:
 
 {
-  imports = [
-  ];
 
   # Bootloader.
   fonts.packages = with pkgs; [
@@ -76,7 +74,7 @@
     enable = true;
     enableSSHSupport = true;
   };
-  
+
   nixpkgs.hostPlatform = "aarch64-darwin";
   # List services that you want to enable:
   services = {

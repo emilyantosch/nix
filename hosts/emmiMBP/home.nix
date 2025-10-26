@@ -9,6 +9,10 @@
 {
 
   imports = [
+    ./../../modules/home-manager/tmux.nix
+    ./../../modules/home-manager/starship.nix
+    ./../../modules/home-manager/ghostty.nix
+    ./../../modules/home-manager/yazi.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should
