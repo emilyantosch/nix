@@ -61,6 +61,7 @@
     fzf
     fd
     ripgrep
+    pass
     tmux
     obsidian
     zoxide
