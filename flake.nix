@@ -93,7 +93,16 @@
           ./hosts/emmiMBP/configuration.nix
           inputs.darwin-modules.bare.bare
           inputs.darwin-modules.bare.home
+
+        home-manager.darwinModules.home-manager {
+          # home-manager.useGlobalPkgs = true;
+          # home-manger.useUserPackages = true;
+          home-manager.backupFileExtension = "bak";
+          home-manager.extraSpecialArgs = {inherit inputs;};
+          home-manager.users.emmi = import ./hosts/emmiMBP/home.nix;
+        }
         ];
+
       };
 
       darwinConfigurations.emilyantoschMBP = nix-darwin.lib.darwinSystem {

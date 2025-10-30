@@ -12,10 +12,6 @@
 }:
 
 {
-
-imports = [
-  ./../../modules/nixos/kanata.nix
-];
   # Bootloader.
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
@@ -33,6 +29,10 @@ imports = [
 
   programs.zsh.enable = true;
 
+  users.users.emmi = {
+    name = "emmi";
+    home = "/Users/emmi";
+  };
   # Allow unfree packages
   nixpkgs.config.cudaSupport = true;
   nixpkgs.config.allowUnfree = true;
@@ -44,8 +44,8 @@ imports = [
     just
     openssl.out
     pkg-config
-    nushell
     lua
+    nushell
     btop
     python313
     bun
@@ -66,7 +66,6 @@ imports = [
     ripgrep
     pass
     tmux
-    obsidian
     zoxide
     p7zip
     sass
@@ -99,5 +98,6 @@ imports = [
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = 6; # Did you read the comment?
   system.primaryUser = "emmi";
+
 
 }

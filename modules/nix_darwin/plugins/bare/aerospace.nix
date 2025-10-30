@@ -19,6 +19,7 @@
       # Default Layout and Orientation
       default-root-container-layout = "accordion";
       default-root-container-orientation = "auto";
+      accordion-padding = 200;
 
       on-focused-monitor-changed = ["move-mouse monitor-lazy-center"];
 

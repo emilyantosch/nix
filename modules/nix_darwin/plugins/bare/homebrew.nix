@@ -21,6 +21,7 @@
 
     casks = [
       "chromium"
+      "obsidian"
       "docker-desktop"
       "ghostty"
       "karabiner-elements"
