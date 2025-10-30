@@ -13,6 +13,9 @@
 
 {
 
+imports = [
+  ./../../modules/nixos/kanata.nix
+];
   # Bootloader.
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono

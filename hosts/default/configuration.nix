@@ -21,6 +21,7 @@
     ./../../modules/nixos/smb.nix
     ./../../modules/nixos/niri.nix
     ./../../modules/nixos/kanata.nix
+    ./../../modules/nixos/services.nix
     inputs.home-manager.nixosModules.default
   ];
 

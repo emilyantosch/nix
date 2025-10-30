@@ -36,7 +36,7 @@
               ;; ---define variables---
               (defvar
               tap-time 300
-              hold-time 200
+              hold-time 300
 
               ;; set tap/hold time for layer tap-hold
               ;;layer-tap-time 200
@@ -58,14 +58,19 @@
               ;;met-hold 200
               )
 
+              (deflocalkeys-linux
+                langl 86
+                rangl 87
+              )
+
               ;; ---base layer for kanata---
               (deflayer base
               esc    f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12        prnt slck pause
-              grv    1    2    3    4    5    6    7    8    9    0    -    =    bspc  ins  home pgup  nlck kp/  kp*  kp-
+              bspc    1    2    3    4    5    6    7    8    9    0    -    =    bspc  ins  home pgup  nlck kp/  kp*  kp-
               @ltab  q    w    e    r    t    y    u    i    o    p    [    ]    \     del  end  pgdn  kp7  kp8  kp9  kp+
-              @lesc @am  @sa  @ds  @fc  g    h    @jc  @ks  @la  @;m  '    ret                        kp4  kp5  kp6
+              esc @am  @sa  @ds  @fc  g    h    @jc  @ks  @la  @;m  '    ret                        kp4  kp5  kp6
               lsft   z    x    c    v    b    n    m    ,    .    /    rsft                 up         kp1  kp2  kp3  kprt
-              @chom  lmet @aend          spc            ralt rmet cmp  rctl            left down rght  kp0  kp.
+              @chom  lmet @aend          @lspc            ralt rmet cmp  rctl            left down rght  kp0  kp.
               )
               ;;might need to replace the hardcoded one with _ to emulate the original layer underneath it - only if qwertz layout switch doesnt work anymore afterwards
 
@@ -73,17 +78,17 @@
               (deflayer nav1
               _    _    _    _    _    _    _    _    _    _    _    _    _          _    _    _
               _    _    _    _    _    _    _    _    _    _    _   RA-s  _    _     _    _    _     _    _    _    _
-              _ A-left up A-rght  _    _    _    C-v  C-c  C-x  _   RA-y  _    _     _    _    _     _    _    _    _
-              _  left down rght   _    _    left down up  rght RA-p RA-q  _                          _    _    _
+              _    A-8    A-9    S-8  S-9    _    _  C-v  C-c  C-x  _   RA-y  _    _     _    _    _     _    _    _    _
+              _    langl  S-langl    A-7    A-0    _    left down up  rght RA-p RA-q  _                          _    _    _
               _    _    _    _    _    _    _    _    _    _    _    _                    _          _    _    _    _
               _    _    _              _              _    _    _    _               _    _    _     _    _
               )
-
               ;; ---gaming layer without homerow mods---
+
               (deflayer game
               _    _    _    _    _    _    _    _    _    _    _    _    _          _    _    _
-              _    _    _    _    _    _    _    _    _    _    _    _    _    _     _    _    _     _    _    _    _
             @lbtab _    _    _    _    _    _    _    _    _    _    _    _    _     _    _    _     _    _    _    _
+              _    _    _    _    _    _    _    _    _    _    _    _    _    _     _    _    _     _    _    _    _
               _    _    _    _    _    _    _    _    _    _    _    _    _                          _    _    _
               _    _    _    _    _    _    _    _    _    _    _    _                    _          _    _    _    _
               _    _    _              _              _    _    _    _               _    _    _     _    _
@@ -96,11 +101,10 @@
               game (layer-switch game)
               base (layer-switch base)
 
+              lspc (tap-hold $tap-time $hold-time spc @nav1)
               ;;define key-alias and functions
-              lesc (tap-hold-press $tap-time $hold-time esc @nav1)
               ltab (tap-hold-press $spc-tap-time $spc-hold-time tab @game)
               lbtab (tap-hold-press $spc-tap-time $spc-hold-time tab @base)
-              lspc (tap-hold-press $spc-tap-time $spc-hold-time spc @nav1)
 
               chj (chord jkl-chords j)
               chk (chord jkl-chords k)
@@ -132,7 +136,6 @@
               (j    ) j
               (   k ) k
               (     l) l
-              (j  k ) esc
               (   k l) bspc
               )
 
