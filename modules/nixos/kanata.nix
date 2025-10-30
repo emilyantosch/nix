@@ -7,9 +7,6 @@
 }:
 
 {
-  # For Kanata enable uinput
-  boot.kernelModules = [ "uinput" ];
-  hardware.uinput.enable = true;
 
   services.kanata = {
     enable = true;

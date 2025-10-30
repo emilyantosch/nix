@@ -25,10 +25,13 @@
     inputs.home-manager.nixosModules.default
   ];
 
+  # For Kanata enable uinput
+  hardware.uinput.enable = true;
   # Bootloader.
   boot = {
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
+    kernelModules = [ "uinput" ];
   };
 
   systemd.sleep.extraConfig = ''
