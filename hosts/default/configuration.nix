@@ -20,6 +20,7 @@
     ./../../modules/nixos/sddm.nix
     ./../../modules/nixos/smb.nix
     ./../../modules/nixos/niri.nix
+    ./../../modules/nixos/kanata.nix
     inputs.home-manager.nixosModules.default
   ];
 
