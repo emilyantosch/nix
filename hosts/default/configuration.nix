@@ -206,6 +206,7 @@
   environment.systemPackages = with pkgs; [
     gnome-keyring # Implements the Secret Portal
     nautilus # Required for File Chooser from xdg-desktop-portal-gnome 47.0+
+    opencode
     inkscape
     sqlite
     libxcb

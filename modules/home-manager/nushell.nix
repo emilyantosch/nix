@@ -6,7 +6,7 @@
       v = "nvim";
       ll = "eza -1 -l";
       g = "git";
-      nxd = "sudo nixos-rebuild switch --upgrade --flake /home/emmi/.config/nixos/#default";
+      nx = "sudo nixos-rebuild switch --upgrade --flake /home/emmi/.config/nixos/#default";
       y = "yazi";
     };
 

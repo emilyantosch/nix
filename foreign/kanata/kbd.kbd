@@ -40,7 +40,11 @@
 
               (deflocalkeys-linux
                 langl 86
-                rangl 87
+                hash 43
+                altgr 224
+                pipe 86
+                lbracket 9
+                rbracket 93
               )
 
               ;; ---base layer for kanata---
@@ -52,14 +56,15 @@
               lsft   z    x    c    v    b    n    m    ,    .    /    rsft                 up         kp1  kp2  kp3  kprt
               @chom  lmet @aend          @lspc            ralt rmet cmp  rctl            left down rght  kp0  kp.
               )
-              ;;might need to replace the hardcoded one with _ to emulate the original layer underneath it - only if qwertz layout switch doesnt work anymore afterwards
 
+              ;;might need to replace the hardcoded one with _ to emulate the original layer underneath it - only if qwertz layout switch doesnt work anymore afterwards
               ;; ---layer one for navigation---
+              ;; ---layer also contains symbols
               (deflayer nav1
               _    _    _    _    _    _    _    _    _    _    _    _    _          _    _    _
-              _    _    _    _    _    _    _    _    _    _    _   RA-s  _    _     _    _    _     _    _    _    _
-              _    A-8    A-9    S-8  S-9    _    _  C-v  C-c  C-x  _   RA-y  _    _     _    _    _     _    _    _    _
-              _    langl  S-langl    A-7    A-0    _    left down up  rght RA-p RA-q  _                          _    _    _
+              _    _    _    hash    _    _    _    pipe    _    _    _   RA-s  _    _     _    _    _     _    _    _    _
+              _    A-C-8    BracketRight    S-8  S-9    _    _  C-v  C-c  C-x  _   RA-y  _    _     _    _    _     _    _    _    _
+              _    langl  S-langl    Digit0    Digit7   _    left down up  rght RA-p RA-q  _                          _    _    _
               _    _    _    _    _    _    _    _    _    _    _    _                    _          _    _    _    _
               _    _    _              _              _    _    _    _               _    _    _     _    _
               )
