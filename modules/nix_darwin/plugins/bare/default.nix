@@ -4,6 +4,6 @@
     with builtins;
     with lib;
     map (fn: ./${fn}) (
-      filter (fn: (fn != "default.nix" && !hasSuffix ".md" "${fn}")) (attrNames (readDir ./.))
+      filter (fn: (fn != "default.nix" && !hasSuffix ".kbd" "${fn}" && !hasSuffix ".md" "${fn}")) (attrNames (readDir ./.))
     );
 }

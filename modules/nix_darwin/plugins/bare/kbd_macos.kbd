@@ -48,7 +48,7 @@
               esc    f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12        slck pause
               bspc    1    2    3    4    5    6    7    8    9    0    -    =    bspc  ins  home pgup  nlck kp/  kp*  kp-
               @ltab  q    w    e    r    t    y    u    i    o    p    [    ]    \     del  end  pgdn  kp7  kp8  kp9  kp+
-              esc @am  @sa  @ds  @fc  g    h    @jc  @ks  @la  @;m  '    ret                        kp4  kp5  kp6
+              esc @am  @sa  @ds  @fc  @gh    @hh    @jc  @ks  @la  @;m  '    ret                        kp4  kp5  kp6
               lsft   z    x    c    v    b    n    m    ,    .    /    rsft                 up         kp1  kp2  kp3  kprt
               @chom  lmet @aend          @lspc            ralt rmet cmp  rctl            left down rght  kp0  kp.
               )
@@ -101,7 +101,9 @@
               sa (tap-hold $tap-time $hold-time @chs lalt)
               ds (tap-hold $tap-time $hold-time @chd lsft)
               fc (tap-hold $tap-time $hold-time f lctl)
+              gh (tap-hold $tap-time $hold-time g (multi lsft lctl lalt lmet))
 
+              hh (tap-hold $tap-time $hold-time h (multi rsft rctl ralt rmet))
               jc (tap-hold $tap-time $hold-time @chj rctl)
               ks (tap-hold $tap-time $hold-time @chk rsft)
               la (tap-hold $tap-time $hold-time @chl lalt)
