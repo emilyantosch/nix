@@ -58,8 +58,8 @@
               (deflayer nav1
               _    _    _    _    _    _    _    _    _    _    _    _    _             _    _
               _    _    _    _    _    _    _    _    _    _    _   RA-s  _    _     _    _    _     _    _    _    _
-              _    A-8    A-9    S-8  S-9    _    _  C-v  C-c  C-x  _   RA-y  _    _     _    _    _     _    _    _    _
-              _    langl  S-langl    A-7    A-0    _    left down up  rght RA-p RA-q  _                          _    _    _
+              _    RA-8    RA-9    S-8  S-9    _    _  C-v  C-c  C-x  _   RA-y  _    _     _    _    _     _    _    _    _
+              _    langl  S-langl    RA-7    RA-0    _    left down up  rght RA-p RA-q  _                          _    _    _
               _    _    _    _    _    _    _    _    _    _    _    _                    _          _    _    _    _
               _    _    _              _              _    _    _    _               _    _    _     _    _
               )
