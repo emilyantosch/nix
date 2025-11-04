@@ -16,6 +16,7 @@
       $env.PATH = [
       $"($env.HOME)/.nix-profile/bin"
       $"/etc/profiles/per-user/($env.USER)/bin"
+      "/run/wrappers/bin"
       "/run/current-system/sw/bin"
       "/bin"
       "/sbin"
@@ -24,6 +25,7 @@
       "/usr/local/bin"
       "/nix/var/nix/profiles/default/bin"
       ]
+      $env.editor = "nvim"
       ${pkgs.zoxide}/bin/zoxide init nushell | save -f ~/.zoxide.nu
     '';
     configFile.text = ''

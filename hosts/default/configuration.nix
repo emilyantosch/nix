@@ -209,9 +209,6 @@
     opencode
     inkscape
     sqlite
-    libxcb
-    libxcb-wm
-    libxcb-util
     adwaita-icon-theme
     unixtools.netstat
     openssl.dev
@@ -240,8 +237,9 @@
     yazi
     xdg-utils
     librsvg
-    cmake
     kdePackages.dolphin
+    xorg.xcbutil.dev
+    xorg.libxcb.dev
     protonplus
     protontricks
     wootility
@@ -249,7 +247,7 @@
     hypridle
     zathura
     godot_4
-    #Might be broken, will need to reinstall later for Ascend: aseprite
+    aseprite
     foot
     python313
     bun

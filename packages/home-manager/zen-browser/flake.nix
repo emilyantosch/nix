@@ -96,7 +96,7 @@
           nativeBuildInputs = [
             pkgs.makeWrapper
             pkgs.copyDesktopItems
-            pkgs.wrapGAppsHook
+            pkgs.wrapGAppsHook3
           ];
 
           installPhase = ''
