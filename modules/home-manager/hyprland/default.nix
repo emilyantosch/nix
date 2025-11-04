@@ -6,7 +6,7 @@
   # programs.hyprland.enable = true;
   wayland.windowManager.hyprland.enable = true;
   wayland.windowManager.hyprland.plugins = with pkgs; [
-    (callPackage ./../../../packages/hyprland-plugins/default.nix { }).hyprsplit
+    # (callPackage ./../../../packages/hyprland-plugins/default.nix { }).hyprsplit
   ];
   imports = [
     ./animations.nix
