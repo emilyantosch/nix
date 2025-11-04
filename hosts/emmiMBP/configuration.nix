@@ -54,7 +54,6 @@
     (callPackage ./../../packages/home-manager/claude-code/default.nix { })
     gh
     rustup
-    gpg
     clang
     lazygit
     pandoc
