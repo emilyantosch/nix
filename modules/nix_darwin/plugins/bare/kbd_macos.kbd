@@ -39,8 +39,7 @@
               )
 
               (deflocalkeys-macos
-                langl 86
-                rangl 87
+                langl 60
               )
 
               ;; ---base layer for kanata---

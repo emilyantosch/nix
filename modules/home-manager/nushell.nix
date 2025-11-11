@@ -7,8 +7,8 @@
       ll = "eza -1 -l";
       g = "git";
       nxd = "sudo nixos-rebuild switch --upgrade --flake /home/emmi/.config/nixos/#default";
-      nxe = "sudo darwin-rebuild switch --upgrade --flake ~/.config/nix/#emmiMBP";
-      nxea = "sudo darwin-rebuild switch --upgrade --flake ~/.config/nix/#emilyantoschMBP";
+      nxe = "sudo darwin-rebuild switch --flake ~/.config/nix/#emmiMBP";
+      nxea = "sudo darwin-rebuild switch --flake ~/.config/nix/#emilyantoschMBP";
       y = "yazi";
     };
 

@@ -6,7 +6,7 @@ in
   programs.tmux = {
     enable = true;
     #shortcut = " ";
-    shell = "${pkgs.zsh}/bin/zsh";
+    shell = "${pkgs.nushell}/bin/nu";
     terminal = "tmux-256color";
     historyLimit = 10000;
     baseIndex = 1;

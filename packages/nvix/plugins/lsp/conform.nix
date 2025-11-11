@@ -11,8 +11,18 @@
           "trim_whitespace"
           "trim_newlines"
         ];
+        rust = [ "rustfmt" ];
       };
       formatters.squeeze_blanks.command = lib.getExe' pkgs.coreutils "cat";
     };
   };
+  autoCmd = [
+  {
+    event = ["BufWritePre"];
+    pattern = "*";
+    callback = {
+      __raw = ''function(args) require("conform").format({bufnr = args.buf, timeout_ms = 200, lsp_format = "fallback" }) end'';
+    };
+  }
+  ];
 }

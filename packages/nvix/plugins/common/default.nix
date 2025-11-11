@@ -91,13 +91,14 @@ in
     splitbelow = true;
     splitright = true;
     splitkeep = "screen";
+    linebreak = true;
     termguicolors = true;
 
     conceallevel = 2;
 
     undofile = true;
 
-    wrap = false;
+    wrap = true;
 
     virtualedit = "block";
     winminwidth = 5;

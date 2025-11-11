@@ -34,7 +34,6 @@
     home = "/Users/emmi";
   };
   # Allow unfree packages
-  nixpkgs.config.cudaSupport = true;
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowUnfreePrediacte = (_: true);
 

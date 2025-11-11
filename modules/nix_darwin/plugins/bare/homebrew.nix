@@ -17,10 +17,13 @@
       "wget"
       "curl"
       "opencode"
+      "node"
+      "gpg"
+      "deno"
     ];
 
     casks = [
-      "chromium"
+      "google-chrome"
       "obsidian"
       "docker-desktop"
       "ghostty"
