@@ -248,6 +248,7 @@
     zathura
     godot_4
     aseprite
+    sshpass
     foot
     python313
     bun
@@ -312,7 +313,8 @@
     prismlauncher
     nix-ld
     sass
-    davinci-resolve
+    kdePackages.kdenlive
+    keymapp
     blender
   ];
 
