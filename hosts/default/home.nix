@@ -38,6 +38,7 @@
     ./../../modules/home-manager/gtk.nix
     ./../../modules/home-manager/sherlock.nix
     ./../../modules/home-manager/carapace.nix
+    ./../../modules/home-manager/atuin.nix
   ];
 
   programs = {
