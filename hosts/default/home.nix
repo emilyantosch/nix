@@ -39,7 +39,6 @@
     ./../../modules/home-manager/sherlock.nix
     ./../../modules/home-manager/carapace.nix
     ./../../modules/home-manager/atuin.nix
-    ./../../modules/home-manager/bacon.nix
   ];
 
   programs = {

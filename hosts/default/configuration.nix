@@ -22,6 +22,7 @@
     ./../../modules/nixos/niri.nix
     ./../../modules/nixos/kanata.nix
     ./../../modules/nixos/services.nix
+    ./../../modules/nixos/bacon.nix
     inputs.home-manager.nixosModules.default
   ];
 
