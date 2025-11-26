@@ -76,13 +76,11 @@
   # Configure console keymap
   console.keyMap = "de";
 
-
   # Enable bluetooth, like wtf
   hardware.bluetooth.enable = true;
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
-
 
   networking.nat = {
     enable = true;
@@ -179,7 +177,6 @@
       "emmi" = import ./home.nix;
     };
   };
-
 
   # Allow unfree packages
   nixpkgs.config.cudaSupport = true;
