@@ -38,7 +38,7 @@ cursor {
     xcursor-theme "default"
     xcursor-size 24
     // hide-when-typing
-    // hide-after-inactive-ms 1000 
+    // hide-after-inactive-ms 1000
 }
 // OVERVIEW SETTINGS
 overview {
@@ -230,7 +230,6 @@ output "DP-1" {
     // so to put another output directly adjacent to it on the right, set its x to 1920.
     // If the position is unset or results in an overlap, the output is instead placed
     // automatically.
-
 
 // Settings that influence how windows are positioned and sized.
 // Find more information on the wiki:
@@ -433,13 +432,13 @@ layout {
     //     // radius. It has to assume that windows have square corners, leading to
     //     // shadow artifacts inside the CSD rounded corners. This setting fixes
     //     // those artifacts.
-    //     // 
+    //     //
     //     // However, instead you may want to set prefer-no-csd and/or
     //     // geometry-corner-radius. Then, niri will know the corner radius and
     //     // draw the shadow correctly, without having to draw it behind the
     //     // window. These will also remove client-side shadows if the window
     //     // draws any.
-    //     // 
+    //     //
     //     // draw-behind-window true
     //
     //     // You can change how shadows look. The values below are in logical
@@ -621,7 +620,6 @@ animations {
     }
 }
 
-
 // hotkey-overlay { skip-at-startup; }
 environment {
     ELECTRON_OZONE_PLATFORM_HINT "auto"
@@ -634,8 +632,6 @@ environment {
     "QT_WAYLAND_DISABLE_WINDOWDECORATION" "1"
     "SDL_VIDEODRIVER" "wayland"
 }
-
-
 
 // // Make the wallpaper stationary, rather than moving with workspaces.
 // layer-rule {
@@ -663,7 +659,6 @@ switch-events {
     tablet-mode-on { spawn "bash" "-c" "gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled true"; }
     tablet-mode-off { spawn "bash" "-c" "gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled false"; }
 }
-
 
 workspace "docu/tasks"
 workspace "chat" // { open-on-output "Vertical monitor pls" }
@@ -699,7 +694,6 @@ window-rule {
 // set-dynamic-cast-window
 // set-dynamic-cast-monitor
 // clear-dynamic-cast-target
-
 
 // Open Fractal on the "chat" workspace, if it runs at niri startup.
 window-rule {
@@ -776,8 +770,6 @@ window-rule {
 }
 // For some reason, DMABUF screencasts are disabled in the Zen Browser, so screencasting doesn't work out of the box on niri. To fix it, open about:config and set widget.dmabuf.force-enabled to true.
 
-
-
 // Example: block out two password managers from screen capture.
 // (This example rule is commented out with a "/-" in front.)
 /-window-rule {
@@ -833,7 +825,7 @@ binds {
     Super+W { toggle-window-floating; }
     Alt+Shift+F { switch-focus-between-floating-and-tiling; }
     // Ctrl+Alt+Tab { toggle-column-tabbed-display; }
-  
+
     Super+V { fullscreen-window; }
     Alt+Return { maximize-column; }
     Super+Ctrl+Return { move-window-to-monitor-next; }
@@ -876,6 +868,9 @@ binds {
     Super+H { focus-column-or-monitor-left; }
     Super+J { focus-window-or-monitor-down; }
     Super+K { focus-window-or-monitor-up; }
+
+    Super+Alt+L { focus-monitor-right; }
+    Super+Alt+H { focus-monitor-left; }
 
     Super+Right { focus-column-or-monitor-right; }
     Super+Left { focus-column-or-monitor-left; }
@@ -931,7 +926,7 @@ binds {
 //     Alt+Shift+Ctrl+J     { move-column-to-monitor-down; }
 //     Alt+Shift+Ctrl+K     { move-column-to-monitor-up; }
 //     Alt+Shift+Ctrl+L     { move-column-to-monitor-right; }
-  
+
     Alt+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
     Alt+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
     Alt+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
@@ -945,7 +940,7 @@ binds {
     Alt+Ctrl+WheelScrollLeft        { focus-column-left; }
     Alt+Ctrl+Shift+WheelScrollDown { move-column-right; }
     Alt+Ctrl+Shift+WheelScrollUp   { move-column-left; }
-  
+
     // Example volume keys mappings for PipeWire & WirePlumber.
     // The allow-when-locked=true property makes them work even when the session is locked.
     XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "2%+"; }
@@ -1253,7 +1248,7 @@ debug {
     restrict-primary-scanout-to-matching-format
     // render-drm-device "/dev/dri/renderD129" // to use a different gpu for rendering niri
     wait-for-frame-completion-before-queueing
-//     disable-resize-throttling    
+//     disable-resize-throttling
 //     disable-transactions // renders just resized window and others on window set
 // skip-cursor-only-updates-during-vrr
 //     deactivate-unfocused-windows

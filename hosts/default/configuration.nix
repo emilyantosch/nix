@@ -22,7 +22,6 @@
     ./../../modules/nixos/niri.nix
     ./../../modules/nixos/kanata.nix
     ./../../modules/nixos/services.nix
-    ./../../modules/nixos/bacon.nix
     inputs.home-manager.nixosModules.default
   ];
 
@@ -332,5 +331,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.11"; # Did you read the comment?
-
 }

@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  bacon = {
+  programs.bacon = {
     enable = true;
     settings = {
     jobs = {

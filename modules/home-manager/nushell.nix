@@ -40,9 +40,14 @@
       ]
       $env.editor = "nvim"
       ${pkgs.zoxide}/bin/zoxide init nushell | save -f ~/.zoxide.nu
+      $env.DISPLAY = ":0"
+      mkdir $"($nu.cache-dir)"
+      carapace _carapace nushell | save --force $"($nu.cache-dir)/carapace.nu"
+
     '';
     configFile.text = ''
       source ~/.zoxide.nu
+      source $"($nu.cache-dir)/carapace.nu"
     '';
     plugins = [ ];
   };
