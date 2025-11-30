@@ -32,5 +32,5 @@ let
       { };
 in
 {
-  flake.bare = forAllNixFiles ./. (fn: fn);
+  flake.modules = forAllNixFiles ./. (fn: fn);
 }

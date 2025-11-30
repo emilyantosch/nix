@@ -76,13 +76,11 @@
   # Configure console keymap
   console.keyMap = "de";
 
-
   # Enable bluetooth, like wtf
   hardware.bluetooth.enable = true;
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
-
 
   networking.nat = {
     enable = true;
@@ -180,7 +178,6 @@
     };
   };
 
-
   # Allow unfree packages
   nixpkgs.config.cudaSupport = true;
   nixpkgs.config.allowUnfree = true;
@@ -248,6 +245,7 @@
     zathura
     godot_4
     aseprite
+    sshpass
     foot
     python313
     bun
@@ -312,7 +310,8 @@
     prismlauncher
     nix-ld
     sass
-    davinci-resolve
+    kdePackages.kdenlive
+    keymapp
     blender
   ];
 
@@ -332,5 +331,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.11"; # Did you read the comment?
-
 }

@@ -3,13 +3,26 @@
   programs.nushell = {
     enable = true;
     shellAliases = {
-      v = "nvim";
+      vi = "nvim";
       ll = "eza -1 -l";
-      g = "git";
-      nxd = "sudo nixos-rebuild switch --upgrade --flake /home/emmi/.config/nixos/#default";
-      nxe = "sudo darwin-rebuild switch --flake ~/.config/nix/#emmiMBP";
-      nxea = "sudo darwin-rebuild switch --flake ~/.config/nix/#emilyantoschMBP";
-      y = "yazi";
+      yz = "yazi";
+
+      # Nix Aliases
+      nd = "sudo nixos-rebuild switch --upgrade --flake /home/emmi/.config/nixos/#default";
+      ne = "sudo darwin-rebuild switch --flake ~/.config/nix/#emmiMBP";
+      na = "sudo darwin-rebuild switch --flake ~/.config/nix/#emilyantoschMBP";
+
+      # Git Aliases
+      gs = "git status";
+      ga = "git add";
+      gc = "git commit";
+      gf = "git fetch";
+      gp = "git pull";
+      gP = "git push";
+      gb = "git branch";
+      gC = "git checkout";
+      gm = "git merge";
+      gr = "git rebase";
     };
 
     envFile.text = ''
@@ -27,9 +40,14 @@
       ]
       $env.editor = "nvim"
       ${pkgs.zoxide}/bin/zoxide init nushell | save -f ~/.zoxide.nu
+      $env.DISPLAY = ":0"
+      mkdir $"($nu.cache-dir)"
+      carapace _carapace nushell | save --force $"($nu.cache-dir)/carapace.nu"
+
     '';
     configFile.text = ''
       source ~/.zoxide.nu
+      source $"($nu.cache-dir)/carapace.nu"
     '';
     plugins = [ ];
   };

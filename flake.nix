@@ -91,8 +91,8 @@
         };
         modules = [
           ./hosts/emmiMBP/configuration.nix
-          inputs.darwin-modules.bare.bare
-          inputs.darwin-modules.bare.home
+          inputs.darwin-modules.modules.bare
+          inputs.darwin-modules.modules.home
 
         home-manager.darwinModules.home-manager {
           # home-manager.useGlobalPkgs = true;
@@ -113,7 +113,18 @@
         };
         modules = [
           ./hosts/emilyantoschMBP/configuration.nix
+          inputs.darwin-modules.modules.bare
+          inputs.darwin-modules.modules.home
+
+        home-manager.darwinModules.home-manager {
+          # home-manager.useGlobalPkgs = true;
+          # home-manger.useUserPackages = true;
+          home-manager.backupFileExtension = "bak";
+          home-manager.extraSpecialArgs = {inherit inputs;};
+          home-manager.users.emmi = import ./hosts/emilyantoschMBP/home.nix;
+        }
         ];
+
       };
-    };
+  };
 }
