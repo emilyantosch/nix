@@ -20,6 +20,7 @@
       "node"
       "gpg"
       "deno"
+      "typst"
     ];
 
     casks = [
