@@ -14,6 +14,8 @@
     ./../../modules/home-manager/ghostty.nix
     ./../../modules/home-manager/yazi.nix
     ./../../modules/home-manager/nushell.nix
+    ./../../modules/home-manager/atuin.nix
+    ./../../modules/home-manager/carapace.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should
@@ -21,8 +23,8 @@
   nixpkgs.config.allowUnfree = true;
 
   home = {
-    username = "emmi";
-    homeDirectory = "/Users/emmi";
+    username = "emilylucia.antosch";
+    homeDirectory = "/Users/emilylucia.antosch";
 
     stateVersion = "25.05";
   };

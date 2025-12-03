@@ -19,6 +19,9 @@
     source-sans
     font-awesome
   ];
+  imports = [
+    ./../../modules/nixos/git.nix
+  ];
 
   nix.settings.experimental-features = [
     "nix-command"
@@ -29,9 +32,9 @@
 
   programs.zsh.enable = true;
 
-  users.users.emmi = {
-    name = "emmi";
-    home = "/Users/emmi";
+  users.users."emilylucia.antosch" = {
+    name = "emilylucia.antosch";
+    home = "/Users/emilylucia.antosch";
   };
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -47,6 +50,9 @@
     nushell
     btop
     python313
+    aws-sso-cli
+    docker_25
+    podman
     bun
     deno
     inputs.nyx.packages.${pkgs.system}.core
@@ -97,7 +103,6 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = 6; # Did you read the comment?
-  system.primaryUser = "emmi";
-
+  system.primaryUser = "emilylucia.antosch";
 
 }

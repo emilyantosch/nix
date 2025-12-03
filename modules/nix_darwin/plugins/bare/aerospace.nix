@@ -23,6 +23,19 @@
 
       on-focused-monitor-changed = ["move-mouse monitor-lazy-center"];
 
+      workspace-to-monitor-force-assignment = {
+        "1" = "main";
+        "2" = "main";
+        "3" = "main";
+        "4" = "main";
+        "5" = "main";
+        "6" = "secondary";
+        "7" = "secondary";
+        "8" = "secondary";
+        "9" = "secondary";
+        "10" = "secondary";
+      };
+
       automatically-unhide-macos-hidden-apps = true;
 
       gaps = {
@@ -33,7 +46,6 @@
         outer.right = 10;
         outer.top = 10;
       };
-
 
 # All possible keys:
 # - Letters.        a, b, c, ..., z
@@ -62,7 +74,6 @@ mode.main.binding = {
 
   cmd-alt-ctrl-shift-enter = ["exec-and-forget open -a /Applications/Ghostty.app"];
 
-
   alt-ctrl-shift-f = "fullscreen";
   alt-ctrl-f = "layout floating tiling";
 
@@ -76,10 +87,10 @@ mode.main.binding = {
   alt-comma = "layout accordion horizontal vertical";
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#focus
-  cmd-alt-ctrl-shift-h = "focus left";
-  cmd-alt-ctrl-shift-l = "focus right";
-  cmd-alt-ctrl-shift-j = "focus down";
-  cmd-alt-ctrl-shift-k = "focus up";
+  cmd-alt-ctrl-shift-h = "focus --boundaries all-monitors-outer-frame left";
+  cmd-alt-ctrl-shift-l = "focus --boundaries all-monitors-outer-frame right";
+  cmd-alt-ctrl-shift-j = "focus --boundaries all-monitors-outer-frame down";
+  cmd-alt-ctrl-shift-k = "focus --boundaries all-monitors-outer-frame up";
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move
   alt-shift-h = "move left";

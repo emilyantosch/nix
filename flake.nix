@@ -121,7 +121,7 @@
           # home-manger.useUserPackages = true;
           home-manager.backupFileExtension = "bak";
           home-manager.extraSpecialArgs = {inherit inputs;};
-          home-manager.users.emmi = import ./hosts/emilyantoschMBP/home.nix;
+          home-manager.users."emilylucia.antosch" = import ./hosts/emilyantoschMBP/home.nix;
         }
         ];
 

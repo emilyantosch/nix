@@ -2,7 +2,8 @@
 {
   programs = {
     ghostty = {
-      # enable = true;
+      enable = true;
+      package = null;
       settings = {
         font-feature = [
           "liga"

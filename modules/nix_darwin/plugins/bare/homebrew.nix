@@ -9,9 +9,6 @@
       cleanup = "zap";
     };
 
-    masApps = {
-      Xcode = 497799835;
-    };
 
     brews = [
       "wget"
@@ -25,8 +22,9 @@
 
     casks = [
       "google-chrome"
+      "microsoft-teams"
+      "microsoft-outlook"
       "obsidian"
-      "docker-desktop"
       "ghostty"
       "karabiner-elements"
       "zen"
