@@ -19,9 +19,6 @@
     source-sans
     font-awesome
   ];
-  imports = [
-    ./../../modules/nixos/git.nix
-  ];
 
   nix.settings.experimental-features = [
     "nix-command"
@@ -42,6 +39,7 @@
 
   environment.systemPackages = with pkgs; [
     sqlite
+    lazygit
     openssl.dev
     just
     openssl.out
