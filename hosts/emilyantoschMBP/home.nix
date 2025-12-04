@@ -26,6 +26,9 @@
   home = {
     username = "emilylucia.antosch";
     homeDirectory = "/Users/emilylucia.antosch";
+    sessionVariables = {
+      EDITOR = "nvim";
+    };
 
     stateVersion = "25.05";
   };

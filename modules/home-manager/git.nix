@@ -2,7 +2,7 @@
 {
   home.file = {
     ".gitconfig" = {
-      source = config.lib.file.mkOutOfStoreSymLink "~/.config/nix/foreign/git/.gitconfig";
+      source = config.lib.file.mkOutOfStoreSymlink "~/.config/nix/foreign/git/.gitconfig";
     };
   };
 }

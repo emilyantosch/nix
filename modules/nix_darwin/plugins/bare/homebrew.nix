@@ -38,6 +38,7 @@
 
       "raycast"
 
+      "spotify"
       "postman"
     ];
   };

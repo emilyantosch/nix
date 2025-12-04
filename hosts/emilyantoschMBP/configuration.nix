@@ -73,6 +73,7 @@
     zoxide
     p7zip
     sass
+    sops
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
