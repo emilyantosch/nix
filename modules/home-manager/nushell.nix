@@ -71,6 +71,7 @@
         | into record
     load-env $ssh_agent_env
     $ssh_agent_env | save --force $ssh_agent_file
+    ssh-add ~/.ssh/github
 }
     '';
     configFile.text = ''
