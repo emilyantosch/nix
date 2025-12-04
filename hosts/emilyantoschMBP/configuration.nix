@@ -75,6 +75,8 @@
     sass
     sops
     jq
+    kubectl
+    delta
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

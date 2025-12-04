@@ -12,3 +12,12 @@
     autoSetupRemote = true
 [alias]
     uc = reset --soft HEAD~1
+[core]
+    pager = delta
+    excludesFile = '~/.gitignore'
+[interactive]
+    diffFilter = 'delta --color-only'
+[delta]
+    navigate = true
+[merge]
+    conflictStyle = zdiff3

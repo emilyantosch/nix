@@ -23,8 +23,13 @@
       gC = "git checkout";
       gm = "git merge";
       gr = "git rebase";
-    };
 
+    # Kubernetes
+      ku = "kubectl";
+      kdev = ''with-env { MOIA_ENV: "dev", MOIA_ENVIRONMENT: "dev", KUBECONFIG: "~/.kube/moia-base-dev:~/.kube/moia-dev" } {nu}'';
+      kint = "MOIA_ENV=int MOIA_ENVIRONMENT=int KUBECONFIG=~/.kube/moia-base-int:~/.kube/moia-int nu";
+      kprd = "MOIA_ENV=prd MOIA_ENVIRONMENT=prd KUBECONFIG=~/.kube/moia-base-prd:~/.kube/moia-prd nu";
+    };
     envFile.text = ''
       $env.PATH = [
       $"($env.HOME)/.nix-profile/bin"
@@ -44,6 +49,7 @@
       $env.editor = "nvim"
       ${pkgs.zoxide}/bin/zoxide init nushell | save -f ~/.zoxide.nu
       $env.DISPLAY = ":0"
+      $env.MOIA_USERNAME = "emilylucia.antosch@moia.io"
       mkdir $"($nu.cache-dir)"
       carapace _carapace nushell | save --force $"($nu.cache-dir)/carapace.nu"
     '';

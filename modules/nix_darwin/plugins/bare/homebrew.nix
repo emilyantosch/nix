@@ -22,6 +22,7 @@
       "openjdk"
       "fish"
       "awscli"
+      "helm"
     ];
 
     casks = [
