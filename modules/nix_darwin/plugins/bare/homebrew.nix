@@ -21,6 +21,7 @@
       "cmake"
       "openjdk"
       "fish"
+      "awscli"
     ];
 
     casks = [

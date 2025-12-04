@@ -5,7 +5,7 @@
     settings = {
       add_newline = true;
       format = ''
-        [](color_orange)$os$username[](bg:color_yellow fg:color_orange)$directory[](fg:color_yellow bg:color_aqua)$git_branch$git_status[](fg:color_aqua bg:color_blue)$c$cpp$rust$golang$nodejs$php$java$kotlin$haskell$python[](fg:color_blue bg:color_bg3)$nix_shell$docker_context$conda$pixi[](fg:color_bg3 bg:color_bg1)$time[ ](fg:color_bg1)$line_break$character
+        [](color_orange)$os$username[](bg:color_yellow fg:color_orange)$directory[](fg:color_yellow bg:color_aqua)$git_branch$git_status[](fg:color_aqua bg:color_blue)$c$cpp$rust$golang$nodejs$php$java$kotlin$haskell$python[](fg:color_blue bg:color_bg3)$nix_shell$aws$docker_context$conda$pixi[](fg:color_bg3 bg:color_bg1)$time[ ](fg:color_bg1)$line_break$character
       '';
       palette = "gruvbox_dark";
       palettes = {
@@ -26,6 +26,14 @@
         symbol = "";
         style = "bg:color_blue";
         format = "[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)";
+      };
+      aws = {
+        format = "[on $symbol$profile]($style)";
+        style = "bg:color_bg3";
+        symbol = "";
+        profile_aliases = {
+          Enterprise_Naming_scheme-voidstars = "void**";
+        };
       };
       c = {
         symbol = " ";
