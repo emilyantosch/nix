@@ -56,10 +56,10 @@
     inputs.nyx.packages.${pkgs.system}.core
     (callPackage ./../../packages/home-manager/claude-code/default.nix { })
     gh
-    rustup
-    clang
     lazygit
+    hadolint
     pandoc
+    eza
     uv
     starship
     zplug

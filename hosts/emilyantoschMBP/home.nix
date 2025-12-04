@@ -16,7 +16,6 @@
     ./../../modules/home-manager/nushell.nix
     ./../../modules/home-manager/atuin.nix
     ./../../modules/home-manager/carapace.nix
-    ./../../modules/home-manager/git.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should

@@ -37,13 +37,14 @@
       "/usr/sbin"
       "/usr/local/bin"
       "/nix/var/nix/profiles/default/bin"
+      "/Users/emilylucia.antosch/.cargo/bin"
       ]
+      $env.CARGO_NET_GIT_FETCH_WITH_CLI = "true"
       $env.editor = "nvim"
       ${pkgs.zoxide}/bin/zoxide init nushell | save -f ~/.zoxide.nu
       $env.DISPLAY = ":0"
       mkdir $"($nu.cache-dir)"
       carapace _carapace nushell | save --force $"($nu.cache-dir)/carapace.nu"
-
     '';
     configFile.text = ''
       source ~/.zoxide.nu

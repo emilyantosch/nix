@@ -9,7 +9,6 @@
       cleanup = "zap";
     };
 
-
     brews = [
       "wget"
       "curl"
@@ -18,9 +17,14 @@
       "gpg"
       "deno"
       "typst"
+      "llvm"
+      "cmake"
+      "openjdk"
+      "fish"
     ];
 
     casks = [
+      "sioyek"
       "google-chrome"
       "microsoft-teams"
       "microsoft-outlook"

@@ -171,6 +171,21 @@ mode.move.binding = {
     "move-node-to-workspace 8 --focus-follows-window"
     "mode main"
   ];
+  cmd-alt-ctrl-shift-h = [
+    "move --boundaries all-monitors-outer-frame left"
+  ];
+  cmd-alt-ctrl-shift-l = [
+    "move --boundaries all-monitors-outer-frame right"
+  ];
+  cmd-alt-ctrl-shift-j = [
+    "move --boundaries all-monitors-outer-frame down"
+  ];
+  cmd-alt-ctrl-shift-k = [
+    "move --boundaries all-monitors-outer-frame up"
+  ];
+  cmd-alt-ctrl-shift-esc = [
+    "mode main"
+  ];
 };
 
     mode.service.binding = {
