@@ -17,6 +17,7 @@
     ./../../modules/home-manager/atuin.nix
     ./../../modules/home-manager/carapace.nix
     ./../../modules/home-manager/git.nix
+    ./../../modules/home-manager/lazygit.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should

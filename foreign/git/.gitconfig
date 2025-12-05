@@ -8,6 +8,8 @@
     defaultBranch = main
 [submodule]
     recurse = true
+[pull]
+    rebase = true
 [push]
     autoSetupRemote = true
 [alias]
