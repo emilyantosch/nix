@@ -23,6 +23,7 @@
       "fish"
       "awscli"
       "helm"
+      "imagemagick"
     ];
 
     casks = [

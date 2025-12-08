@@ -24,11 +24,14 @@
       gm = "git merge";
       gr = "git rebase";
 
-    # Kubernetes
+      gl = ''git log --graph --decorate --oneline --pretty=format:"%cn committed %h on %cd"'';
+
+      # Kubernetes
       ku = "kubectl";
       kdev = ''with-env { MOIA_ENV: "dev", MOIA_ENVIRONMENT: "dev", KUBECONFIG: "~/.kube/moia-base-dev:~/.kube/moia-dev" } {nu}'';
-      kint = "MOIA_ENV=int MOIA_ENVIRONMENT=int KUBECONFIG=~/.kube/moia-base-int:~/.kube/moia-int nu";
-      kprd = "MOIA_ENV=prd MOIA_ENVIRONMENT=prd KUBECONFIG=~/.kube/moia-base-prd:~/.kube/moia-prd nu";
+      kint = ''with-env { MOIA_ENV: "int", MOIA_ENVIRONMENT: "int", KUBECONFIG: "~/.kube/moia-base-int:~/.kube/moia-int" } {nu}'';
+      kprd = ''with-env { MOIA_ENV: "prd", MOIA_ENVIRONMENT: "prd", KUBECONFIG: "~/.kube/moia-base-prd:~/.kube/moia-prd" } {nu}'';
+
     };
     envFile.text = ''
       $env.PATH = [
