@@ -4,7 +4,11 @@
       enable = true;
       settings = {
         git = {
-          pagers = ["delta"];
+          pagers = [
+            {
+              pager = ''delta --dark --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"'';
+            }
+          ];
         };
       };
     };
