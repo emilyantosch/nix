@@ -84,6 +84,9 @@
 }
     '';
     configFile.text = ''
+    $env.config.show_banner = false
+    $env.config.buffer_editor = "nvim"
+    $env.EDITOR = "nvim"
       source ~/.zoxide.nu
       source $"($nu.cache-dir)/carapace.nu"
     '';
