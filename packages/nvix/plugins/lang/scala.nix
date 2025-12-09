@@ -11,6 +11,6 @@ let
 in
 {
   plugins = {
-    lsp.servers.metal.enable = true;
+    lsp.servers.metals.enable = true;
   };
 }

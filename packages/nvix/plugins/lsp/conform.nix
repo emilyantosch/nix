@@ -11,7 +11,6 @@
           "trim_whitespace"
           "trim_newlines"
         ];
-        rust = [ "rustfmt" ];
       };
       formatters.squeeze_blanks.command = lib.getExe' pkgs.coreutils "cat";
     };

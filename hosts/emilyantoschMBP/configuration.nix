@@ -77,6 +77,8 @@
     jq
     kubectl
     delta
+    scala
+    rust-analyzer
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
