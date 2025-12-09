@@ -40,7 +40,7 @@
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    inputs.copyparty.url = "github:9001/copyparty";
+    copyparty.url = "github:9001/copyparty";
   };
 
   outputs =
