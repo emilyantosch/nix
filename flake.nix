@@ -40,6 +40,7 @@
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    inputs.copyparty.url = "github:9001/copyparty";
   };
 
   outputs =
@@ -57,6 +58,7 @@
       niri,
       qs-caelestia-cli,
       qs-caelestia-shell,
+      copyparty,
       ...
     }@inputs:
     let
@@ -71,6 +73,7 @@
           inherit system;
         };
         modules = [
+        copyparty.nixosModules.default
           {
             nixpkgs.overlays = [
               inputs.hyprpanel.overlay
