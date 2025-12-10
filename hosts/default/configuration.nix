@@ -22,6 +22,7 @@
     ./../../modules/nixos/niri.nix
     ./../../modules/nixos/kanata.nix
     ./../../modules/nixos/services.nix
+    ./../../modules/nixos/copyparty.nix
     inputs.home-manager.nixosModules.default
   ];
 
@@ -324,6 +325,7 @@
   };
   programs.nix-ld.enable = true;
 
+  networking.firewall.allowedTCPPorts = [ 3210 ];
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave

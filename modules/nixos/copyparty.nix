@@ -19,16 +19,16 @@ services.copyparty = {
   };
 
   # create users
-  accounts = {
-    # specify the account name as the key
-    ed = {
-      # provide the path to a file containing the password, keeping it out of /nix/store
-      # must be readable by the copyparty service user
-      passwordFile = "/run/keys/copyparty/ed_password";
-    };
-    # or do both in one go
-    k.passwordFile = "/run/keys/copyparty/k_password";
-  };
+  # accounts = {
+  #   # specify the account name as the key
+  #   ed = {
+  #     # provide the path to a file containing the password, keeping it out of /nix/store
+  #     # must be readable by the copyparty service user
+  #     passwordFile = "/run/keys/copyparty/ed_password";
+  #   };
+  #   # or do both in one go
+  #   k.passwordFile = "/run/keys/copyparty/k_password";
+  # };
 
   # create a group
   groups = {
@@ -45,9 +45,9 @@ services.copyparty = {
       # see `copyparty --help-accounts` for available options
       access = {
         # everyone gets read-access, but
-        r = "*";
+        rw = "*";
         # users "ed" and "k" get read-write
-        rw = [ "ed" "k" ];
+        # rw = [ "ed" "k" ];
       };
       # see `copyparty --help-flags` for available options
       flags = {

@@ -1,15 +1,13 @@
 {
   plugins = {
-    rustaceanvim.enable = false;
+    rustaceanvim.enable = true;
     crates.enable = true;
-    lsp.servers.rust-analyzer = {
-      enable = true;
-      package = null;
-      cargoPackage = null;
-      rustcPackage = null;
-      rustfmtPackage = null;
-      # filetypes = ["rs" "toml"];
-      settings.rustfmt.extraArgs = ["+nightly-2025-11-03"];
+
+    conform-nvim.settings = {
+      formatters_by_ft.rust = ["rustfmt"];
+      formatters.rustfmt = {
+        command = "rustfmt +nightly-2025-11-08";
+      };
+      };
     };
-  };
-}
+  }
