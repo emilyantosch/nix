@@ -10,7 +10,6 @@
   system,
   ...
 }:
-
 {
   # Bootloader.
   fonts.packages = with pkgs; [
@@ -47,6 +46,7 @@
     lua
     nushell
     btop
+    nixfmt
     python313
     aws-sso-cli
     docker_25
