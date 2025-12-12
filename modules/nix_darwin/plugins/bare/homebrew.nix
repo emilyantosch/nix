@@ -24,13 +24,16 @@
       "awscli"
       "helm"
       "imagemagick"
-      "derailed/k9s/k9s"
+      "git"
+      "bacon"
+      "bacon-ls"
     ];
 
     casks = [
       "sioyek"
       "google-chrome"
       "microsoft-teams"
+      "microsoft-powerpoint"
       "microsoft-outlook"
       "obsidian"
       "ghostty"

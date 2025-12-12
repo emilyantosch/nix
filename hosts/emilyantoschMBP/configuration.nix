@@ -79,6 +79,8 @@
     delta
     scala
     rust-analyzer
+    k9s
+    colima
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
