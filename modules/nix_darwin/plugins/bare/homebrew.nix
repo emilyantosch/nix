@@ -1,4 +1,4 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 {
   homebrew = {
     enable = true;
@@ -35,6 +35,7 @@
       "microsoft-teams"
       "microsoft-powerpoint"
       "microsoft-outlook"
+      "microsoft-excel"
       "obsidian"
       "ghostty"
       "karabiner-elements"

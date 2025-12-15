@@ -80,6 +80,7 @@
     scala
     rust-analyzer
     k9s
+    emacs
     colima
   ];
 

@@ -7,6 +7,7 @@
           default_settings = {
             rust-analyzer = {
               diagnostics.enable = false;
+              checkOnSave = false;
             };
           };
         };

@@ -1,4 +1,4 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 {
   programs = {
     ghostty = {
@@ -24,6 +24,8 @@
         link-url = true;
         macos-titlebar-proxy-icon = "hidden";
         macos-titlebar-style = "hidden";
+
+        macos-option-as-alt = "left";
 
         mouse-hide-while-typing = true;
         theme = "Gruvbox Material Dark";
