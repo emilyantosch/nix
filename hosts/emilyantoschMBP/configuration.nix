@@ -82,6 +82,8 @@
     k9s
     emacs
     colima
+    coursier
+    metals
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

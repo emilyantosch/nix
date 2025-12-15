@@ -29,9 +29,9 @@
 
       # Kubernetes
       ku = "kubectl";
-      kdev = ''with-env { MOIA_ENV: "dev", MOIA_ENVIRONMENT: "dev", KUBECONFIG: "~/.kube/moia-base-dev:~/.kube/moia-dev" } {nu}'';
-      kint = ''with-env { MOIA_ENV: "int", MOIA_ENVIRONMENT: "int", KUBECONFIG: "~/.kube/moia-base-int:~/.kube/moia-int" } {nu}'';
-      kprd = ''with-env { MOIA_ENV: "prd", MOIA_ENVIRONMENT: "prd", KUBECONFIG: "~/.kube/moia-base-prd:~/.kube/moia-prd" } {nu}'';
+      kdev = ''with-env { MOIA_ENV: "dev", MOIA_ENVIRONMENT: "dev", KUBECONFIG: "/Users/emilylucia.antosch/.kube/moia-base-dev:/Users/emilylucia.antosch/.kube/moia-dev" } {nu}'';
+      kint = ''with-env { MOIA_ENV: "int", MOIA_ENVIRONMENT: "int", KUBECONFIG: "/Users/emilylucia.antosch/.kube/moia-base-int:/Users/emilylucia.antosch/.kube/moia-int" } {nu}'';
+      kprd = ''with-env { MOIA_ENV: "prd", MOIA_ENVIRONMENT: "prd", KUBECONFIG: "/Users/emilylucia.antosch/.kube/moia-base-prd:/Users/emilylucia.antosch/.kube/moia-prd" } {nu}'';
 
     };
     envFile.text = ''
