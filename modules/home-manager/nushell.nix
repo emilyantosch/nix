@@ -50,6 +50,7 @@
       "/opt/homebrew/bin/"
       ]
       $env.CARGO_NET_GIT_FETCH_WITH_CLI = "true"
+      $env.SCIPOPTDIR = "/opt/homebrew/opt/scip"
       $env.editor = "nvim"
       ${pkgs.zoxide}/bin/zoxide init nushell | save -f ~/.zoxide.nu
       $env.DISPLAY = ":0"
