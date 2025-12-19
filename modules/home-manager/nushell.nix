@@ -27,6 +27,10 @@
 
       gl = ''git log --graph --decorate --oneline --pretty=format:"%cn committed %h on %cd"'';
 
+      # Jira
+      jl = ''jira issue list --component "Fleet Optimization" --status "~Closed"'';
+      jc = ''jira issue create --component "Fleet Optimization" --status "Selected"'';
+
       # Kubernetes
       ku = "kubectl";
       kdev = ''with-env { MOIA_ENV: "dev", MOIA_ENVIRONMENT: "dev", KUBECONFIG: "/Users/emilylucia.antosch/.kube/moia-base-dev:/Users/emilylucia.antosch/.kube/moia-dev" } {nu}'';
@@ -48,6 +52,7 @@
       "/nix/var/nix/profiles/default/bin"
       "/Users/emilylucia.antosch/.cargo/bin"
       "/opt/homebrew/bin/"
+      "/Users/emilylucia.antosch/.deno/bin/"
       ]
       $env.CARGO_NET_GIT_FETCH_WITH_CLI = "true"
       $env.SCIPOPTDIR = "/opt/homebrew/opt/scip"

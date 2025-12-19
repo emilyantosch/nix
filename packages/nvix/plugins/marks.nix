@@ -7,23 +7,22 @@ in
 {
   plugins = {
     marks = {
-      enable = true;
+      enable = false;
       settings = {
         cyclic = true;
         mappings = {
-          delete = "<Leader>md";
-          delete_buf = "<Leader>mc";
-          delete_line = "<Leader>mD";
-          next = "<Leader>mn";
-          prev = "<Leader>mp";
-          set = "<Leader>mM";
-          toggle = "<Leader>mm";
-          set_bookmark0 = "<Leader>mb0";
-          next_bookmark = "<Leader>mbn";
-          prev_bookmark = "<Leader>mbN";
+          delete = "<leader>md";
+          delete_buf = "<leader>mc";
+          delete_line = "<leader>mD";
+          next = "<leader>mn";
+          prev = "<leader>mp";
+          set = "<leader>mM";
+          toggle = "<leader>mm";
+          set_bookmark0 = "<leader>mb0";
+          next_bookmark = "<leader>mbn";
+          prev_bookmark = "<leader>mbN";
         };
         refreshInterval = 150;
-
       };
     };
   };

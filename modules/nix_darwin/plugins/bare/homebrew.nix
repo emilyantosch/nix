@@ -28,6 +28,10 @@
       "bacon"
       "bacon-ls"
       "scip"
+      "grpcurl"
+      "ghz"
+      "jira-cli"
+      "yt-dlp"
     ];
 
     casks = [
