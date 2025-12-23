@@ -41,6 +41,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     copyparty.url = "github:9001/copyparty";
+    sops-nix.url = "github:Mic92/sops-nix";
   };
 
   outputs =
@@ -59,6 +60,7 @@
       qs-caelestia-cli,
       qs-caelestia-shell,
       copyparty,
+      sops-nix,
       ...
     }@inputs:
     let
@@ -73,7 +75,7 @@
           inherit system;
         };
         modules = [
-        copyparty.nixosModules.default
+          copyparty.nixosModules.default
           {
             nixpkgs.overlays = [
               inputs.hyprpanel.overlay
@@ -97,13 +99,14 @@
           inputs.darwin-modules.modules.bare
           inputs.darwin-modules.modules.home
 
-        home-manager.darwinModules.home-manager {
-          # home-manager.useGlobalPkgs = true;
-          # home-manger.useUserPackages = true;
-          home-manager.backupFileExtension = "bak";
-          home-manager.extraSpecialArgs = {inherit inputs;};
-          home-manager.users.emmi = import ./hosts/emmiMBP/home.nix;
-        }
+          home-manager.darwinModules.home-manager
+          {
+            # home-manager.useGlobalPkgs = true;
+            # home-manger.useUserPackages = true;
+            home-manager.backupFileExtension = "bak";
+            home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.users.emmi = import ./hosts/emmiMBP/home.nix;
+          }
         ];
 
       };
@@ -119,15 +122,16 @@
           inputs.darwin-modules.modules.bare
           inputs.darwin-modules.modules.home
 
-        home-manager.darwinModules.home-manager {
-          # home-manager.useGlobalPkgs = true;
-          # home-manger.useUserPackages = true;
-          home-manager.backupFileExtension = "bak";
-          home-manager.extraSpecialArgs = {inherit inputs;};
-          home-manager.users."emilylucia.antosch" = import ./hosts/emilyantoschMBP/home.nix;
-        }
+          home-manager.darwinModules.home-manager
+          {
+            # home-manager.useGlobalPkgs = true;
+            # home-manger.useUserPackages = true;
+            home-manager.backupFileExtension = "bak";
+            home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.users."emilylucia.antosch" = import ./hosts/emilyantoschMBP/home.nix;
+          }
         ];
 
       };
-  };
+    };
 }

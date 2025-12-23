@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   programs.bacon = {
-    enable = true;
+    enable = false;
     settings = {
       exports = {
         cargo-json-spans = {

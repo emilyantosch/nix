@@ -32,6 +32,8 @@
       "ghz"
       "jira-cli"
       "yt-dlp"
+      "mpv"
+      "ncspot"
     ];
 
     casks = [
@@ -46,6 +48,7 @@
       "karabiner-elements"
       "zen"
       "intellij-idea"
+      "alacritty"
 
       "discord"
 
@@ -53,6 +56,7 @@
 
       "spotify"
       "postman"
+      "audiowhisper"
     ];
   };
 }

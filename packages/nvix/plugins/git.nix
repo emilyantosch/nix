@@ -26,6 +26,12 @@ in
         };
       };
     };
+    octo = {
+      enable = true;
+      settings = {
+        picker = "snacks";
+      };
+    };
   };
   wKeyList = [
     (wKeyObj [

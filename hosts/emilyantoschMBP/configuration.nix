@@ -11,6 +11,9 @@
   ...
 }:
 {
+  imports = [
+    inputs.sops-nix.darwinModules.sops
+  ];
   # Bootloader.
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
@@ -23,6 +26,8 @@
     "nix-command"
     "flakes"
   ];
+
+  sops.defaultSopsFile = ./secrets/jira_api.yaml;
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -85,6 +90,11 @@
     coursier
     metals
     lazydocker
+    youtube-tui
+    wiki-tui
+    rusty-man
+    tokei
+    grex
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

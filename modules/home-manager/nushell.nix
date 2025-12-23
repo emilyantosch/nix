@@ -27,6 +27,11 @@
 
       gl = ''git log --graph --decorate --oneline --pretty=format:"%cn committed %h on %cd"'';
 
+      ca = ''aws-sso exec -p ai-coding.tools -- claude'';
+      cA = ''aws-sso exec -p ai-coding.tools -- claude --continue'';
+      cl = ''claude'';
+      cc = ''claude --continue'';
+
       # Jira
       jl = ''jira issue list --component "Fleet Optimization" --status "~Closed"'';
       jc = ''jira issue create --component "Fleet Optimization" --status "Selected"'';
