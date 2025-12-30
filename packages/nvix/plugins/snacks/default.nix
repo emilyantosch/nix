@@ -255,6 +255,17 @@ in
         style = "minimal";
         top_down = false;
       };
+      gh = {
+        enabled = true;
+        style = "minimal";
+        picker.sources = {
+          gh_pr = { };
+          gh_issue = { };
+        };
+      };
+      scratches = {
+        enabled = true;
+      };
     };
   };
 

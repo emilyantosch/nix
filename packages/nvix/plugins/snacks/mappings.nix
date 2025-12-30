@@ -22,6 +22,11 @@ in
       "search"
     ])
     (wKeyObj [
+      "<leader>G"
+      ""
+      "Github"
+    ])
+    (wKeyObj [
       "<leader>f"
       ""
       "file/find"
@@ -65,6 +70,10 @@ in
     (mkKeymap "n" "<leader>sj" "<cmd>:lua Snacks.picker.jumps() <cr>" "Jumps")
     (mkKeymap "n" "<leader>sl" "<cmd>:lua Snacks.picker.loclist() <cr>" "Location List")
     (mkKeymap "n" "<leader>sm" "<cmd>:lua Snacks.picker.marks() <cr>" "Marks")
+    (mkKeymap "n" "<leader>Gp" "<cmd>:lua Snacks.picker.gh_pr() <cr>" "Github PR")
+    (mkKeymap "n" "<leader>Gi" "<cmd>:lua Snacks.picker.gh_issue() <cr>" "Github Issues")
+    (mkKeymap "n" "<leader>Gd" "<cmd>:lua Snacks.picker.gh_diff() <cr>" "Github Diff")
+    (mkKeymap "n" "<leader>Go" ''<cmd>:lua Snacks.gh.open({ type = "PR"}) <cr>'' "Open Github PR")
     (mkKeymap "n" "<leader>sM" "<cmd>:lua Snacks.picker.man() <cr>" "Man Pages")
     (mkKeymap "n" "<leader>sq" "<cmd>:lua Snacks.picker.qflist() <cr>" "Quickfix List")
     (mkKeymap "n" "<leader>sR" "<cmd>:lua Snacks.picker.resume() <cr>" "Resume")

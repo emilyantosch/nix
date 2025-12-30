@@ -52,6 +52,7 @@
       "/bin"
       "/sbin"
       "/usr/bin"
+      "/Users/emilylucia.antosch/.local/bin"
       "/usr/sbin"
       "/usr/local/bin"
       "/nix/var/nix/profiles/default/bin"

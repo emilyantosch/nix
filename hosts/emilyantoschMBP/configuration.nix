@@ -44,10 +44,10 @@
   environment.systemPackages = with pkgs; [
     sqlite
     lazygit
-    openssl.dev
+    # openssl.dev
     just
-    openssl.out
-    pkg-config
+    # openssl.out
+    # pkg-config
     lua
     nushell
     btop

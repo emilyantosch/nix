@@ -34,6 +34,12 @@
       "yt-dlp"
       "mpv"
       "ncspot"
+      "uv"
+      "glib"
+      "openssl"
+      "pkgconf"
+      "gtk+3"
+      "atkmm"
     ];
 
     casks = [
@@ -42,6 +48,7 @@
       "microsoft-teams"
       "microsoft-powerpoint"
       "microsoft-outlook"
+      "logi-options+"
       "microsoft-excel"
       "obsidian"
       "ghostty"
