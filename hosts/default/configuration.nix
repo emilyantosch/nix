@@ -251,8 +251,10 @@
     python313
     bun
     deno
-    inputs.nyx.packages.${pkgs.system}.core
+    # inputs.nyx.packages.${pkgs.system}.core
     gh
+    neovim
+    tree-sitter
     docker
     typst
     lazydocker
@@ -314,6 +316,7 @@
     kdePackages.kdenlive
     keymapp
     blender
+    ani-cli
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
