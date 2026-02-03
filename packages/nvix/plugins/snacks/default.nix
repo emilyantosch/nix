@@ -43,7 +43,7 @@ in
               {
                 pane = 2,
                 icon = " ",
-                desc = "Browse Repo",
+                desc = "Brows Repo",
                 padding = 1,
                 key = "b",
                 action = function()
@@ -254,17 +254,6 @@ in
         enabled = true;
         style = "minimal";
         top_down = false;
-      };
-      gh = {
-        enabled = true;
-        style = "minimal";
-        picker.sources = {
-          gh_pr = { };
-          gh_issue = { };
-        };
-      };
-      scratches = {
-        enabled = true;
       };
     };
   };

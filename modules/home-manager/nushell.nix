@@ -60,6 +60,7 @@
       "/opt/homebrew/bin/"
       "/Users/emilylucia.antosch/.deno/bin/"
       ]
+      $env.AWS_DEFAUT_REGION = "eu-central-1"
       $env.CARGO_NET_GIT_FETCH_WITH_CLI = "true"
       $env.SCIPOPTDIR = "/opt/homebrew/opt/scip"
       $env.editor = "nvim"

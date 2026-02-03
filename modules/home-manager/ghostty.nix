@@ -11,8 +11,8 @@
           "calt"
           "ss05"
         ];
-        font-size = 16;
-        font-family = "JetBrainsMono NFM Bold Italic";
+        font-size = 20;
+        font-family = "JetBrainsMonoNL NFM ExtraBold";
         font-thicken = true;
         window-inherit-font-size = true;
 

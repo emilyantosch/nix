@@ -24,6 +24,7 @@ in
 
       bind C-c display-popup -E "claude"
       bind C-g display-popup -E "tmux attach -t notes"
+      bind C-d display-popup
 
       set-option -g default-shell ${nu}
       set -g base-index 1

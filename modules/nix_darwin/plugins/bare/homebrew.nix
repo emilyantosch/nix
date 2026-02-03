@@ -10,6 +10,7 @@
     };
 
     brews = [
+      "awscurl"
       "wget"
       "curl"
       "opencode"
@@ -21,6 +22,7 @@
       "cmake"
       "openjdk"
       "fish"
+      "ollama"
       "awscli"
       "helm"
       "imagemagick"
@@ -33,6 +35,11 @@
       "jira-cli"
       "yt-dlp"
       "mpv"
+      "mise"
+      "yq"
+      "go"
+      "jsonnet"
+      "git-lfs"
       "ncspot"
       "uv"
       "glib"
@@ -40,6 +47,9 @@
       "pkgconf"
       "gtk+3"
       "atkmm"
+      "tree-sitter-cli"
+      "presenterm"
+      "nvim"
     ];
 
     casks = [
@@ -47,6 +57,7 @@
       "google-chrome"
       "microsoft-teams"
       "microsoft-powerpoint"
+      "zed"
       "microsoft-outlook"
       "logi-options+"
       "microsoft-excel"

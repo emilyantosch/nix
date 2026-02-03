@@ -58,7 +58,7 @@
     podman
     bun
     deno
-    inputs.nyx.packages.${pkgs.system}.core
+    # inputs.nyx.packages.${pkgs.system}.core
     (callPackage ./../../packages/home-manager/claude-code/default.nix { })
     gh
     lazygit
@@ -95,6 +95,8 @@
     rusty-man
     tokei
     grex
+    ani-cli
+    presenterm
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
