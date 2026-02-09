@@ -59,7 +59,6 @@
     bun
     deno
     # inputs.nyx.packages.${pkgs.system}.core
-    (callPackage ./../../packages/home-manager/claude-code/default.nix { })
     gh
     lazygit
     hadolint

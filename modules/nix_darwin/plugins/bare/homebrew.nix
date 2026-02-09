@@ -50,10 +50,12 @@
       "tree-sitter-cli"
       "presenterm"
       "nvim"
+      "worktrunk"
     ];
 
     casks = [
       "sioyek"
+      "claude-code"
       "google-chrome"
       "microsoft-teams"
       "microsoft-powerpoint"

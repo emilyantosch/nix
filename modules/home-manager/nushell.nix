@@ -71,38 +71,152 @@
       carapace _carapace nushell | save --force $"($nu.cache-dir)/carapace.nu"
     '';
     loginFile.text = ''
-          do --env {
-              let ssh_agent_file = (
-                  $nu.temp-path | path join $"ssh-agent-(whoami).nuon"
-              )
+                do --env {
+                    let ssh_agent_file = (
+                        $nu.temp-path | path join $"ssh-agent-(whoami).nuon"
+                    )
 
-          if ($ssh_agent_file | path exists) {
-              let ssh_agent_env = open ($ssh_agent_file)
-              if ($"/proc/($ssh_agent_env.SSH_AGENT_PID)" | path exists) {
-                  load-env $ssh_agent_env
-                  return
-              } else {
-                  rm $ssh_agent_file
-              }
-          }
+                if ($ssh_agent_file | path exists) {
+                    let ssh_agent_env = open ($ssh_agent_file)
+                    if ($"/proc/($ssh_agent_env.SSH_AGENT_PID)" | path exists) {
+                        load-env $ssh_agent_env
+                        return
+                    } else {
+                        rm $ssh_agent_file
+                    }
+                }
 
-          let ssh_agent_env = ^ssh-agent -c
-              | lines
-              | first 2
-              | parse "setenv {name} {value};"
-              | transpose --header-row
-              | into record
-          load-env $ssh_agent_env
-          $ssh_agent_env | save --force $ssh_agent_file
-          ssh-add ~/.ssh/github
+                let ssh_agent_env = ^ssh-agent -c
+                    | lines
+                    | first 2
+                    | parse "setenv {name} {value};"
+                    | transpose --header-row
+                    | into record
+                load-env $ssh_agent_env
+                $ssh_agent_env | save --force $ssh_agent_file
+                ssh-add ~/.ssh/github
+      def "parse vars" [] {
+        $in | from csv --noheaders --no-infer | rename 'op' 'name' 'value'
       }
+
+      def --env "update-env" [] {
+        for $var in $in {
+          if $var.op == "set" {
+            if ($var.name | str upcase) == 'PATH' {
+              $env.PATH = ($var.value | split row (char esep))
+            } else {
+              load-env {($var.name): $var.value}
+            }
+          } else if $var.op == "hide" and $var.name in $env {
+            hide-env $var.name
+          }
+        }
+      }
+      export-env {
+
+        ''' | parse vars | update-env
+        $env.MISE_SHELL = "nu"
+        let mise_hook = {
+          condition: { "MISE_SHELL" in $env }
+          code: { mise_hook }
+        }
+        add-hook hooks.pre_prompt $mise_hook
+        add-hook hooks.env_change.PWD $mise_hook
+      }
+
+      def --env add-hook [field: cell-path new_hook: any] {
+        let field = $field | split cell-path | update optional true | into cell-path
+        let old_config = $env.config? | default {}
+        let old_hooks = $old_config | get $field | default []
+        $env.config = ($old_config | upsert $field ($old_hooks ++ [$new_hook]))
+      }
+
+      export def --env --wrapped main [command?: string, --help, ...rest: string] {
+        let commands = ["deactivate", "shell", "sh"]
+
+        if ($command == null) {
+          ^"/opt/homebrew/bin/mise"
+        } else if ($command == "activate") {
+          $env.MISE_SHELL = "nu"
+        } else if ($command in $commands) {
+          ^"/opt/homebrew/bin/mise" $command ...$rest
+          | parse vars
+          | update-env
+        } else {
+          ^"/opt/homebrew/bin/mise" $command ...$rest
+        }
+      }
+
+      def --env mise_hook [] {
+        ^"/opt/homebrew/bin/mise" hook-env -s nu
+          | parse vars
+          | update-env
+      }
+            }
     '';
     configFile.text = ''
-      $env.config.show_banner = false
-      $env.config.buffer_editor = "nvim"
-      $env.EDITOR = "nvim"
-        source ~/.zoxide.nu
-        source $"($nu.cache-dir)/carapace.nu"
+            $env.config.show_banner = false
+            $env.config.buffer_editor = "nvim"
+            $env.EDITOR = "nvim"
+              source ~/.zoxide.nu
+              source $"($nu.cache-dir)/carapace.nu"
+      def "parse vars" [] {
+        $in | from csv --noheaders --no-infer | rename 'op' 'name' 'value'
+      }
+
+      def --env "update-env" [] {
+        for $var in $in {
+          if $var.op == "set" {
+            if ($var.name | str upcase) == 'PATH' {
+              $env.PATH = ($var.value | split row (char esep))
+            } else {
+              load-env {($var.name): $var.value}
+            }
+          } else if $var.op == "hide" and $var.name in $env {
+            hide-env $var.name
+          }
+        }
+      }
+      export-env {
+
+        ''' | parse vars | update-env
+        $env.MISE_SHELL = "nu"
+        let mise_hook = {
+          condition: { "MISE_SHELL" in $env }
+          code: { mise_hook }
+        }
+        add-hook hooks.pre_prompt $mise_hook
+        add-hook hooks.env_change.PWD $mise_hook
+      }
+
+      def --env add-hook [field: cell-path new_hook: any] {
+        let field = $field | split cell-path | update optional true | into cell-path
+        let old_config = $env.config? | default {}
+        let old_hooks = $old_config | get $field | default []
+        $env.config = ($old_config | upsert $field ($old_hooks ++ [$new_hook]))
+      }
+
+      export def --env --wrapped main [command?: string, --help, ...rest: string] {
+        let commands = ["deactivate", "shell", "sh"]
+
+        if ($command == null) {
+          ^"/opt/homebrew/bin/mise"
+        } else if ($command == "activate") {
+          $env.MISE_SHELL = "nu"
+        } else if ($command in $commands) {
+          ^"/opt/homebrew/bin/mise" $command ...$rest
+          | parse vars
+          | update-env
+        } else {
+          ^"/opt/homebrew/bin/mise" $command ...$rest
+        }
+      }
+
+      def --env mise_hook [] {
+        ^"/opt/homebrew/bin/mise" hook-env -s nu
+          | parse vars
+          | update-env
+      }
     '';
     plugins = [ ];
   };

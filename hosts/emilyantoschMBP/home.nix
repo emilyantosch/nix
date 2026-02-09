@@ -19,6 +19,7 @@
     ./../../modules/home-manager/git.nix
     ./../../modules/home-manager/lazygit.nix
     ./../../modules/home-manager/bacon.nix
+    ./../../modules/home-manager/fish.nix
     inputs.sops-nix.homeManagerModules.sops
   ];
 
