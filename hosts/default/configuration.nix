@@ -2,14 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{
-  config,
-  pkgs,
-  inputs,
-  lib,
-  system,
-  ...
-}:
+{ config, pkgs, inputs, lib, system, ... }:
 
 {
   imports = [
@@ -93,9 +86,7 @@
 
   # Enable OpenGL
   hardware = {
-    wooting = {
-      enable = true;
-    };
+    wooting = { enable = true; };
     graphics = {
       enable = true;
       enable32Bit = true;
@@ -105,9 +96,7 @@
   # Load nvidia driver for Xorg and Wayland
 
   virtualisation.docker.enable = true;
-  hardware.nvidia-container-toolkit = {
-    enable = true;
-  };
+  hardware.nvidia-container-toolkit = { enable = true; };
 
   hardware.nvidia = {
     # Modesetting is required.
@@ -139,10 +128,7 @@
     package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -164,19 +150,18 @@
         "docker"
       ];
       shell = pkgs.nushell;
-      packages = with pkgs; [
-        kdePackages.kate
-        #  thunderbird
-      ];
+      packages = with pkgs;
+        [
+          kdePackages.kate
+          #  thunderbird
+        ];
     };
   };
 
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
     backupFileExtension = "bak";
-    users = {
-      "emmi" = import ./home.nix;
-    };
+    users = { "emmi" = import ./home.nix; };
   };
 
   # Allow unfree packages
@@ -205,8 +190,10 @@
     gnome-keyring # Implements the Secret Portal
     nautilus # Required for File Chooser from xdg-desktop-portal-gnome 47.0+
     opencode
+    statix
     inkscape
     sqlite
+    icu
     adwaita-icon-theme
     unixtools.netstat
     openssl.dev
@@ -232,6 +219,7 @@
     obs-studio
     hwinfo
     btop
+    nil
     yazi
     xdg-utils
     librsvg
@@ -253,7 +241,6 @@
     deno
     # inputs.nyx.packages.${pkgs.system}.core
     gh
-    neovim
     tree-sitter
     docker
     typst
@@ -270,6 +257,7 @@
     vim
     git
     wget
+    neovim
     fzf
     fd
     ripgrep
@@ -315,7 +303,6 @@
     sass
     kdePackages.kdenlive
     keymapp
-    blender
     ani-cli
   ];
 
