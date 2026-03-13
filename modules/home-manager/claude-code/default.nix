@@ -45,6 +45,41 @@
           "Bash(just lint:*)"
         ];
       };
+
+      model = "opus";
+      hooks = {
+        PreToolUse = [
+          {
+            hooks = [
+              {
+                type = "command";
+                command = "npx -y ccstatusline@latest --hook";
+              }
+            ];
+            matcher = "Skill";
+          }
+        ];
+        UserPromptSubmit = [
+          {
+            hooks = [
+              {
+                type = "command";
+                command = "npx -y ccstatusline@latest --hook";
+              }
+            ];
+          }
+        ];
+      };
+      enabledPlugins = {
+        "context7@claude-plugins-official" = true;
+        "rust-analyzer-lsp@claude-plugins-official" = true;
+      };
+      voiceEnabled = false;
+      statusLine = {
+        type = "command";
+        command = "npx -y ccstatusline@latest";
+        padding = 0;
+      };
     };
   };
 }
