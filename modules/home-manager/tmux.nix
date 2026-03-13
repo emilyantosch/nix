@@ -1,6 +1,6 @@
 { pkgs, lib, ... }:
 let
-  nu = lib.getExe pkgs.nushell;
+  fish = lib.getExe pkgs.fish;
 in
 {
   programs.tmux = {
@@ -26,7 +26,7 @@ in
       bind C-g display-popup -E "tmux attach -t notes"
       bind C-d display-popup
 
-      set-option -g default-shell ${nu}
+      set-option -g default-shell ${fish}
       set -g base-index 1
       set -g pane-base-index 1
       set-window-option -g pane-base-index 1

@@ -32,18 +32,38 @@
       cl = ''claude'';
       cc = ''claude --continue'';
 
+      va = ''aws-sso exec -p ai-coding.tools -- nvim'';
+
       # Jira
       jl = ''jira issue list --component "Fleet Optimization" --status "~Closed"'';
       jc = ''jira issue create --component "Fleet Optimization" --status "Selected"'';
 
       # Kubernetes
       ku = "kubectl";
-      kdev = ''with-env { MOIA_ENV: "dev", MOIA_ENVIRONMENT: "dev", KUBECONFIG: "/Users/emilylucia.antosch/.kube/moia-base-dev:/Users/emilylucia.antosch/.kube/moia-dev" } {nu}'';
-      kint = ''with-env { MOIA_ENV: "int", MOIA_ENVIRONMENT: "int", KUBECONFIG: "/Users/emilylucia.antosch/.kube/moia-base-int:/Users/emilylucia.antosch/.kube/moia-int" } {nu}'';
-      kprd = ''with-env { MOIA_ENV: "prd", MOIA_ENVIRONMENT: "prd", KUBECONFIG: "/Users/emilylucia.antosch/.kube/moia-base-prd:/Users/emilylucia.antosch/.kube/moia-prd" } {nu}'';
-
+      kdev = ''MOIA_ENV=dev MOIA_ENVIRONMENT=dev KUBECONFIG=/Users/emilylucia.antosch/.kube/moia-base-dev:/Users/emilylucia.antosch/.kube/moia-dev fish'';
+      kint = ''MOIA_ENV=int MOIA_ENVIRONMENT=int KUBECONFIG=/Users/emilylucia.antosch/.kube/moia-base-int:/Users/emilylucia.antosch/.kube/moia-int fish'';
+      kprd = ''MOIA_ENV=prd MOIA_ENVIRONMENT=prd KUBECONFIG=/Users/emilylucia.antosch/.kube/moia-base-prd:/Users/emilylucia.antosch/.kube/moia-prd fish'';
     };
-    #   envFile.text = ''
+    interactiveShellInit = ''
+      export MOIA_USERNAME=emilylucia.antosch
+      export EDITOR=nvim
+      export PATH=$PATH:$HOME/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:/bin:/sbin:/usr/sbin:/usr/local/bin:/Users/emilylucia.antosch/.cargo/bin:/Users/emilylucia.antosch/.deno/bin:/Users/emilylucia.antosch/.local/bin:/opt/homebrew/bin:/run/wrappers/bin:/usr/bin:/run/current-system/sw/bin:/Applications/Obsidian.app/Contents/MacOS
+      export CARGO_NET_GIT_FETCH_WITH_CLI=true
+
+      # config.fish
+      if test -z (pgrep ssh-agent | string collect)
+        eval (ssh-agent -c)
+        set -Ux SSH_AUTH_SOCK $SSH_AUTH_SOCK
+        set -Ux SSH_AGENT_PID $SSH_AGENT_PID
+        set -Ux SSH_AUTH_SOCK $SSH_AUTH_SOCK
+      end
+      ssh-add ~/.ssh/github
+
+      starship init fish | source
+      atuin init fish | source
+      mise activate fish | source
+      zoxide init fish | source
+    '';
     #     $env.PATH = [
     #     $"($env.HOME)/.nix-profile/bin"
     #     $"/etc/profiles/per-user/($env.USER)/bin"

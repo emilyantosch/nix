@@ -3,3 +3,4 @@
 dev_ai/
 secrets/
 .sops.yaml
+tmp/
