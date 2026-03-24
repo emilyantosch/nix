@@ -6,6 +6,7 @@
 
     commands = {
       local-review = ./commands/local-review.md;
+      commit-push-pr = ./commands/commit-push-pr.md;
     };
 
     skills = {
