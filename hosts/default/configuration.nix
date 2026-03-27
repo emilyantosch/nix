@@ -28,10 +28,10 @@
     kernelModules = [ "uinput" ];
   };
 
-  systemd.sleep.extraConfig = ''
-    AllowSuspend=yes
-    AllowHibernation=yes
-  '';
+  systemd.sleep.settings.Sleep = {
+    AllowSuspend = true;
+    AllowHibernation = true;
+  };
   # Networking
   networking = {
     networkmanager.enable = true;
@@ -200,7 +200,7 @@
     cura-appimage
     super-slicer
     audacity
-    (callPackage ./../../packages/home-manager/claude-code/default.nix { })
+    claude-code
     nvidia-container-toolkit
     just
     openssl.out
