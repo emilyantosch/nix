@@ -21,6 +21,8 @@ in
       bind l select-pane -R
       bind j select-pane -D
       bind k select-pane -U
+      bind-key x kill-pane # skip "kill-pane 1? (y/n)" prompt
+      set -g detach-on-destroy off  # don't exit from tmux when closing a session
 
       bind C-c display-popup -E "claude"
       bind C-g display-popup -E "tmux attach -t notes"

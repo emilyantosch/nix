@@ -26,6 +26,7 @@
       "awscli"
       "lld"
       "sesh"
+      "television"
       "helm"
       "imagemagick"
       "git"
