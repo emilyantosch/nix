@@ -24,6 +24,8 @@
       "fish"
       "ollama"
       "awscli"
+      "lld"
+      "sesh"
       "helm"
       "imagemagick"
       "git"

@@ -14,6 +14,7 @@
     };
     settings = {
 
+      autoMemoryEnabled = true;
       env = {
         AWS_REGION = "eu-central-1";
         ANTHROPIC_DEFAULT_OPUS_MODEL = "eu.anthropic.claude-opus-4-6-v1";
@@ -21,6 +22,12 @@
         ANTHROPIC_DEFAULT_HAIKU_MODEL = "eu.anthropic.claude-haiku-4-5-20251001-v1:0";
         CLAUDE_CODE_USE_BEDROCK = "1";
       };
+
+      attribution = {
+        commit = "";
+        pr = "";
+      };
+
       permissions = {
         allow = [
           "mcp__plugin_context7_context7__query-docs"
