@@ -13,6 +13,9 @@
     ./../../modules/home-manager/starship.nix
     ./../../modules/home-manager/ghostty.nix
     ./../../modules/home-manager/yazi.nix
+    ./../../modules/home-manager/sesh.nix
+    ./../../modules/home-manager/television.nix
+    ./../../modules/home-manager/fzf.nix
     ./../../modules/home-manager/nushell.nix
     ./../../modules/home-manager/atuin.nix
     ./../../modules/home-manager/carapace.nix
