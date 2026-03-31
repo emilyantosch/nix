@@ -24,6 +24,9 @@ in
       bind-key x kill-pane # skip "kill-pane 1? (y/n)" prompt
       set -g detach-on-destroy off  # don't exit from tmux when closing a session
 
+      unbind t
+      bind-key t display-popup -E -w 80% -h 70% -d '#{pane_current_path}' -T 'Sesh' tv sesh
+
       bind C-c display-popup -E "claude"
       bind C-g display-popup -E "tmux attach -t notes"
       bind C-d display-popup

@@ -2,7 +2,6 @@
 {
   programs.sesh = {
     enable = true;
-    package = null;
     settings = {
       session = [
         {

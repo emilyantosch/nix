@@ -1,6 +1,7 @@
 { ... }:
 {
   programs.television = {
+    enable = true;
     enableFishIntegration = true;
     channels = {
       sesh = {
