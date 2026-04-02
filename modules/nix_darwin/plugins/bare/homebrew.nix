@@ -12,6 +12,7 @@
     brews = [
       "awscurl"
       "wget"
+      "bat"
       "curl"
       "opencode"
       "node"
@@ -58,7 +59,7 @@
 
     casks = [
       "sioyek"
-      "claude-code"
+      "claude-code@latest"
       "google-chrome"
       "microsoft-teams"
       "microsoft-powerpoint"

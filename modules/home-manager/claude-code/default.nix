@@ -7,13 +7,22 @@
     commands = {
       local-review = ./commands/local-review.md;
       commit-push-pr = ./commands/commit-push-pr.md;
+      map-codebase = ./commands/map-codebase.md;
     };
 
     skills = {
       test-driven-development = ./skills/test-driven-development.md;
     };
-    settings = {
 
+    rules = {
+      shell = ''
+        Always use the fish shell for everything.
+        All of the auth setup is done for fish only (git/ssh).
+        Example: `git push` becomes `fish -c 'git push'`
+      '';
+    };
+
+    settings = {
       autoMemoryEnabled = true;
       env = {
         AWS_REGION = "eu-central-1";
