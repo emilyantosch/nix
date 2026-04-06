@@ -7,7 +7,6 @@
     commands = {
       local-review = ./commands/local-review.md;
       commit-push-pr = ./commands/commit-push-pr.md;
-      map-codebase = ./commands/map-codebase.md;
     };
 
     skills = {
@@ -26,10 +25,10 @@
       autoMemoryEnabled = true;
       env = {
         AWS_REGION = "eu-central-1";
-        ANTHROPIC_DEFAULT_OPUS_MODEL = "eu.anthropic.claude-opus-4-6-v1";
-        ANTHROPIC_DEFAULT_SONNET_MODEL = "eu.anthropic.claude-sonnet-4-6";
-        ANTHROPIC_DEFAULT_HAIKU_MODEL = "eu.anthropic.claude-haiku-4-5-20251001-v1:0";
-        CLAUDE_CODE_USE_BEDROCK = "1";
+        # ANTHROPIC_DEFAULT_OPUS_MODEL = "eu.anthropic.claude-opus-4-6-v1";
+        # ANTHROPIC_DEFAULT_SONNET_MODEL = "eu.anthropic.claude-sonnet-4-6";
+        # ANTHROPIC_DEFAULT_HAIKU_MODEL = "eu.anthropic.claude-haiku-4-5-20251001-v1:0";
+        CLAUDE_CODE_USE_BEDROCK = "0";
       };
 
       attribution = {
