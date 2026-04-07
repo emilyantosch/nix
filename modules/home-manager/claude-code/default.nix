@@ -4,12 +4,9 @@
     enable = true;
     package = null;
 
-    commands = {
+    skills = {
       local-review = ./commands/local-review.md;
       commit-push-pr = ./commands/commit-push-pr.md;
-    };
-
-    skills = {
       test-driven-development = ./skills/test-driven-development.md;
     };
 
