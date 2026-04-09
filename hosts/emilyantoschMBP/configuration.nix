@@ -30,6 +30,10 @@
   sops.defaultSopsFile = ./secrets/secrets.yaml;
   sops.defaultSopsFormat = "yaml";
   sops.age.keyFile = "~/.config/sops/age/keys.txt";
+
+  sops.secrets.artifactory = {
+    owner = config.users.users."emilylucia.antosch".name;
+  };
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
