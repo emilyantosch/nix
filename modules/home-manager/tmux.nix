@@ -23,6 +23,8 @@ in
       bind k select-pane -U
       bind-key x kill-pane # skip "kill-pane 1? (y/n)" prompt
       set -g detach-on-destroy off  # don't exit from tmux when closing a session
+      set -g extended-keys on # pi coding agent modified enter
+      set -g extended-keys-format csi-u # pi coding agent modified enter
 
       unbind t
       bind-key t display-popup -E -w 80% -h 70% -d '#{pane_current_path}' -T 'Sesh' tv sesh

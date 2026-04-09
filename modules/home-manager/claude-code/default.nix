@@ -2,11 +2,12 @@
 {
   programs.claude-code = {
     enable = true;
+
     package = null;
 
     skills = {
-      local-review = ./commands/local-review.md;
-      commit-push-pr = ./commands/commit-push-pr.md;
+      local-review = ./skills/local-review.md;
+      commit-push-pr = ./skills/commit-push-pr.md;
       test-driven-development = ./skills/test-driven-development.md;
     };
 
@@ -22,10 +23,10 @@
       autoMemoryEnabled = true;
       env = {
         AWS_REGION = "eu-central-1";
-        # ANTHROPIC_DEFAULT_OPUS_MODEL = "eu.anthropic.claude-opus-4-6-v1";
-        # ANTHROPIC_DEFAULT_SONNET_MODEL = "eu.anthropic.claude-sonnet-4-6";
-        # ANTHROPIC_DEFAULT_HAIKU_MODEL = "eu.anthropic.claude-haiku-4-5-20251001-v1:0";
-        CLAUDE_CODE_USE_BEDROCK = "0";
+        ANTHROPIC_DEFAULT_OPUS_MODEL = "eu.anthropic.claude-opus-4-6-v1";
+        ANTHROPIC_DEFAULT_SONNET_MODEL = "eu.anthropic.claude-sonnet-4-6";
+        ANTHROPIC_DEFAULT_HAIKU_MODEL = "eu.anthropic.claude-haiku-4-5-20251001-v1:0";
+        CLAUDE_CODE_USE_BEDROCK = "1";
       };
 
       attribution = {
@@ -61,6 +62,42 @@
 
       model = "opus";
       hooks = {
+        SessionStart = [
+          {
+            hooks = [
+              {
+                type = "command";
+                command = "/Users/emilylucia.antosch/.claude/hooks/peon-ping/peon.sh";
+                timeout = 10;
+                async = true;
+              }
+            ];
+          }
+        ];
+        PermissionRequest = [
+          {
+            hooks = [
+              {
+                type = "command";
+                command = "/Users/emilylucia.antosch/.claude/hooks/peon-ping/peon.sh";
+                timeout = 10;
+                async = true;
+              }
+            ];
+          }
+        ];
+        SessionEnd = [
+          {
+            hooks = [
+              {
+                type = "command";
+                command = "/Users/emilylucia.antosch/.claude/hooks/peon-ping/peon.sh";
+                timeout = 10;
+                async = true;
+              }
+            ];
+          }
+        ];
         PreToolUse = [
           {
             hooks = [
@@ -78,6 +115,12 @@
               {
                 type = "command";
                 command = "npx -y ccstatusline@latest --hook";
+              }
+              {
+                type = "command";
+                command = "/Users/emilylucia.antosch/.claude/hooks/peon-ping/peon.sh";
+                timeout = 10;
+                async = true;
               }
             ];
           }

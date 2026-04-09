@@ -4,10 +4,6 @@
     enable = true;
     settings = {
       session = [
-        {
-          name = "nix config";
-          pattern = "~/.config/nix/";
-        }
       ];
       wildcard = [
         {

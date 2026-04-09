@@ -12,16 +12,15 @@ DO NOT, UNDER ANY CIRCUMSTANCES, MENTION IN ANY MESSAGE THAT THIS COMMIT OR PR H
 
 ## Committing
 
-1. Run `just` in the root of the project. If there are any issues, report back to the user and abort running the command.
-2. Review all staged and unstaged changes with `git diff` and `git diff --staged`
-3. Group related changes into logical commits (split where it makes sense)
-4. Stage files with `git add` as needed
-5. Commit using conventional commits format: `type(scope): description`
+1. Review all staged and unstaged changes with `sem diff` and `sem diff --format json`
+2. Group related changes into logical commits (split where it makes sense)
+3. Stage files with `git add` as needed
+4. Commit using conventional commits format: `type(scope): description`
    - Types: feat, fix, refactor, docs, test, chore, style, perf, build, ci
    - Keep messages under 60 characters
    - Do NOT add any AI-generated remarks, footers, or co-author lines
-6. Push to origin: `git push origin {branch_name}`
-7. If the push is rejected, because of any problems with the remote, report back to the user and stop execution.
+5. Push to origin: `git push origin {branch_name}`
+6. If the push is rejected, because of any problems with the remote, report back to the user and stop execution.
 
 ## Creating PR
 
@@ -29,7 +28,7 @@ DO NOT, UNDER ANY CIRCUMSTANCES, MENTION IN ANY MESSAGE THAT THIS COMMIT OR PR H
 2. Extract ticket number from branch name (the part before the first `/`)
 3. Create draft PR with `gh pr create`:
    - Title: `[ticket_number] Short description of changes`
-   - Body: Brief summary of what the PR contains (2-3 sentences max)
+   - Body: Brief summary of what the PR contains (2-3 sentences max). Do not use misdirection, just type the string as is (no EOF and pipes).
    - Always use `--draft` flag
 
 ## Example

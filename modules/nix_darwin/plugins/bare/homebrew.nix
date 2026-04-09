@@ -21,6 +21,7 @@
       "typst"
       "llvm"
       "cmake"
+      "PeonPing/tap/peon-ping"
       "openjdk"
       "fish"
       "ollama"

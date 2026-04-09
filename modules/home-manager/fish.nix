@@ -40,6 +40,8 @@
 
       va = "aws-sso exec -p ai-coding.tools -- nvim";
 
+      po = "pi --provider amazon-bedrock --model eu.anthropic.claude-opus-4-6-v1";
+
       # Jira
       jl = ''jira issue list --component "Fleet Optimization" --status "~Closed"'';
       jc = ''jira issue create --component "Fleet Optimization" --status "Selected"'';
@@ -55,6 +57,7 @@
           export EDITOR=nvim
           export PATH=$PATH:$HOME/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:/bin:/sbin:/usr/sbin:/usr/local/bin:/Users/emilylucia.antosch/.cargo/bin:/Users/emilylucia.antosch/.deno/bin:/Users/emilylucia.antosch/.local/bin:/opt/homebrew/bin:/run/wrappers/bin:/usr/bin:/run/current-system/sw/bin:/Applications/Obsidian.app/Contents/MacOS
           export CARGO_NET_GIT_FETCH_WITH_CLI=true
+          export AWS_REGION=eu-central-1
 
           # config.fish
           if test -z (pgrep ssh-agent | string collect)
