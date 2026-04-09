@@ -40,7 +40,7 @@
 
       va = "aws-sso exec -p ai-coding.tools -- nvim";
 
-      po = "pi --provider amazon-bedrock --model eu.anthropic.claude-opus-4-6-v1";
+      po = "aws-sso exec -p ai-coding.tolls -- pi --provider amazon-bedrock --model eu.anthropic.claude-opus-4-6-v1";
 
       # Jira
       jl = ''jira issue list --component "Fleet Optimization" --status "~Closed"'';

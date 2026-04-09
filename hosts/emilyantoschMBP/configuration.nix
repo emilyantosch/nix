@@ -27,7 +27,9 @@
     "flakes"
   ];
 
-  sops.defaultSopsFile = ./secrets/jira_api.yaml;
+  sops.defaultSopsFile = ./secrets/secrets.yaml;
+  sops.defaultSopsFormat = "yaml";
+  sops.age.keyFile = "~/.config/sops/age/keys.txt";
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
