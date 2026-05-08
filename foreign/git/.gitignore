@@ -3,3 +3,4 @@
 dev_ai/
 .sops.yaml
 tmp/
+.pi-lens/

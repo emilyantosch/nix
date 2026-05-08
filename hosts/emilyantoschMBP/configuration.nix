@@ -27,11 +27,17 @@
     "flakes"
   ];
 
-  sops.defaultSopsFile = ./secrets/secrets.yaml;
+  sops.defaultSopsFile = ../../secrets/secrets.yaml;
   sops.defaultSopsFormat = "yaml";
-  sops.age.keyFile = "~/.config/sops/age/keys.txt";
+  sops.age.keyFile = "/Users/emilylucia.antosch/.config/sops/age/keys.txt";
 
   sops.secrets.artifactory = {
+    owner = config.users.users."emilylucia.antosch".name;
+  };
+  sops.secrets.jira = {
+    owner = config.users.users."emilylucia.antosch".name;
+  };
+  sops.secrets.jira_scoped = {
     owner = config.users.users."emilylucia.antosch".name;
   };
   # Enable touchpad support (enabled default in most desktopManager).
@@ -59,14 +65,12 @@
     btop
     nixfmt
     python313
-    aws-sso-cli
     docker_25
     podman
     bun
     deno
     # inputs.nyx.packages.${pkgs.system}.core
     gh
-    lazygit
     hadolint
     pandoc
     eza
@@ -74,9 +78,7 @@
     starship
     zplug
     vim
-    git
     fzf
-    fd
     ripgrep
     pass
     tmux
