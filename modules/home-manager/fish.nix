@@ -61,6 +61,8 @@
     };
     interactiveShellInit = ''
                       export MOIA_USERNAME=emilylucia.antosch
+                      export SCIPOPTDIR=/opt/homebrew/opt/scip
+                      export LIBRARY_PATH=/opt/homebrew/lib
                       export EDITOR=nvim
                       export PATH=$PATH:$HOME/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:/bin:/sbin:/usr/sbin:/usr/local/bin:/Users/emilylucia.antosch/.cargo/bin:/Users/emilylucia.antosch/.deno/bin:/Users/emilylucia.antosch/.local/bin:/opt/homebrew/bin:/run/wrappers/bin:/usr/bin:/run/current-system/sw/bin:/Applications/Obsidian.app/Contents/MacOS
                       export CARGO_NET_GIT_FETCH_WITH_CLI=true
@@ -77,7 +79,7 @@
                       end
                       ssh-add ~/.ssh/github
 
-                      abbr --add hr gh workflow run deploy-app.yaml -f environment=dev --ref $(git branch --show-current) -f application=matchmaker
+                      abbr --add hr gh workflow run deploy-app-eks.yaml -f environment=DEV --ref $(git branch --show-current) -f application=matchmaker
 
                       starship init fish | source
                       atuin init fish | source
@@ -332,24 +334,27 @@
             end
 
             function safekeys
-                safe --env-pass=OPENAI_API_KEY,ANTHROPIC_API_KEY,GEMINI_API_KEY $argv
+                safe --env-pass=AWS_SECRET_ACCESS_KEY,AWS_ACCESS_KEY_ID,AWS_REGION,AWS_SESSION_TOKEN $argv
             end
+function safepi
+       set -l tok
+       command gh auth token | read -l tok
+       set -l gh_status $pipestatus[1]
 
-            function claude
-                safe claude --dangerously-skip-permissions $argv
-            end
+       if test $gh_status -ne 0
+           return $gh_status
+       end
 
-            function codex
-                safe codex --dangerously-bypass-approvals-and-sandbox $argv
-            end
+       if test -z "$tok"
+           echo "gh auth token returned empty" >&2
+           return 1
+       end
 
-            function amp
-                safe amp --dangerously-allow-all $argv
-            end
-
-            function safe-pi
-                safe pi $argv
-            end
+       env GH_TOKEN="$tok" GITHUB_TOKEN="$tok" safehouse \
+           --env-pass=GH_TOKEN,GITHUB_TOKEN \
+           --append-profile="$HOME/.config/agent-safehouse/local-overrides.sb" \
+           -- pi $argv
+   end
 
       function eksenv
       	export KUBECONFIG="$HOME/.kube/moia-01-$argv"

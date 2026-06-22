@@ -7,10 +7,14 @@
       autoUpdate = true;
       upgrade = true;
       cleanup = "zap";
+      extraFlags = [ "--force-cleanup" ];
     };
 
     brews = [
       "aws-sso-cli"
+      "mole"
+      "jj"
+      "gws"
       "awscurl"
       "fd"
       "wget"
@@ -19,11 +23,9 @@
       "opencode"
       "node"
       "gpg"
-      "deno"
       "typst"
       "llvm"
       "cmake"
-      "PeonPing/tap/peon-ping"
       "openjdk"
       "fish"
       "ollama"
@@ -39,6 +41,7 @@
       "scip"
       "grpcurl"
       "ghz"
+      "gh"
       "jira-cli"
       "yt-dlp"
       "mpv"
@@ -47,7 +50,6 @@
       "go"
       "jsonnet"
       "git-lfs"
-      "ncspot"
       "uv"
       "glib"
       "openssl"
@@ -60,32 +62,29 @@
       "worktrunk"
       "sem-cli"
       "eugene1g/safehouse/agent-safehouse"
+      "rtk"
+      "postgresql@18"
     ];
 
     casks = [
+      "wispr-flow"
       "sioyek"
+      "codex"
       "claude-code@latest"
       "antinote"
       "google-chrome"
       "microsoft-teams"
       "microsoft-powerpoint"
-      "zed"
       "microsoft-outlook"
       "microsoft-excel"
       "obsidian"
       "ghostty"
       "karabiner-elements"
       "zen"
-      "intellij-idea"
-      "alacritty"
-
       "discord"
-
       "raycast"
-
       "spotify"
-      "postman"
-      "audiowhisper"
+      "pgadmin4"
     ];
   };
 }

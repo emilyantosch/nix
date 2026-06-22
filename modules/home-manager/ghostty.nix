@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   programs = {
     ghostty = {
@@ -21,6 +21,8 @@
 
         bold-is-bright = true;
 
+        custom-shader = "./bettercrt.glsl";
+
         link-url = true;
         macos-titlebar-proxy-icon = "hidden";
         macos-titlebar-style = "hidden";
@@ -28,7 +30,7 @@
         macos-option-as-alt = "left";
 
         mouse-hide-while-typing = true;
-        theme = "Gruvbox Material Dark";
+        theme = "dark:Gruvbox Material Dark,light:Gruvbox Material Light";
         window-vsync = true;
 
         background-opacity = 0.95;
