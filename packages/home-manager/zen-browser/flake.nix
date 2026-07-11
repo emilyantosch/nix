@@ -59,17 +59,17 @@
           libglvnd
           pipewire
         ]
-        ++ (with pkgs.xorg; [
+        ++ (with pkgs; [
           libxcb
-          libX11
-          libXcursor
-          libXrandr
-          libXi
-          libXext
-          libXcomposite
-          libXdamage
-          libXfixes
-          libXScrnSaver
+          libx11
+          libxcursor
+          libxrandr
+          libxi
+          libxext
+          libxcomposite
+          libxdamage
+          libxfixes
+          libxscrnsaver
         ]);
 
       mkZen =

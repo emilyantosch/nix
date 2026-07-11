@@ -1,5 +1,4 @@
-{pkgs, ...}:
-{
+{ pkgs, ... }: {
   services = {
     openssh.enable = true;
     udev.extraRules = ''
@@ -31,11 +30,11 @@
 
     avahi = {
       enable = true;
-      nssmdns = true;
+      nssmdns4 = true;
     };
 
     printing = {
-  # Enable CUPS to print documents.
+      # Enable CUPS to print documents.
       enable = true;
       browsing = true;
       browsedConf = ''
@@ -53,7 +52,6 @@
     xserver.enable = true;
 
     # Enable the KDE Plasma Desktop Environment.
-    displayManager.sddm.enable = true;
     #services.desktopManager.plasma6.enable = true;
 
     # Configure keymap in X11
@@ -62,9 +60,8 @@
       xkb = {
         layout = "de";
         variant = "";
+      };
     };
-    };
-
 
     pipewire = {
       enable = true;
@@ -78,6 +75,6 @@
         enable = true;
         package = pkgs.wireplumber;
       };
-  };
+    };
   };
 }

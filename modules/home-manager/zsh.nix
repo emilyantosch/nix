@@ -11,7 +11,7 @@
       path = "/home/emmi/.zsh_history";
     };
 
-    initExtra = ''
+    initContent = ''
       alias v=nvim
       bindkey '^p' history-search-backward
       bindkey '^n' history-search-backward

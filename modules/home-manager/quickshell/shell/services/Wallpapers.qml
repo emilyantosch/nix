@@ -76,7 +76,7 @@ Singleton {
 
         property string path
 
-        command: ["caelestia", "wallpaper", "-f", path, "&&", "swww", "img", "/home/emmi/.local/state/caelestia/wallpaper/current", "--transition-type=any", "--transition-fps=120"]
+        command: ["caelestia", "wallpaper", "-f", path, "&&", "awww", "img", "/home/emmi/.local/state/caelestia/wallpaper/current", "--transition-type=any", "--transition-fps=120"]
     }
 
     Process {

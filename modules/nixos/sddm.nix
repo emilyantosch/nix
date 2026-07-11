@@ -2,16 +2,11 @@
 let
   sddm-candy = pkgs.callPackage ../../packages/nixos/sddm-candy.nix { };
   sddm-corners = pkgs.callPackage ../../packages/nixos/sddm-corners.nix { };
-in
-{
+in {
   services.displayManager.sddm = {
-    enable = true;
 
     package = pkgs.kdePackages.sddm;
-    extraPackages = with pkgs; [
-      sddm-candy
-      sddm-corners
-    ];
+    extraPackages = with pkgs; [ sddm-candy sddm-corners ];
 
     wayland = {
       enable = true;
@@ -23,8 +18,5 @@ in
       };
     };
   };
-  environment.systemPackages = with pkgs; [
-    sddm-candy
-    sddm-corners
-  ];
+  environment.systemPackages = with pkgs; [ sddm-candy sddm-corners ];
 }

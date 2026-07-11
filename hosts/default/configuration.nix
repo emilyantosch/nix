@@ -23,7 +23,11 @@
   hardware.uinput.enable = true;
   # Bootloader.
   boot = {
-    loader.systemd-boot.enable = true;
+    loader.systemd-boot = {
+      enable = true;
+      # Keep the EFI system partition from filling up with old NixOS kernels/initrds.
+      configurationLimit = 5;
+    };
     loader.efi.canTouchEfiVariables = true;
     kernelModules = [ "uinput" ];
   };
@@ -73,7 +77,7 @@
   # Enable bluetooth, like wtf
   hardware.bluetooth.enable = true;
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
 
   networking.nat = {
@@ -133,10 +137,11 @@
   # services.xserver.libinput.enable = true;
 
   programs.zsh.enable = true;
+  programs.fish.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
-    defaultUserShell = pkgs.nushell;
+    defaultUserShell = pkgs.fish;
     users.emmi = {
       isNormalUser = true;
       description = "Emmi";
@@ -149,7 +154,7 @@
         "libvirtd"
         "docker"
       ];
-      shell = pkgs.nushell;
+      shell = pkgs.fish;
       packages = with pkgs;
         [
           kdePackages.kate
@@ -158,6 +163,7 @@
     };
   };
 
+  services.desktopManager.plasma6.enable = true;
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
     backupFileExtension = "bak";
@@ -198,6 +204,7 @@
     unixtools.netstat
     openssl.dev
     cura-appimage
+    gws
     super-slicer
     audacity
     claude-code
@@ -209,23 +216,25 @@
     virtualgl
     pkg-config
     vesktop
+    mise
     killall
-    swww
+    awww
     nushell
     onlyoffice-desktopeditors
-    nodePackages.prettier
+    prettier
     lua
     gnutls
-    obs-studio
     hwinfo
     btop
     nil
     yazi
     xdg-utils
     librsvg
+    davinci-resolve
     kdePackages.dolphin
-    xorg.xcbutil.dev
-    xorg.libxcb.dev
+    libxcb-util.dev
+    forge-mtg
+    libxcb.dev
     protonplus
     protontricks
     wootility
@@ -237,9 +246,11 @@
     sshpass
     foot
     python313
+    pi-coding-agent
     bun
     deno
     # inputs.nyx.packages.${pkgs.system}.core
+    fish
     gh
     tree-sitter
     docker
@@ -272,10 +283,6 @@
     chromium
     tmux
     obsidian
-    rustc
-    clippy
-    rustfmt
-    cargo
     nix-init
     gnupg
     pass-wayland
@@ -293,15 +300,13 @@
     cudaPackages.cuda_opencl
     p7zip
     cudaPackages.cudnn
-    xfce.thunar
+    thunar
     cudaPackages.libnpp
     vlc
     winetricks
     wine
     prismlauncher
     nix-ld
-    sass
-    kdePackages.kdenlive
     keymapp
     ani-cli
   ];

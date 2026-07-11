@@ -1,10 +1,4 @@
-{
-  inputs,
-  lib,
-  config,
-  pkgs,
-  ...
-}:
+{ inputs, lib, config, pkgs, ... }:
 
 {
 
@@ -22,6 +16,7 @@
     ./../../modules/home-manager/zsh.nix
     ./../../modules/home-manager/niri/default.nix
     ./../../modules/home-manager/zen-browser.nix
+    ./../../modules/home-manager/fish.nix
     ./../../modules/home-manager/rofi/default.nix
     ./../../modules/home-manager/hyprlock.nix
     ./../../modules/home-manager/tidal.nix
@@ -40,26 +35,9 @@
     ./../../modules/home-manager/carapace.nix
     ./../../modules/home-manager/atuin.nix
     ./../../modules/home-manager/bacon.nix
+    ./../../modules/home-manager/ghostty.nix
   ];
 
-  programs = {
-    ghostty = {
-      enable = true;
-      settings = {
-        font-size = 18;
-        window-decoration = false;
-        confirm-close-surface = false;
-        font-feature = [
-          "liga"
-          "dlig"
-          "calt"
-        ];
-        background-opacity = 1;
-        theme = "gruvbox-material";
-        # custom-shader = "./assets/shaders/bettercrt.glsl";
-      };
-    };
-  };
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   nixpkgs.config.allowUnfree = true;
@@ -127,9 +105,7 @@
   #
   #  /etc/profiles/per-user/emmi/etc/profile.d/hm-session-vars.sh
   #
-  home.sessionVariables = {
-    EDITOR = "nvim";
-  };
+  home.sessionVariables = { EDITOR = "nvim"; };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

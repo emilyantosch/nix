@@ -5,6 +5,7 @@
 {
   # programs.hyprland.enable = true;
   wayland.windowManager.hyprland.enable = true;
+  wayland.windowManager.hyprland.configType = "hyprlang";
   wayland.windowManager.hyprland.plugins = with pkgs; [
     # (callPackage ./../../../packages/hyprland-plugins/default.nix { }).hyprsplit
   ];

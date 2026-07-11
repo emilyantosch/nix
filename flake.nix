@@ -18,7 +18,6 @@
     };
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     zen-browser.url = "./packages/home-manager/zen-browser";
-    hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
     bacon.url = "github:Canop/bacon";
     bacon-ls.url = "github:crisidev/bacon-ls";
     astal = {
@@ -51,7 +50,6 @@
       nix-darwin,
       darwin-modules,
       nyx,
-      hyprpanel,
       zen-browser,
       home-manager,
       bacon,
@@ -78,7 +76,6 @@
           copyparty.nixosModules.default
           {
             nixpkgs.overlays = [
-              inputs.hyprpanel.overlay
               inputs.bacon.outputs.overlay.x86_64-linux
               inputs.bacon-ls.outputs.overlay.x86_64-linux
             ];
