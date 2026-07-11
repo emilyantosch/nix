@@ -33,7 +33,7 @@
         git log --graph --decorate --oneline --pretty=format:"%cn committed %h on %cd"'';
 
       ## gh bindings
-      hc = "gh pr create --title";
+      hc = "gh pr create --draft --title";
       hv = "gh pr view --web";
       hV = "gh repo view --web";
       hr = "gh workflow run";
@@ -75,8 +75,10 @@
                             export PATH=$PATH:$HOME/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:/bin:/sbin:/usr/sbin:/usr/local/bin:/Users/emilylucia.antosch/.cargo/bin:/Users/emilylucia.antosch/.deno/bin:/Users/emilylucia.antosch/.local/bin:/opt/homebrew/bin:/run/wrappers/bin:/usr/bin:/run/current-system/sw/bin:/Applications/Obsidian.app/Contents/MacOS:$HOME/.local/bin
                             export CARGO_NET_GIT_FETCH_WITH_CLI=true
                             export AWS_REGION=eu-central-1
+                            export AWS_DEFAULT_REGION=eu-central-1
 
                             # config.fish
+                            set -g fish_key_bindings fish_vi_key_bindings
                             if test -z (pgrep ssh-agent | string collect)
                               eval (ssh-agent -c)
                               set -Ux SSH_AUTH_SOCK $SSH_AUTH_SOCK

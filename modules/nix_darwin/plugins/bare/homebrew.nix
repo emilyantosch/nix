@@ -14,7 +14,6 @@
       "aws-sso-cli"
       "mole"
       "jj"
-      "gws"
       "awscurl"
       "fd"
       "wget"
@@ -64,12 +63,18 @@
       "eugene1g/safehouse/agent-safehouse"
       "rtk"
       "postgresql@18"
+      "googleworkspace-cli"
+      "herdr"
     ];
 
     casks = [
+      "audacity"
       "wispr-flow"
+      "zed"
       "sioyek"
+      "utm"
       "codex"
+      "helium-browser"
       "claude-code@latest"
       "antinote"
       "google-chrome"

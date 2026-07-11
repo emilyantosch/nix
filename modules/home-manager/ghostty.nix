@@ -14,8 +14,6 @@
 
         bold-is-bright = true;
 
-        custom-shader = "./bettercrt.glsl";
-
         link-url = true;
         macos-titlebar-proxy-icon = "hidden";
         macos-titlebar-style = "hidden";
