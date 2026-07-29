@@ -1,4 +1,4 @@
-{ _ }: {
+{ ... }: {
   programs.fish = {
     enable = true;
     shellAliases = {
@@ -71,11 +71,9 @@
                             export SCIPOPTDIR=/opt/homebrew/opt/scip
                             export LIBRARY_PATH=/opt/homebrew/lib
                             export EDITOR=nvim
-                            export PATH=$PATH:$HOME/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:/bin:/sbin:/usr/sbin:/usr/local/bin:/Users/emilylucia.antosch/.cargo/bin:/Users/emilylucia.antosch/.deno/bin:/Users/emilylucia.antosch/.local/bin:/opt/homebrew/bin:/run/wrappers/bin:/usr/bin:/run/current-system/sw/bin:/Applications/Obsidian.app/Contents/MacOS
+                            export PATH=$PATH:$HOME/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:/bin:/sbin:/usr/sbin:/usr/local/bin:/Users/emilylucia.antosch/.cargo/bin:/Users/emilylucia.antosch/.deno/bin:/Users/emilylucia.antosch/.local/bin:/opt/homebrew/bin:/run/wrappers/bin:/usr/bin:/run/current-system/sw/bin:/Applications/Obsidian.app/Contents/MacOS:$HOME/.local/bin
                             export CARGO_NET_GIT_FETCH_WITH_CLI=true
                             export AWS_REGION=eu-central-1
-                            export ARTIFACTORY_APIKEY=$(cat /run/secrets/artifactory)
-                            export JIRA_API_TOKEN=$(cat /run/secrets/jira)
 
                             # config.fish
                             if test -z (pgrep ssh-agent | string collect)

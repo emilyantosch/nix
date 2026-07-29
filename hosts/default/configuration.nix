@@ -246,10 +246,12 @@
     sshpass
     foot
     python313
-    pi-coding-agent
     bun
+    nodejs
     deno
-    # inputs.nyx.packages.${pkgs.system}.core
+    helix
+    rustup
+    codex
     fish
     gh
     tree-sitter

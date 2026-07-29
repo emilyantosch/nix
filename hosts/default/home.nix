@@ -31,6 +31,7 @@
     ./../../modules/home-manager/vesktop.nix
     ./../../modules/home-manager/spicetify.nix
     ./../../modules/home-manager/gtk.nix
+    ./../../modules/home-manager/sesh.nix
     ./../../modules/home-manager/sherlock.nix
     ./../../modules/home-manager/carapace.nix
     ./../../modules/home-manager/atuin.nix
@@ -40,6 +41,8 @@
 
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
+  programs.fzf.tmux.enableShellIntegration = true;
+
   nixpkgs.config.allowUnfree = true;
   home.username = "emmi";
   home.homeDirectory = "/home/emmi";
