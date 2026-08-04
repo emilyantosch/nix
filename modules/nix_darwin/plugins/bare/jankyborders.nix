@@ -1,13 +1,8 @@
-{...}:
+{ ... }:
 {
-  homebrew = {
-    taps = [
-      "FelixKratz/formulae"
-    ];
-    brews = [
-    "borders"
-    ];
-  };
+  homebrew.brews = [
+    "FelixKratz/formulae/borders"
+  ];
   services.jankyborders = {
     enable = true;
     hidpi = true;

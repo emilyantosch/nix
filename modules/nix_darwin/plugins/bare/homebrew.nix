@@ -7,7 +7,6 @@
       autoUpdate = true;
       upgrade = true;
       cleanup = "zap";
-      extraFlags = [ "--force-cleanup" ];
     };
 
     brews = [
@@ -64,19 +63,17 @@
       "rtk"
       "postgresql@18"
       "googleworkspace-cli"
-      "herdr"
     ];
 
     casks = [
       "audacity"
-      "wispr-flow"
+      "chatgpt"
       "zed"
       "sioyek"
       "utm"
       "codex"
       "helium-browser"
       "claude-code@latest"
-      "antinote"
       "google-chrome"
       "microsoft-teams"
       "microsoft-powerpoint"

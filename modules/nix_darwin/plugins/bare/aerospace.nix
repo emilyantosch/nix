@@ -1,13 +1,8 @@
 { pkgs, ... }:
 {
-  homebrew = {
-    taps = [
-      "nikitabobko/tap"
-    ];
-    casks = [
-      "aerospace"
-    ];
-  };
+  homebrew.casks = [
+    "nikitabobko/tap/aerospace"
+  ];
 
   services.aerospace = {
     enable = true;
