@@ -6,6 +6,7 @@
       em = "emacs -nw";
       ll = "eza -1 -l";
       yz = "yazi";
+      lg = "lazygit";
 
       edev = "eksenv dev";
       eint = "eksenv int";
