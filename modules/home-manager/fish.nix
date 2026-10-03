@@ -79,6 +79,7 @@
 
                             # config.fish
                             set -g fish_key_bindings fish_vi_key_bindings
+                            set -U fish_escape_delay_ms 10
                             if test -z (pgrep ssh-agent | string collect)
                               eval (ssh-agent -c)
                               set -Ux SSH_AUTH_SOCK $SSH_AUTH_SOCK
@@ -86,6 +87,7 @@
                               set -Ux SSH_AUTH_SOCK $SSH_AUTH_SOCK
                             end
                             ssh-add ~/.ssh/github
+
 
                             abbr --add hr gh workflow run deploy-app-eks.yaml -f environment=DEV --ref $(git branch --show-current) -f application=matchmaker
 

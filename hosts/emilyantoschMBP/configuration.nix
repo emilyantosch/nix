@@ -68,6 +68,7 @@
     # pkg-config
     lua
     nushell
+    aseprite
     btop
     nixfmt
     python313
