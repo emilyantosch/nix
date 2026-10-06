@@ -18,9 +18,8 @@
     ./../../modules/home-manager/zen-browser.nix
     ./../../modules/home-manager/fish.nix
     ./../../modules/home-manager/rofi/default.nix
-    ./../../modules/home-manager/hyprlock.nix
+    # ponytail: Caelestia owns locking and idle handling; do not start a second locker.
     ./../../modules/home-manager/tidal.nix
-    ./../../modules/home-manager/hypridle.nix
     ./../../modules/home-manager/hyprland/default.nix
     ./../../modules/home-manager/waybar.nix
     ./../../modules/home-manager/foot.nix

@@ -31,6 +31,28 @@
         }
     },
     "general": {
+        "idle": {
+            "lockBeforeSleep": true,
+            "inhibitWhenAudio": false,
+            "timeouts": [
+                {
+                    "timeout": 300,
+                    "idleAction": "lock",
+                    "inhibitWhenAudio": true
+                },
+                {
+                    "timeout": 360,
+                    "idleAction": ["niri", "msg", "action", "power-off-monitors"],
+                    "returnAction": ["niri", "msg", "action", "power-on-monitors"],
+                    "inhibitWhenAudio": true
+                },
+                {
+                    "timeout": 1800,
+                    "idleAction": ["suspendThenHibernate"],
+                    "inhibitWhenAudio": true
+                }
+            ]
+        },
         "apps": {
             "terminal": ["ghostty"],
             "audio": ["pavucontrol"]
@@ -127,13 +149,13 @@
     },
     "dashboard": {
         "enabled": true,
-        "dragThreshold": 50,
+        "dragThreshold": 5,
         "mediaUpdateInterval": 500,
         "showOnHover": true
     },
     "launcher": {
         "actionPrefix": ">",
-        "dragThreshold": 50,
+        "dragThreshold": 5,
         "vimKeybinds": true,
         "enableDangerousActions": false,
         "maxShown": 8,
@@ -149,7 +171,8 @@
         "showOnHover": true
     },
     "lock": {
-        "recolourLogo": true
+        "recolourLogo": true,
+        "useWallpaper": true
     },
     "notifs": {
         "actionOnClick": false,
@@ -183,7 +206,7 @@
         "visualiserBars": 45
     },
     "session": {
-        "dragThreshold": 30,
+        "dragThreshold": 5,
         "vimKeybinds": true,
         "commands": {
             "logout": ["loginctl", "terminate-user", ""],
@@ -191,5 +214,8 @@
             "hibernate": ["systemctl", "hibernate"],
             "reboot": ["systemctl", "reboot"]
         }
+    },
+    "sidebar": {
+        "dragThreshold": 5
     }
 }

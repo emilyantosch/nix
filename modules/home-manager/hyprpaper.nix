@@ -5,7 +5,7 @@
       settings = {
         ipc = "on";
         splash = "false";
-        splash_offset = 2.0;
+        splash_offset = 2;
         preload = [
           "~/.config/nixos/assets/wallpapers/Kita.png"
           "~/.config/nixos/assets/wallpapers/golden_bloom.jpeg"

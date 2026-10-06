@@ -12,14 +12,11 @@ spawn-at-startup "plasma-polkit-agent"
 // spawn-sh-at-startup "~/.config/nixos/scripts/swww/swww_wallpapersync.sh"
 // spawn-sh-at-startup "qs -c ~/.config/nixos/ressources/quickshell/noctalia-shell" //shellscript to start automatically (quickshell in this case)
 
-spawn-at-startup "vesktop"
-// spawn-at-startup "foot"
-// spawn-at-startup "zen-twilight"
 spawn-at-startup "obsidian"
 
 spawn-at-startup "sh" "-c" "systemctl --user start xwayland-satellite.service"
 // spawn-at-startup "sh" "-c" "noctalia-shell"
-spawn-at-startup "sh" "-c" "caelestia-shell"
+// caelestia-shell is started by the systemd user service in qs-caelestia.nix
 
 // spawn-at-startup "sh" "-c" "wl-clip-persist --clipboard regular"
 // spawn-at-startup "sh" "-c" "cliphist wipe"
@@ -497,6 +494,9 @@ layout {
 window-rule {
     geometry-corner-radius 20
     clip-to-geometry true
+    // Draw the focus ring only around windows, not as a solid rect behind them;
+    // otherwise it flickers through whenever a buffer lags behind its geometry.
+    draw-border-with-background false
 }
 
 layer-rule {
@@ -794,11 +794,11 @@ binds {
     Alt+Shift+N { spawn "~/.config/nixos/scripts/wall_cycle_back.sh"; }
     Alt+Shift+Slash { show-hotkey-overlay; }
 
-    Super+Escape { spawn "hyprlock"; }
-    Super+Return { spawn "foot"; }
+    Super+Escape { spawn "caelestia-shell" "ipc" "call" "lock" "lock"; }
+    Super+Return { spawn "ghostty"; }
     Super+B { spawn "zen-twilight"; }
     Super+A { spawn "sherlock"; }
-    Super+R { spawn "sh -c caelestia shell drawers toggle launcher"; }
+    Super+R { spawn "caelestia" "shell" "drawers" "toggle" "launcher"; }
     Super+Q { close-window; }
 
     // Ctrl+Alt+C { spawn "sh" "-c" "pidof wl-color-picker || wl-color-picker"; }

@@ -7,7 +7,9 @@
   fileSystems."/mnt/emmi-share" = {
     device = "//192.168.68.59/emmi-share";
     fsType = "cifs";
-    options = [ "username=emmi" "password=gend" "x-systemd.automount" "noauto" ];
+    # No automount: anything stat-ing mounts (e.g. Caelestia's storage widget) would
+    # block for ~10s per attempt whenever the NAS is unreachable. Mount manually.
+    options = [ "username=emmi" "password=gend" "noauto" ];
   };
   
 }
