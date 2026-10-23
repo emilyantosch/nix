@@ -1,15 +1,15 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 {
-    programs.lazygit = {
-      enable = true;
-      settings = {
-        git = {
-          pagers = [
-            {
-              pager = ''delta --dark --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"'';
-            }
-          ];
-        };
+  programs.lazygit = {
+    enable = true;
+    settings = {
+      git = {
+        diffRenderers = [
+          {
+            command = ''delta --dark --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"'';
+          }
+        ];
       };
     };
-  }
+  };
+}

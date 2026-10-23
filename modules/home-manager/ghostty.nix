@@ -1,9 +1,16 @@
-{ ... }: {
+{ ... }:
+{
   programs = {
     ghostty = {
       enable = true;
+      package = null;
       settings = {
-        font-feature = [ "liga" "dlig" "calt" "ss05" ];
+        font-feature = [
+          "liga"
+          "dlig"
+          "calt"
+          "ss05"
+        ];
         font-size = 28;
         font-family = "JetBrainsMonoNL NFM ExtraBold";
         font-thicken = true;

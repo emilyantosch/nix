@@ -1,7 +1,6 @@
 { ... }:
 {
   programs.yazi = {
-    shellWrapperName = "y";
     enable = true;
     shellWrapperName = "yy";
     settings = {

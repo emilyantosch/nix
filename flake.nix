@@ -27,7 +27,7 @@
     sherlock.url = "github:Skxxtz/sherlock";
     nyx.url = "./packages/nvix";
     nix-darwin = {
-      url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
+      url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     darwin-modules.url = "./modules/nix_darwin";

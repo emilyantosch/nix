@@ -69,6 +69,7 @@
     lua
     nushell
     aseprite
+    proselint
     btop
     nixfmt
     python313
