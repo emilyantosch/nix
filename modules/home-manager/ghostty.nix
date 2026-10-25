@@ -1,16 +1,11 @@
-{ ... }:
-{
+{ lib, pkgs, ... }: {
   programs = {
     ghostty = {
       enable = true;
-      package = null;
+      # Ghostty is installed outside of Nix on macOS
+      package = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin null;
       settings = {
-        font-feature = [
-          "liga"
-          "dlig"
-          "calt"
-          "ss05"
-        ];
+        font-feature = [ "liga" "dlig" "calt" "ss05" ];
         font-size = 28;
         font-family = "JetBrainsMonoNL NFM ExtraBold";
         font-thicken = true;
