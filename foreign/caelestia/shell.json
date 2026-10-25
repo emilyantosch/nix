@@ -190,7 +190,7 @@
     "paths": {
         "mediaGif": "root:/assets/bongocat.gif",
         "sessionGif": "root:/assets/kurukuru.gif",
-        "wallpaperDir": "~/.config/nixos/ressources/wallpapers/Anime"
+        "wallpaperDir": "~/.config/nixos/assets/wallpapers"
     },
     "services": {
         "audioIncrement": 0.1,

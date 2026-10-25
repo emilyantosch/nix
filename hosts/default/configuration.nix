@@ -30,11 +30,44 @@
     };
     loader.efi.canTouchEfiVariables = true;
     kernelModules = [ "uinput" ];
+    # Swap partition that holds the hibernation image (passed as resume= to the kernel).
+    resumeDevice = "/dev/disk/by-uuid/dd36c28b-a1e2-4034-b1ae-343c707d3ea7";
   };
 
   systemd.sleep.settings.Sleep = {
     AllowSuspend = true;
     AllowHibernation = true;
+    # suspend-then-hibernate: stay in S3 this long, then write the image to swap.
+    HibernateDelaySec = "1h";
+  };
+
+  # After resume the NVIDIA driver sometimes reports the DisplayPort monitors as
+  # disconnected (they are still in deep standby) and never sends a hotplug event
+  # once they wake, leaving niri with no outputs. Re-probe the connectors for a
+  # while so the hotplug event fires when the monitors come back.
+  systemd.services.drm-reprobe-after-resume = {
+    description = "Re-probe DRM connectors after resume";
+    after = [
+      "suspend.target"
+      "hibernate.target"
+      "hybrid-sleep.target"
+      "suspend-then-hibernate.target"
+    ];
+    wantedBy = [
+      "suspend.target"
+      "hibernate.target"
+      "hybrid-sleep.target"
+      "suspend-then-hibernate.target"
+    ];
+    serviceConfig.Type = "oneshot";
+    script = ''
+      for _ in $(seq 10); do
+        sleep 3
+        for status in /sys/class/drm/card*-*/status; do
+          echo detect > "$status" || true
+        done
+      done
+    '';
   };
   # Networking
   networking = {
@@ -211,7 +244,7 @@
     nvidia-container-toolkit
     just
     openssl.out
-    inputs.qs-caelestia-shell.packages.${system}.default
+    (import ../../packages/caelestia-shell { inherit inputs system; })
     inputs.qs-caelestia-cli.packages.${system}.default
     virtualgl
     pkg-config
@@ -263,6 +296,7 @@
     uv
     jdk
     starship
+    tuicr
     zplug
     swappy
     grim
@@ -321,6 +355,7 @@
     enableSSHSupport = true;
   };
   programs.nix-ld.enable = true;
+  programs.localsend.enable = true; # also opens port 53317
 
   networking.firewall.allowedTCPPorts = [ 3210 ];
   # This value determines the NixOS release from which the default

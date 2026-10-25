@@ -1,6 +1,9 @@
 { pkgs, inputs, ... }:
 let
-  caelestia-shell = inputs.qs-caelestia-shell.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  caelestia-shell = import ../../packages/caelestia-shell {
+    inherit inputs;
+    system = pkgs.stdenv.hostPlatform.system;
+  };
 in
 {
   home.file.".config/caelestia/shell.json".source = ../../foreign/caelestia/shell.json;
@@ -18,6 +21,10 @@ in
       ExecStart = "${caelestia-shell}/bin/caelestia-shell";
       Restart = "on-failure";
       RestartSec = 2;
+      # Normally ~400M. If it runs away (it has hit 56G), get OOM-killed and
+      # restarted instead of dragging the whole machine through swap.
+      MemoryMax = "4G";
+      MemorySwapMax = 0;
     };
     Install.WantedBy = [ "graphical-session.target" ];
   };

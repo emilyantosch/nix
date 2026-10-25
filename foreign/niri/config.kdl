@@ -794,7 +794,8 @@ binds {
     Alt+Shift+N { spawn "~/.config/nixos/scripts/wall_cycle_back.sh"; }
     Alt+Shift+Slash { show-hotkey-overlay; }
 
-    Super+Escape { spawn "caelestia-shell" "ipc" "call" "lock" "lock"; }
+    // allow-when-locked: re-lock with a fresh surface if the shell restarted while locked.
+    Super+Escape allow-when-locked=true { spawn "caelestia-shell" "ipc" "call" "lock" "lock"; }
     Super+Return { spawn "ghostty"; }
     Super+B { spawn "zen-twilight"; }
     Super+A { spawn "sherlock"; }
