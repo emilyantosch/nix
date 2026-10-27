@@ -90,7 +90,7 @@ input {
       model ""
       rules ""
       variant ""
-      options "grp:win_space_toggle"
+      options ""
       // For example:
       // layout "us,ru"
       // options "grp:win_space_toggle,compose:ralt,ctrl:nocaps"
@@ -198,7 +198,7 @@ input {
 // PC Home
 output "DP-2" {
     variable-refresh-rate // on-demand=true
-    scale 1.000000
+    scale 1.5
     transform "normal"
     position x=0 y=0
     mode "3840x2160@160.00"
@@ -209,9 +209,9 @@ output "DP-2" {
 
 output "DP-1" {
     variable-refresh-rate // on-demand=true
-    scale 1.000000
+    scale 1.5
     transform "90"
-    position x=-2160 y=0
+    position x=-1440 y=0
     mode "3840x2160@160.00"
     // background-color "#003300" //just for testing unsure what its doing
     // backdrop-color "#001100" //color between workspaces
@@ -800,6 +800,7 @@ binds {
     Super+B { spawn "zen-twilight"; }
     Super+A { spawn "sherlock"; }
     Super+R { spawn "caelestia" "shell" "drawers" "toggle" "launcher"; }
+    Super+Space { spawn "caelestia" "shell" "drawers" "toggle" "launcher"; }
     Super+Q { close-window; }
 
     // Ctrl+Alt+C { spawn "sh" "-c" "pidof wl-color-picker || wl-color-picker"; }

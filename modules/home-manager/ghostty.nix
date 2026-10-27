@@ -6,7 +6,7 @@
       package = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin null;
       settings = {
         font-feature = [ "liga" "dlig" "calt" "ss05" ];
-        font-size = 28;
+        font-size = 21;
         font-family = "JetBrainsMonoNL NFM ExtraBold";
         font-thicken = true;
         window-inherit-font-size = true;

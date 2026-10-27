@@ -1,0 +1,109 @@
+--- a/services/ShellState.qml	2026-10-25 19:40:37.533355496 +0100
++++ b/services/ShellState.qml	2026-10-25 19:41:03.595504606 +0100
+@@ -2,13 +2,21 @@
+ 
+ import QtQuick
+ import Quickshell
++import Quickshell.Io
+ import Caelestia
+ import qs.components
+ import qs.services
+ 
+ Singleton {
++    id: root
++
+     property ShellRoot shellRoot
+ 
++    // Not on Hyprland: the focused output name, tracked from niri's event stream
++    readonly property bool isNiri: !!Quickshell.env("NIRI_SOCKET")
++    property string niriFocusedOutput
++    property var niriWorkspaceOutputs: ({})
++
+     function anySidebarOpen(): bool {
+         return states.instances.some(s => s.sidebar);
+     }
+@@ -20,10 +28,16 @@
+         return null;
+     }
+ 
+-    function forActive(): ScreenState {
++    function isActiveScreen(screen: ShellScreen): bool {
++        if (isNiri)
++            return screen.name === niriFocusedOutput;
+         const mon = Hypr.focusedMonitor;
++        return !!mon && Hypr.monitorFor(screen) === mon;
++    }
++
++    function forActive(): ScreenState {
+         for (const s of states.instances)
+-            if (Hypr.monitorFor(s.modelData) === mon)
++            if (isActiveScreen(s.modelData))
+                 return s;
+         return null;
+     }
+@@ -36,13 +50,51 @@
+     }
+ 
+     function componentsForActive(): Components {
+-        const mon = Hypr.focusedMonitor;
+         for (const c of components.instances)
+-            if (Hypr.monitorFor(c.modelData) === mon)
++            if (isActiveScreen(c.modelData))
+                 return c;
+         return null;
+     }
+ 
++    function handleNiriEvent(line: string): void {
++        let event;
++        try {
++            event = JSON.parse(line);
++        } catch (e) {
++            return;
++        }
++
++        if (event.WorkspacesChanged) {
++            const outputs = {};
++            for (const ws of event.WorkspacesChanged.workspaces) {
++                outputs[ws.id] = ws.output;
++                if (ws.is_focused)
++                    niriFocusedOutput = ws.output ?? "";
++            }
++            niriWorkspaceOutputs = outputs;
++        } else if (event.WorkspaceActivated?.focused) {
++            niriFocusedOutput = niriWorkspaceOutputs[event.WorkspaceActivated.id] ?? niriFocusedOutput;
++        }
++    }
++
++    Process {
++        id: niriEvents
++
++        running: root.isNiri
++        command: ["niri", "msg", "--json", "event-stream"]
++        stdout: SplitParser {
++            onRead: data => root.handleNiriEvent(data)
++        }
++        onExited: niriRestartTimer.start() // qmllint disable signal-handler-parameters
++    }
++
++    Timer {
++        id: niriRestartTimer
++
++        interval: 2000
++        onTriggered: niriEvents.running = root.isNiri
++    }
++
+     Variants {
+         id: states
+ 
+--- a/modules/drawers/ContentWindow.qml	2026-10-25 19:40:37.534500504 +0100
++++ b/modules/drawers/ContentWindow.qml	2026-10-25 19:41:03.607798316 +0100
+@@ -68,7 +68,8 @@
+     name: "drawers"
+     WlrLayershell.exclusionMode: ExclusionMode.Ignore
+     WlrLayershell.layer: (fsTransitionProg > 0 && contentItem.Config.general.showOverFullscreen) || (hasSpecialWorkspace && hasFullscreenOnNormalWs) ? WlrLayer.Overlay : WlrLayer.Top
+-    WlrLayershell.keyboardFocus: screenState.launcher || screenState.session ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
++    // OnDemand only gets focus on click outside Hyprland; take the keyboard as soon as the launcher opens
++    WlrLayershell.keyboardFocus: screenState.launcher ? WlrKeyboardFocus.Exclusive : screenState.session ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
+ 
+     mask: hasFullscreen ? emptyRegion : regions
+ 

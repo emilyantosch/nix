@@ -7,5 +7,11 @@ inputs.qs-caelestia-shell.packages.${system}.default.overrideAttrs (old: {
     # Lock screen notification groups spin in a polish() loop, pinning a core
     # and growing memory the longer the session stays locked.
     ./lock-notifgroup-polish-loop.patch
+    # Close the hover-opened launcher once the mouse leaves it, like the
+    # dashboard/utilities do. Shortcut-opened launchers stay open.
+    ./launcher-hide-on-leave.patch
+    # niri: find the active screen from niri's event stream instead of Hyprland
+    # (shortcuts/IPC did nothing), and give the launcher keyboard focus without a click.
+    ./niri-compat.patch
   ];
 })

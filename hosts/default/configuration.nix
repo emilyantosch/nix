@@ -330,7 +330,7 @@
     rust-analyzer
     overskride
     pavucontrol
-    steam
+    (steam.override { extraEnv.STEAM_FORCE_DESKTOPUI_SCALING = "1.5"; })
     steam-run
     cudaPackages.cudatoolkit
     cudaPackages.cuda_opencl

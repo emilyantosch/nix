@@ -1,0 +1,45 @@
+--- a/modules/drawers/Interactions.qml	2026-10-25 19:37:11.562242433 +0100
++++ b/modules/drawers/Interactions.qml	2026-10-25 19:37:23.779321976 +0100
+@@ -22,6 +22,13 @@
+     property bool dashboardShortcutActive
+     property bool osdShortcutActive
+     property bool utilitiesShortcutActive
++    property bool launcherShortcutActive
++
++    // Full launcher area, ignoring the open animation, so it doesn't close while still sliding in
++    function inLauncherArea(x: real, y: real): bool {
++        const launcher = panels.launcher;
++        return y > height - Config.border.thickness - launcher.height - Config.border.rounding && withinPanelWidth(launcher, x, y);
++    }
+ 
+     function withinPanelHeight(panel: Item, x: real, y: real): bool {
+         const panelY = root.borderThickness + panel.y;
+@@ -78,6 +85,9 @@
+             if (!utilitiesShortcutActive)
+                 screenState.utilities = false;
+ 
++            if (Config.launcher.showOnHover && !launcherShortcutActive)
++                screenState.launcher = false;
++
+             if (!popouts.currentName.startsWith("traymenu") || ((popouts.current as StackView)?.depth ?? 0) <= 1) {
+                 popouts.hasCurrent = false;
+                 bar.closeTray();
+@@ -200,6 +210,8 @@
+         if (Config.launcher.showOnHover) {
+             if (!screenState.launcher && inBottomPanel(panels.launcher, x, y))
+                 screenState.launcher = true;
++            else if (screenState.launcher && !launcherShortcutActive && !pressed && !inLauncherArea(x, y))
++                screenState.launcher = false;
+         } else if (pressed && inBottomPanel(panels.launcher, dragStart.x, dragStart.y) && withinPanelWidth(panels.launcher, x, y)) {
+             if (dragY < -Config.launcher.dragThreshold)
+                 screenState.launcher = true;
+@@ -249,6 +261,9 @@
+     // Monitor individual visibility changes
+     Connections {
+         function onLauncherChanged() {
++            // Opened by hover only if the mouse is on the bottom edge trigger; anything else is a shortcut
++            root.launcherShortcutActive = root.screenState.launcher && !(root.containsMouse && root.inBottomPanel(root.panels.launcher, root.mouseX, root.mouseY));
++
+             // If launcher is hidden, clear shortcut flags for dashboard and OSD
+             if (!root.screenState.launcher) {
+                 root.dashboardShortcutActive = false;

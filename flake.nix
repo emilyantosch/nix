@@ -35,10 +35,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    quickshell = {
-      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     copyparty.url = "github:9001/copyparty";
     sops-nix.url = "github:Mic92/sops-nix";
   };
