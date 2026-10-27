@@ -803,6 +803,11 @@ binds {
     Super+Space { spawn "caelestia" "shell" "drawers" "toggle" "launcher"; }
     Super+Q { close-window; }
 
+    // Curated themes (picked from the wallpaper on every wallpaper change).
+    Super+T { spawn "caelestia-theme" "next"; }
+    Super+Shift+T { spawn "caelestia-theme" "prev"; }
+    Super+Ctrl+T { spawn "caelestia-theme" "mode" "toggle"; }
+
     // Ctrl+Alt+C { spawn "sh" "-c" "pidof wl-color-picker || wl-color-picker"; }
     Alt+Shift+W { switch-preset-column-width; }
     Alt+Shift+E { switch-preset-window-height; }

@@ -9,6 +9,9 @@
         "enableGtk": true,
         "enableQt": true
     },
+    "wallpaper": {
+        "postHook": "caelestia-theme apply \"$WALLPAPER_PATH\""
+    },
     "toggles": {
         "communication": {
             "vestkop": {

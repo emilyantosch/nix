@@ -245,7 +245,8 @@
     just
     openssl.out
     (import ../../packages/caelestia-shell { inherit inputs system; })
-    inputs.qs-caelestia-cli.packages.${system}.default
+    # CLI + curated wallpaper-matched themes (caelestia-theme)
+    (import ../../packages/caelestia-cli { inherit inputs system; })
     virtualgl
     pkg-config
     vesktop
