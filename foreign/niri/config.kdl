@@ -801,6 +801,7 @@ binds {
     Super+A { spawn "sherlock"; }
     Super+R { spawn "caelestia" "shell" "drawers" "toggle" "launcher"; }
     Super+Space { spawn "caelestia" "shell" "drawers" "toggle" "launcher"; }
+    Super+Shift+W { spawn "caelestia-shell" "ipc" "call" "launcher" "wallpapers"; }
     Super+Q { close-window; }
 
     // Curated themes (picked from the wallpaper on every wallpaper change).

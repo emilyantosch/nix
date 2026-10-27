@@ -1,0 +1,53 @@
+diff -ru a/services/Wallpapers.qml b/services/Wallpapers.qml
+--- a/services/Wallpapers.qml	2026-10-27 15:47:12.798107213 +0100
++++ b/services/Wallpapers.qml	2026-10-27 15:47:19.330838844 +0100
+@@ -44,6 +44,8 @@
+ 
+         if (Colours.scheme === "dynamic")
+             getPreviewColoursProc.running = true;
++        else if (Colours.scheme === "curated")
++            curatedPreviewProc.request();
+     }
+ 
+     function stopPreview(): void {
+@@ -120,6 +122,40 @@
+                 Colours.load(text, true);
+                 Colours.showPreview = true;
+             }
++        }
++    }
++
++    // The curated theme `caelestia-theme apply` would pick for the hovered
++    // wallpaper. Ranking an uncached wallpaper takes up to ~1s, so hovers
++    // during a run are coalesced into one rerun for the latest wallpaper.
++    Process {
++        id: curatedPreviewProc
++
++        property string path
++        property bool stale
++
++        function request(): void {
++            if (running) {
++                stale = true;
++                return;
++            }
++            stale = false;
++            path = root.previewPath;
++            running = true;
++        }
++
++        command: ["caelestia-theme", "preview", path]
++        onRunningChanged: {
++            if (!running && stale)
++                request();
++        }
++        stdout: StdioCollector {
++            onStreamFinished: {
++                if (curatedPreviewProc.stale || !root.showPreview || !text)
++                    return;
++                Colours.load(text, true);
++                Colours.showPreview = true;
++            }
+         }
+     }
+ }

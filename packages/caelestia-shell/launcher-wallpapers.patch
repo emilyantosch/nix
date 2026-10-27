@@ -1,0 +1,82 @@
+diff -ru a/components/ScreenState.qml b/components/ScreenState.qml
+--- a/components/ScreenState.qml
++++ b/components/ScreenState.qml
+@@ -12,6 +12,9 @@
+     property bool utilities
+     property bool sidebar
+ 
++    // Launcher search text to fill in when it next opens (consumed on use)
++    property string launcherQuery
++
+     // Dashboard state
+     property int dashboardTab
+     property date dashboardDate: new Date()
+diff -ru a/modules/launcher/Content.qml b/modules/launcher/Content.qml
+--- a/modules/launcher/Content.qml
++++ b/modules/launcher/Content.qml
+@@ -19,6 +19,15 @@
+     readonly property int padding: Tokens.padding.large
+     readonly property int rounding: Tokens.rounding.extraLarge
+ 
++    function applyQuery(): void {
++        if (!screenState.launcher || !screenState.launcherQuery)
++            return;
++        search.text = screenState.launcherQuery;
++        screenState.launcherQuery = "";
++    }
++
++    Component.onCompleted: applyQuery()
++
+     implicitWidth: listWrapper.width + padding * 2
+     implicitHeight: search.height + listWrapper.height + padding + search.anchors.bottomMargin
+ 
+@@ -113,6 +122,12 @@
+             function onLauncherChanged(): void {
+                 if (!root.screenState.launcher)
+                     search.text = "";
++                else
++                    root.applyQuery();
++            }
++
++            function onLauncherQueryChanged(): void {
++                root.applyQuery();
+             }
+ 
+             function onSessionChanged(): void {
+diff -ru a/modules/Shortcuts.qml b/modules/Shortcuts.qml
+--- a/modules/Shortcuts.qml
++++ b/modules/Shortcuts.qml
+@@ -2,6 +2,7 @@
+ import Quickshell
+ import Quickshell.Io
+ import Caelestia
++import Caelestia.Config
+ import qs.components.misc
+ import qs.services
+ import qs.modules.nexus
+@@ -136,6 +137,25 @@
+     }
+ 
+     IpcHandler {
++        // Open the launcher straight into the wallpaper picker; closes it if already open
++        function wallpapers(): void {
++            if (root.hasFullscreen)
++                return;
++            const screenState = ShellState.forActive();
++            if (!screenState)
++                return;
++            if (screenState.launcher) {
++                screenState.launcher = false;
++                return;
++            }
++            screenState.launcherQuery = `${GlobalConfig.launcher.actionPrefix}wallpaper `;
++            screenState.launcher = true;
++        }
++
++        target: "launcher"
++    }
++
++    IpcHandler {
+         function open(): void {
+             WindowFactory.create();
+         }

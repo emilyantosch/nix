@@ -20,11 +20,12 @@ import subprocess
 import sys
 from pathlib import Path
 
-from caelestia.utils.paths import c_state_dir, scheme_data_dir, scheme_path, wallpaper_path_path
+from caelestia.utils.paths import c_cache_dir, c_state_dir, scheme_data_dir, scheme_path, wallpaper_path_path
 from PIL import Image
 
 SCHEME = "curated"
 STATE = c_state_dir / "curated-themes.json"
+FEATURE_CACHE = c_cache_dir / "curated-themes-features.json"
 NAMES = {
     "catppuccin": "Catppuccin",
     "rosepine": "Rosé Pine",
@@ -105,7 +106,27 @@ def features(colours: dict[tuple[int, int, int], float]) -> Features:
     return hue, sum(hist) / total, chroma / total
 
 
-def wallpaper_features(path: Path) -> tuple[list[float], float]:
+def wallpaper_features(path: Path) -> Features:
+    """Cached by path, size and mtime: big PNGs take ~1s to decode, which
+    makes the hover preview in the launcher lag."""
+    st = path.stat()
+    key = f"{path}:{st.st_size}:{st.st_mtime_ns}"
+    try:
+        cache = json.loads(FEATURE_CACHE.read_text())
+    except (OSError, json.JSONDecodeError):
+        cache = {}
+    if key in cache:
+        return tuple(cache[key])
+
+    feats = _wallpaper_features(path)
+    cache = {k: v for k, v in cache.items() if not k.startswith(f"{path}:")}
+    cache[key] = feats
+    FEATURE_CACHE.parent.mkdir(parents=True, exist_ok=True)
+    FEATURE_CACHE.write_text(json.dumps(cache))
+    return feats
+
+
+def _wallpaper_features(path: Path) -> Features:
     with Image.open(path) as img:
         img.draft("RGB", (256, 256))  # fast JPEG downscale on decode
         img = img.convert("RGB")
@@ -194,6 +215,14 @@ def rank(wall: str, mode: str) -> list[tuple[str, float]]:
     return sorted(scores, key=lambda s: s[1], reverse=True)
 
 
+def pick(wall: str, mode: str) -> str:
+    """The theme pinned for this wallpaper, else the best match."""
+    theme = load_overrides().get(wall)
+    if theme not in themes():
+        theme = rank(wall, mode)[0][0]
+    return theme
+
+
 def apply(theme: str, mode: str) -> None:
     subprocess.run(["caelestia", "scheme", "set", "-n", SCHEME, "-f", theme, "-m", mode], check=True)
 
@@ -213,11 +242,18 @@ def require_wallpaper(arg: str | None) -> str:
 def cmd_apply(args: argparse.Namespace) -> None:
     wall = require_wallpaper(args.wallpaper)
     mode = args.mode or current_scheme().get("mode", "dark")
-    theme = load_overrides().get(wall)
-    if theme not in themes():
-        theme = rank(wall, mode)[0][0]
+    theme = pick(wall, mode)
     apply(theme, mode)
     print(theme)
+
+
+def cmd_preview(args: argparse.Namespace) -> None:
+    """The theme `apply` would pick, as `caelestia wallpaper -p` style JSON,
+    without applying it (for the launcher's hover preview)."""
+    wall = require_wallpaper(args.wallpaper)
+    mode = args.mode or current_scheme().get("mode", "dark")
+    theme = pick(wall, mode)
+    print(json.dumps({"name": SCHEME, "flavour": theme, "mode": mode, "colours": theme_colours(theme, mode)}))
 
 
 def cmd_rank(args: argparse.Namespace) -> None:
@@ -295,6 +331,11 @@ def main() -> None:
     p.add_argument("wallpaper", nargs="?", help="defaults to the current wallpaper")
     p.add_argument("-m", "--mode", choices=["dark", "light"], help="defaults to the current mode")
     p.set_defaults(func=cmd_apply)
+
+    p = sub.add_parser("preview", help="print the theme apply would pick as scheme JSON, without applying it")
+    p.add_argument("wallpaper", nargs="?", help="defaults to the current wallpaper")
+    p.add_argument("-m", "--mode", choices=["dark", "light"], help="defaults to the current mode")
+    p.set_defaults(func=cmd_preview)
 
     p = sub.add_parser("rank", help="show how well each theme fits a wallpaper")
     p.add_argument("wallpaper", nargs="?", help="defaults to the current wallpaper")
