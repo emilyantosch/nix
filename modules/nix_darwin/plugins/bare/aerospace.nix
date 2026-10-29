@@ -1,4 +1,23 @@
 { pkgs, ... }:
+let
+  # Ghostty only takes a fixed position, so center on the screen under the mouse
+  # (AeroSpace moves the mouse to the focused monitor).
+  # shortcut: 1164x711 is the measured size of 68x19 cells at font-size 28, re-measure if the font changes
+  notes-window = pkgs.writeShellScript "notes-window" ''
+    read -r x y < <(/usr/bin/osascript -l JavaScript -e '
+      ObjC.import("AppKit");
+      const m = $.NSEvent.mouseLocation;
+      const s = $.NSScreen.screens.js.find(s => $.NSMouseInRect(m, s.frame, false)) || $.NSScreen.screens.js[0];
+      const f = s.visibleFrame;
+      Math.round((f.size.width - 1164) / 2) + " " + Math.round((f.size.height - 711) / 2)')
+    exec open -na /Applications/Ghostty.app --args --title=notes \
+      --window-save-state=never --quit-after-last-window-closed=true \
+      --window-width=68 --window-height=19 \
+      --window-position-x="$x" --window-position-y="$y" \
+      --working-directory="$HOME/projects/notes/emmiNotes" \
+      -e /opt/homebrew/bin/nvim index.md
+  '';
+in
 {
   homebrew.casks = [
     "nikitabobko/tap/aerospace"
@@ -32,6 +51,16 @@
       };
 
       automatically-unhide-macos-hidden-apps = true;
+
+      on-window-detected = [
+        {
+          "if" = {
+            app-id = "com.mitchellh.ghostty";
+            window-title-regex-substring = "^notes$";
+          };
+          run = [ "layout floating" ];
+        }
+      ];
 
       gaps = {
         inner.horizontal = 10;
@@ -68,6 +97,8 @@
       mode.main.binding = {
 
         cmd-alt-ctrl-shift-enter = [ "exec-and-forget open -a /Applications/Ghostty.app" ];
+        # Separate Ghostty instance so the title (and on-window-detected rule below) stays fixed
+        cmd-alt-ctrl-shift-n = [ "exec-and-forget ${notes-window}" ];
 
         alt-ctrl-shift-f = "fullscreen";
         alt-ctrl-f = "layout floating tiling";
