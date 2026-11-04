@@ -19,5 +19,16 @@ inputs.qs-caelestia-shell.packages.${system}.default.overrideAttrs (old: {
     # Hovering a wallpaper previews the curated theme `caelestia-theme apply`
     # would pick for it (upstream only previews the dynamic scheme).
     ./launcher-curated-preview.patch
+    # Launch apps in their own systemd scopes. They used to stay in the shell's
+    # cgroup, so Zen/Steam/Spotify ate into its 4G MemoryMax, got the shell
+    # OOM-killed (leaving niri locked with no lock surface: red screen) and
+    # were killed along with it.
+    ./launcher-own-scope.patch
+    # Bar indicator for voxtype dictation (modules/home-manager/voxtype.nix): a
+    # pulsing mic while recording, a spinner while transcribing, hidden when idle;
+    # a hover-only bar slides out while dictating.
+    # Click finishes, right click discards; hover shows the state. Plus a
+    # bottom-centre pill (where the launcher opens) with a live mic waveform.
+    ./voxtype-indicator.patch
   ];
 })

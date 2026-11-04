@@ -1,0 +1,21 @@
+/* Zen paints its own workspace gradient over extension themes. While one is
+ * active (Pywalfox, following the caelestia scheme), use the theme's colours
+ * instead. Firefox updates the --lwt-* variables live on every theme change,
+ * so this only has to be loaded once. */
+:root[lwtheme] {
+  --zen-primary-color: var(--lwt-toolbar-field-highlight) !important;
+  --toolbox-textcolor: var(--lwt-text-color) !important;
+}
+
+/* Zen sets the gradient inline on these two, and crossfades from the "-old"
+ * one on workspace switches, so override both right where they are used. */
+:root[lwtheme] :is(#zen-browser-background, #zen-toolbar-background) {
+  --zen-main-browser-background: var(--lwt-accent-color) !important;
+  --zen-main-browser-background-old: var(--lwt-accent-color) !important;
+  --zen-main-browser-background-toolbar: var(--lwt-accent-color) !important;
+  --zen-main-browser-background-toolbar-old: var(--lwt-accent-color) !important;
+}
+
+:root[lwtheme] .zen-browser-grain {
+  display: none !important;
+}

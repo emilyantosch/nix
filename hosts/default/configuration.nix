@@ -165,6 +165,23 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
+  # NVIDIA keeps a large free-buffer pool per Wayland client (~1 GB for niri),
+  # which starves games of VRAM. See niri wiki "Nvidia".
+  environment.etc."nvidia/nvidia-application-profiles-rc.d/50-limit-free-buffer-pool-in-wayland-compositors.json".text =
+    builtins.toJSON {
+      rules = [
+        { pattern = { feature = "procname"; matches = "niri"; }; profile = "Limit Free Buffer Pool On Wayland Compositors"; }
+        { pattern = { feature = "procname"; matches = ".quickshell-wrapped"; }; profile = "Limit Free Buffer Pool On Wayland Compositors"; }
+      ];
+      profiles = [
+        { name = "Limit Free Buffer Pool On Wayland Compositors"; settings = [ { key = "GLVidHeapReuseRatio"; value = 0; } ]; }
+      ];
+    };
+
+  # Split-lock detection throttles the offending thread (Proton games trigger it),
+  # causing stutter. SteamOS disables it as well.
+  boot.kernel.sysctl."kernel.split_lock_mitigate" = 0;
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -240,7 +257,6 @@
     gws
     super-slicer
     audacity
-    claude-code
     nvidia-container-toolkit
     just
     openssl.out
@@ -357,6 +373,15 @@
   };
   programs.nix-ld.enable = true;
   programs.localsend.enable = true; # also opens port 53317
+  programs.obs-studio = {
+    enable = true;
+    package = pkgs.obs-studio.override { cudaSupport = true; }; # NVENC
+    enableVirtualCamera = true;
+    plugins = with pkgs.obs-studio-plugins; [
+      obs-pipewire-audio-capture
+      obs-vkcapture
+    ];
+  };
 
   networking.firewall.allowedTCPPorts = [ 3210 ];
   # This value determines the NixOS release from which the default

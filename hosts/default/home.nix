@@ -35,6 +35,7 @@
     ./../../modules/home-manager/atuin.nix
     ./../../modules/home-manager/bacon.nix
     ./../../modules/home-manager/ghostty.nix
+    ./../../modules/home-manager/voxtype.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should

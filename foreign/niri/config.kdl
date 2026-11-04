@@ -5,7 +5,6 @@
 
 // Add lines like this to spawn processes at startup.
 // spawn-at-startup "ironbar"
-spawn-at-startup "xwayland-satellite"
 spawn-at-startup "plasma-polkit-agent"
 // spawn-sh-at-startup "swww-daemon &"
 // spawn-sh-at-startup "swww img  ~/.current-wallpaper"
@@ -14,7 +13,6 @@ spawn-at-startup "plasma-polkit-agent"
 
 spawn-at-startup "obsidian"
 
-spawn-at-startup "sh" "-c" "systemctl --user start xwayland-satellite.service"
 // spawn-at-startup "sh" "-c" "noctalia-shell"
 // caelestia-shell is started by the systemd user service in qs-caelestia.nix
 
@@ -623,8 +621,7 @@ animations {
 // hotkey-overlay { skip-at-startup; }
 environment {
     ELECTRON_OZONE_PLATFORM_HINT "auto"
-    DISPLAY ":1" //or :0
-    // DISPLAY null //or :0
+    // DISPLAY is set by niri's built-in xwayland-satellite integration.
     CLUTTER_BACKEND "wayland"
     QT_QPA_PLATFORM "wayland"
     "ELM_DISPLAY" "wl"
@@ -710,8 +707,15 @@ window-rule {
 window-rule {
     match at-startup=true app-id="vesktop"
     match app-id="vesktop"
-    match app-id="steam"
+    // Anchored: an unanchored "steam" also matches game windows (steam_app_<id>).
+    match app-id="^steam$"
     open-on-workspace "chat"
+}
+// Steam games: main (non-rotated) monitor, fullscreen.
+window-rule {
+    match app-id=r#"^steam_app_\d+$"#
+    open-on-output "DP-2"
+    open-fullscreen true
 }
 // window-rule {
 //     match at-startup=true app-id="foot"
@@ -803,6 +807,11 @@ binds {
     Super+Space { spawn "caelestia" "shell" "drawers" "toggle" "launcher"; }
     Super+Shift+W { spawn "caelestia-shell" "ipc" "call" "launcher" "wallpapers"; }
     Super+Q { close-window; }
+
+    // Dictation (voxtype): press to start, press again to type the transcript at
+    // the cursor; Shift discards it. The bar shows a mic while it listens.
+    Super+D { spawn "voxtype" "record" "toggle"; }
+    Super+Shift+D { spawn "voxtype" "record" "cancel"; }
 
     // Curated themes (picked from the wallpaper on every wallpaper change).
     Super+T { spawn "caelestia-theme" "next"; }

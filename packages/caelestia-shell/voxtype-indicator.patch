@@ -1,0 +1,497 @@
+diff --git a/modules/bar/BarWrapper.qml b/modules/bar/BarWrapper.qml
+index 063c0d7..af527b3 100644
+--- a/modules/bar/BarWrapper.qml
++++ b/modules/bar/BarWrapper.qml
+@@ -4,6 +4,7 @@ import QtQuick
+ import Quickshell
+ import Caelestia.Config
+ import qs.components
++import qs.services
+ import qs.utils
+ import qs.modules.bar.popouts as BarPopouts
+ 
+@@ -21,7 +22,9 @@ Item {
+     readonly property int padding: Math.max(Tokens.padding.small, Config.border.thickness)
+     readonly property int contentWidth: Tokens.sizes.bar.innerWidth + padding * 2
+     readonly property int exclusiveZone: !disabled && (Config.bar.persistent || screenState.bar) ? contentWidth : Config.border.thickness
+-    readonly property bool shouldBeVisible: !fullscreen && !disabled && (Config.bar.persistent || screenState.bar || isHovered)
++    // Also slide out while dictating so the voxtype indicator is visible with a
++    // hover-only bar. Visual only: the exclusive zone stays, windows don't move.
++    readonly property bool shouldBeVisible: !fullscreen && !disabled && (Config.bar.persistent || screenState.bar || isHovered || Voxtype.active)
+     property bool isHovered
+ 
+     function closeTray(): void {
+diff --git a/modules/bar/components/StatusIcons.qml b/modules/bar/components/StatusIcons.qml
+index 90ad09b..3b40625 100644
+--- a/modules/bar/components/StatusIcons.qml
++++ b/modules/bar/components/StatusIcons.qml
+@@ -57,6 +57,21 @@ StyledRect {
+ 
+         spacing: 0
+ 
++        // Not a config entry: only takes up space while dictating, above the rest
++        VoxtypeStatus {
++            property real gap: Voxtype.active && root.firstPresent >= 0 ? root.spacing / 2 : 0
++
++            Layout.alignment: Qt.AlignHCenter
++            Layout.bottomMargin: Math.round(gap)
++            colour: root.colour
++
++            Behavior on gap {
++                Anim {
++                    type: Anim.SlowEffects
++                }
++            }
++        }
++
+         Repeater {
+             model: ScriptModel {
+                 id: model
+diff --git a/modules/bar/components/status/VoxtypeStatus.qml b/modules/bar/components/status/VoxtypeStatus.qml
+new file mode 100644
+index 0000000..d32e720
+--- /dev/null
++++ b/modules/bar/components/status/VoxtypeStatus.qml
+@@ -0,0 +1,96 @@
++import QtQuick
++import qs.components
++import qs.services
++
++// Dictation indicator: grows in while voxtype records (pulsing red mic) or
++// transcribes (spinner), and collapses to nothing otherwise.
++// Left click stops and transcribes, right click discards.
++Item {
++    id: root
++
++    required property color colour
++    // Read by the bar to pick the hover popout
++    readonly property string name: "voxtype"
++
++    property real shownHeight: Voxtype.active ? icon.implicitHeight : 0
++
++    implicitWidth: icon.implicitWidth
++    implicitHeight: Math.round(shownHeight)
++
++    Behavior on shownHeight {
++        Anim {
++            type: Anim.SlowEffects
++        }
++    }
++
++    // Separate from the icon so the pulse doesn't fight its show/hide fade
++    Item {
++        id: pulse
++
++        anchors.fill: parent
++
++        MaterialIcon {
++            id: icon
++
++            anchors.centerIn: parent
++
++            scale: Voxtype.active ? 1 : 0.5
++            opacity: Voxtype.active ? 1 : 0
++
++            // No `animate`: its text fade would force opacity back to 1 while hidden.
++            // Idle shows the spinner so it fades out as it was after transcribing.
++            text: Voxtype.recording ? "mic" : "progress_activity"
++            color: Voxtype.recording ? Colours.palette.m3error : root.colour
++            fill: 1
++            grade: 25
++
++            Behavior on opacity {
++                Anim {
++                    type: Anim.DefaultEffects
++                }
++            }
++
++            Behavior on scale {
++                Anim {}
++            }
++
++            RotationAnimation on rotation {
++                running: Voxtype.transcribing
++                loops: Animation.Infinite
++                from: 0
++                to: 360
++                duration: 1000
++                onRunningChanged: if (!running) icon.rotation = 0
++            }
++        }
++    }
++
++    SequentialAnimation {
++        running: Voxtype.recording
++        loops: Animation.Infinite
++        onRunningChanged: if (!running) pulse.opacity = 1
++
++        NumberAnimation {
++            target: pulse
++            property: "opacity"
++            to: 0.35
++            duration: 700
++            easing.type: Easing.InOutSine
++        }
++        NumberAnimation {
++            target: pulse
++            property: "opacity"
++            to: 1
++            duration: 700
++            easing.type: Easing.InOutSine
++        }
++    }
++
++    MouseArea {
++        anchors.fill: parent
++        enabled: Voxtype.active
++        acceptedButtons: Qt.LeftButton | Qt.RightButton
++        cursorShape: Qt.PointingHandCursor
++        onClicked: event => event.button === Qt.RightButton ? Voxtype.cancel() : Voxtype.stop()
++    }
++}
+diff --git a/modules/bar/popouts/Content.qml b/modules/bar/popouts/Content.qml
+index 2ba14cd..37ae703 100644
+--- a/modules/bar/popouts/Content.qml
++++ b/modules/bar/popouts/Content.qml
+@@ -119,6 +119,11 @@ Item {
+             sourceComponent: KbLayout {}
+         }
+ 
++        Popout {
++            name: "voxtype"
++            sourceComponent: VoxtypePopout {}
++        }
++
+         Popout {
+             name: "lockstatus"
+             sourceComponent: LockStatus {}
+diff --git a/modules/bar/popouts/VoxtypePopout.qml b/modules/bar/popouts/VoxtypePopout.qml
+new file mode 100644
+index 0000000..877c80e
+--- /dev/null
++++ b/modules/bar/popouts/VoxtypePopout.qml
+@@ -0,0 +1,19 @@
++import QtQuick.Layouts
++import Caelestia.Config
++import Caelestia.I18n
++import qs.components
++import qs.services
++
++ColumnLayout {
++    spacing: Tokens.spacing.small
++
++    StyledText {
++        text: Voxtype.recording ? Tr.tr("Dictating…") : Voxtype.transcribing ? Tr.tr("Transcribing…") : Tr.tr("Dictation idle")
++    }
++
++    StyledText {
++        visible: Voxtype.recording
++        text: Tr.tr("Click to finish, right click to discard")
++        color: Colours.palette.m3onSurfaceVariant
++    }
++}
+diff --git a/modules/dictation/Content.qml b/modules/dictation/Content.qml
+new file mode 100644
+index 0000000..df6c240
+--- /dev/null
++++ b/modules/dictation/Content.qml
+@@ -0,0 +1,81 @@
++pragma ComponentBehavior: Bound
++
++import QtQuick
++import Caelestia.Config
++import qs.components
++import qs.services
++
++// Mic + scrolling level bars while recording; a slow wave and a spinner while
++// transcribing.
++Item {
++    id: root
++
++    readonly property int barWidth: 4
++    readonly property int barGap: 3
++    readonly property int barsHeight: 28
++    property real phase
++
++    implicitWidth: row.implicitWidth + Tokens.padding.extraLarge * 2
++    implicitHeight: row.implicitHeight + Tokens.padding.large * 2
++
++    FrameAnimation {
++        running: Voxtype.transcribing
++        onTriggered: root.phase += frameTime * 5
++    }
++
++    Row {
++        id: row
++
++        anchors.centerIn: parent
++        spacing: Tokens.spacing.medium
++
++        MaterialIcon {
++            id: icon
++
++            anchors.verticalCenter: parent.verticalCenter
++
++            text: Voxtype.transcribing ? "progress_activity" : "mic"
++            color: Voxtype.transcribing ? Colours.palette.m3secondary : Colours.palette.m3error
++            fill: 1
++            fontStyle: Tokens.font.icon.medium
++
++            RotationAnimation on rotation {
++                running: Voxtype.transcribing
++                loops: Animation.Infinite
++                from: 0
++                to: 360
++                duration: 1000
++                onRunningChanged: if (!running) icon.rotation = 0
++            }
++        }
++
++        Row {
++            anchors.verticalCenter: parent.verticalCenter
++            height: root.barsHeight
++            spacing: root.barGap
++
++            Repeater {
++                model: Voxtype.levelCount
++
++                StyledRect {
++                    required property int index
++
++                    readonly property real value: Voxtype.transcribing ? 0.2 + 0.25 * (0.5 + 0.5 * Math.sin(root.phase - index * 0.45)) : (Voxtype.levels[index] ?? 0)
++
++                    anchors.verticalCenter: parent.verticalCenter
++                    implicitWidth: root.barWidth
++                    implicitHeight: Math.max(root.barWidth, root.barsHeight * value)
++                    radius: root.barWidth / 2
++                    color: Voxtype.transcribing ? Colours.palette.m3secondary : Colours.palette.m3primary
++
++                    Behavior on implicitHeight {
++                        NumberAnimation {
++                            duration: 90
++                            easing.type: Easing.OutQuad
++                        }
++                    }
++                }
++            }
++        }
++    }
++}
+diff --git a/modules/dictation/Wrapper.qml b/modules/dictation/Wrapper.qml
+new file mode 100644
+index 0000000..55d4c8b
+--- /dev/null
++++ b/modules/dictation/Wrapper.qml
+@@ -0,0 +1,41 @@
++pragma ComponentBehavior: Bound
++
++import QtQuick
++import Quickshell
++import Caelestia.Config
++import qs.components
++import qs.services
++
++// Bottom-centre pill while voxtype dictates, where the launcher opens, so it's
++// in view while looking at the text you're dictating into. Only on the focused
++// screen, and it makes way for the launcher.
++Item {
++    id: root
++
++    required property ShellScreen screen
++    required property ScreenState screenState
++
++    readonly property bool shouldBeActive: Voxtype.active && !screenState.launcher && ShellState.isActiveScreen(screen)
++    property real offsetScale: shouldBeActive ? 0 : 1
++
++    visible: offsetScale < 1
++    anchors.bottomMargin: (-implicitHeight - 5) * offsetScale
++    implicitWidth: content.implicitWidth
++    implicitHeight: content.implicitHeight
++    opacity: 1 - offsetScale
++
++    Behavior on offsetScale {
++        Anim {}
++    }
++
++    Loader {
++        id: content
++
++        anchors.top: parent.top
++        anchors.horizontalCenter: parent.horizontalCenter
++
++        active: root.shouldBeActive || root.visible
++
++        sourceComponent: Content {}
++    }
++}
+diff --git a/modules/drawers/ContentWindow.qml b/modules/drawers/ContentWindow.qml
+index 0871387..35beaca 100644
+--- a/modules/drawers/ContentWindow.qml
++++ b/modules/drawers/ContentWindow.qml
+@@ -189,6 +189,13 @@ StyledWindow {
+             deformAmount: 0.1
+         }
+ 
++        PanelBg {
++            id: dictationBg
++
++            panel: panels.dictation
++            deformAmount: 0.1
++        }
++
+         PanelBg {
+             id: sessionBg
+ 
+@@ -277,6 +284,9 @@ StyledWindow {
+             launcher.transform: Matrix4x4 {
+                 matrix: launcherBg.deformMatrix
+             }
++            dictation.transform: Matrix4x4 {
++                matrix: dictationBg.deformMatrix
++            }
+             session.transform: Matrix4x4 {
+                 matrix: sessionBg.deformMatrix
+             }
+diff --git a/modules/drawers/Panels.qml b/modules/drawers/Panels.qml
+index 28a0356..1d23669 100644
+--- a/modules/drawers/Panels.qml
++++ b/modules/drawers/Panels.qml
+@@ -4,6 +4,7 @@ import Caelestia.Config
+ import qs.components
+ import qs.modules.bar as Bar
+ import qs.modules.dashboard as Dashboard
++import qs.modules.dictation as Dictation
+ import qs.modules.launcher as Launcher
+ import qs.modules.notifications as Notifications
+ import qs.modules.osd as Osd
+@@ -27,6 +28,7 @@ Item {
+     readonly property alias session: session
+     readonly property alias sessionWrapper: sessionWrapper
+     readonly property alias launcher: launcher
++    readonly property alias dictation: dictation
+     readonly property alias dashboard: dashboard
+     readonly property alias popouts: popoutsWrapper.content
+     readonly property alias popoutsWrapper: popoutsWrapper
+@@ -107,6 +109,16 @@ Item {
+         anchors.bottom: parent.bottom
+     }
+ 
++    Dictation.Wrapper {
++        id: dictation
++
++        screen: root.screen
++        screenState: root.screenState
++
++        anchors.horizontalCenter: parent.horizontalCenter
++        anchors.bottom: parent.bottom
++    }
++
+     Dashboard.Wrapper {
+         id: dashboard
+ 
+diff --git a/services/Voxtype.qml b/services/Voxtype.qml
+new file mode 100644
+index 0000000..cb32861
+--- /dev/null
++++ b/services/Voxtype.qml
+@@ -0,0 +1,100 @@
++pragma Singleton
++
++import QtQuick
++import Quickshell
++import Quickshell.Io
++
++// Dictation state from the voxtype daemon. `status --follow` watches its state
++// file with inotify and prints one JSON line per change (and "stopped" when the
++// daemon goes away), so nothing here polls.
++Singleton {
++    id: root
++
++    // "idle", "recording", "transcribing" or "stopped"
++    property string state: "stopped"
++
++    readonly property bool recording: state === "recording"
++    readonly property bool transcribing: state === "transcribing"
++    readonly property bool active: recording || transcribing
++
++    // Recent mic levels while recording, 0..1 on a dB scale, oldest first
++    readonly property int levelCount: 32
++    property var levels: new Array(levelCount).fill(0)
++    property real peakAcc: 0
++
++    onRecordingChanged: {
++        peakAcc = 0;
++        levels = new Array(levelCount).fill(0);
++    }
++
++    function toggle(): void {
++        Quickshell.execDetached(["voxtype", "record", "toggle"]);
++    }
++
++    function stop(): void {
++        Quickshell.execDetached(["voxtype", "record", "stop"]);
++    }
++
++    function cancel(): void {
++        Quickshell.execDetached(["voxtype", "record", "cancel"]);
++    }
++
++    Process {
++        id: follow
++
++        running: true
++        command: ["voxtype", "status", "--follow", "--format", "json"]
++        stdout: SplitParser {
++            onRead: data => {
++                try {
++                    const status = JSON.parse(data);
++                    root.state = status.class || status.alt || "stopped";
++                } catch (e) {
++                    // Ignore partial or non-JSON lines
++                }
++            }
++        }
++        // voxtype missing or the follower died: show nothing and retry later
++        onExited: { // qmllint disable signal-handler-parameters
++            root.state = "stopped";
++            restart.start();
++        }
++    }
++
++    // The daemon streams 100 Hz binary level frames over a socket while recording;
++    // the bridge re-emits them as NDJSON ({"peak":…,"rms":…,"vad":…}).
++    Process {
++        running: root.recording
++        command: ["voxtype-audio-bridge"]
++        stdout: SplitParser {
++            onRead: data => {
++                try {
++                    const frame = JSON.parse(data);
++                    if (frame.peak !== undefined)
++                        root.peakAcc = Math.max(root.peakAcc, frame.peak);
++                } catch (e) {}
++            }
++        }
++    }
++
++    // Fold the frames into one bar per 40 ms
++    Timer {
++        interval: 40
++        repeat: true
++        running: root.recording
++        onTriggered: {
++            // Room tone sits near -60 dBFS, loud speech around -10
++            const db = 20 * Math.log10(Math.max(root.peakAcc, 1e-6));
++            const value = Math.max(0, Math.min(1, (db + 60) / 50));
++            root.levels = [...root.levels.slice(1), value];
++            root.peakAcc = 0;
++        }
++    }
++
++    Timer {
++        id: restart
++
++        interval: 5000
++        onTriggered: follow.running = true
++    }
++}

@@ -1,0 +1,54 @@
+/* Rendered by caelestia into ~/.local/state/caelestia/theme/spicetify-light.css on
+ * every scheme change. The theme postHook links the current mode's file to
+ * spicetify.css, which Spotify's caelestiaColours extension keeps loaded.
+ * :root:root outranks spicetify's colors.css, which Spotify moves after it. */
+:root:root {
+    --spice-text: #{{ onSurface.hex }};
+    --spice-rgb-text: {{ onSurface.red }},{{ onSurface.green }},{{ onSurface.blue }};
+    --spice-subtext: #{{ onSurfaceVariant.hex }};
+    --spice-rgb-subtext: {{ onSurfaceVariant.red }},{{ onSurfaceVariant.green }},{{ onSurfaceVariant.blue }};
+    --spice-main: #{{ surface.hex }};
+    --spice-rgb-main: {{ surface.red }},{{ surface.green }},{{ surface.blue }};
+    --spice-highlight: #{{ primary.hex }};
+    --spice-rgb-highlight: {{ primary.red }},{{ primary.green }},{{ primary.blue }};
+    --spice-misc: #{{ primary.hex }};
+    --spice-rgb-misc: {{ primary.red }},{{ primary.green }},{{ primary.blue }};
+    --spice-notification: #{{ outline.hex }};
+    --spice-rgb-notification: {{ outline.red }},{{ outline.green }},{{ outline.blue }};
+    --spice-notification-error: #{{ error.hex }};
+    --spice-rgb-notification-error: {{ error.red }},{{ error.green }},{{ error.blue }};
+    --spice-shadow: #{{ shadow.hex }};
+    --spice-rgb-shadow: {{ shadow.red }},{{ shadow.green }},{{ shadow.blue }};
+    --spice-card: #{{ surfaceContainer.hex }};
+    --spice-rgb-card: {{ surfaceContainer.red }},{{ surfaceContainer.green }},{{ surfaceContainer.blue }};
+    --spice-player: #{{ secondaryContainer.hex }};
+    --spice-rgb-player: {{ secondaryContainer.red }},{{ secondaryContainer.green }},{{ secondaryContainer.blue }};
+    --spice-sidebar: #{{ surfaceContainer.hex }};
+    --spice-rgb-sidebar: {{ surfaceContainer.red }},{{ surfaceContainer.green }},{{ surfaceContainer.blue }};
+    --spice-main-elevated: #{{ surfaceContainerHigh.hex }};
+    --spice-rgb-main-elevated: {{ surfaceContainerHigh.red }},{{ surfaceContainerHigh.green }},{{ surfaceContainerHigh.blue }};
+    --spice-highlight-elevated: #{{ surfaceContainerHighest.hex }};
+    --spice-rgb-highlight-elevated: {{ surfaceContainerHighest.red }},{{ surfaceContainerHighest.green }},{{ surfaceContainerHighest.blue }};
+    --spice-selected-row: #{{ onSurface.hex }};
+    --spice-rgb-selected-row: {{ onSurface.red }},{{ onSurface.green }},{{ onSurface.blue }};
+    --spice-button: #{{ primary.hex }};
+    --spice-rgb-button: {{ primary.red }},{{ primary.green }},{{ primary.blue }};
+    --spice-button-active: #{{ primary.hex }};
+    --spice-rgb-button-active: {{ primary.red }},{{ primary.green }},{{ primary.blue }};
+    --spice-button-disabled: #{{ outline.hex }};
+    --spice-rgb-button-disabled: {{ outline.red }},{{ outline.green }},{{ outline.blue }};
+    --spice-tab-active: #{{ surfaceContainer.hex }};
+    --spice-rgb-tab-active: {{ surfaceContainer.red }},{{ surfaceContainer.green }},{{ surfaceContainer.blue }};
+    --spice-button-text: #{{ onPrimary.hex }};
+    --spice-rgb-button-text: {{ onPrimary.red }},{{ onPrimary.green }},{{ onPrimary.blue }};
+    --spice-play-button: #{{ primary.hex }};
+    --spice-rgb-play-button: {{ primary.red }},{{ primary.green }},{{ primary.blue }};
+    --spice-playback-bar: #{{ primary.hex }};
+    --spice-rgb-playback-bar: {{ primary.red }},{{ primary.green }},{{ primary.blue }};
+    --spice-sidebar-button: #{{ onSurfaceVariant.hex }};
+    --spice-rgb-sidebar-button: {{ onSurfaceVariant.red }},{{ onSurfaceVariant.green }},{{ onSurfaceVariant.blue }};
+    --spice-sub-button: #{{ secondary.hex }};
+    --spice-rgb-sub-button: {{ secondary.red }},{{ secondary.green }},{{ secondary.blue }};
+    --spice-subbutton-text: #{{ onSecondary.hex }};
+    --spice-rgb-subbutton-text: {{ onSecondary.red }},{{ onSecondary.green }},{{ onSecondary.blue }};
+}
