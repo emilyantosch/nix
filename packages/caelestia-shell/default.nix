@@ -30,5 +30,14 @@ inputs.qs-caelestia-shell.packages.${system}.default.overrideAttrs (old: {
     # Click finishes, right click discards; hover shows the state. Plus a
     # bottom-centre pill (where the launcher opens) with a live mic waveform.
     ./voxtype-indicator.patch
+    # Audio recording (modules/home-manager/voice-record.nix) in the bar and the
+    # bottom pill, cycling through the recording GIFs; the writing girl replaces
+    # the dictation mic. Upstream's Recorder is the screen recorder, hence AudioRecorder.
+    ./recorder-gifs.patch
   ];
+
+  # Background-free, trimmed copies of the GIFs, read from assets/gifs/
+  postPatch = (old.postPatch or "") + ''
+    cp -r --no-preserve=mode ${../../assets/gifs} assets/gifs
+  '';
 })

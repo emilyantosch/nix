@@ -75,6 +75,34 @@
         enable = true;
         package = pkgs.wireplumber;
       };
+
+      # Virtual mic for OBS: set OBS's monitoring device to "OBS Mic (Sink)",
+      # set the mic source to "Monitor and Output", then pick "OBS Virtual Mic"
+      # as the input device in Discord/Vesktop.
+      extraConfig.pipewire."91-obs-virtual-mic" = {
+        "context.modules" = [
+          {
+            name = "libpipewire-module-loopback";
+            args = {
+              "node.description" = "OBS Virtual Mic";
+              "capture.props" = {
+                "node.name" = "obs_mic_sink";
+                "node.description" = "OBS Mic (Sink)";
+                "media.class" = "Audio/Sink";
+                "audio.position" = [ "FL" "FR" ];
+              };
+              "playback.props" = {
+                "node.name" = "obs_mic";
+                "node.description" = "OBS Virtual Mic";
+                # Not "Audio/Source/Virtual": that crashes PipeWire 1.6.9
+                # (ENOSPC adding ports, then SEGV) once WirePlumber connects.
+                "media.class" = "Audio/Source";
+                "audio.position" = [ "FL" "FR" ];
+              };
+            };
+          }
+        ];
+      };
     };
   };
 }

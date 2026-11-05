@@ -16,6 +16,7 @@
     ./../../modules/nixos/kanata.nix
     ./../../modules/nixos/services.nix
     ./../../modules/nixos/copyparty.nix
+    ./../../modules/nixos/camera.nix
     inputs.home-manager.nixosModules.default
   ];
 

@@ -808,10 +808,13 @@ binds {
     Super+Shift+W { spawn "caelestia-shell" "ipc" "call" "launcher" "wallpapers"; }
     Super+Q { close-window; }
 
+    // Audio recording (voice-record): press to start, press again to save it to
+    // ~/Music/Recordings. The bar cycles through GIFs while it records.
+    Super+D { spawn "voice-record" "toggle"; }
     // Dictation (voxtype): press to start, press again to type the transcript at
-    // the cursor; Shift discards it. The bar shows a mic while it listens.
-    Super+D { spawn "voxtype" "record" "toggle"; }
-    Super+Shift+D { spawn "voxtype" "record" "cancel"; }
+    // the cursor; Ctrl discards it. The bar shows the writing girl while it listens.
+    Super+Shift+D { spawn "voxtype" "record" "toggle"; }
+    Super+Ctrl+D { spawn "voxtype" "record" "cancel"; }
 
     // Curated themes (picked from the wallpaper on every wallpaper change).
     Super+T { spawn "caelestia-theme" "next"; }

@@ -12,7 +12,8 @@ let
   settings = {
     state_file = "auto"; # caelestia's bar indicator follows this
 
-    # Started/stopped by niri keybinds (Super+D / Super+Shift+D) instead.
+    # Started/stopped by niri keybinds (Super+Shift+D / Super+Ctrl+D) instead;
+    # Super+D is audio recording (voice-record.nix).
     hotkey.enabled = false;
 
     whisper = {

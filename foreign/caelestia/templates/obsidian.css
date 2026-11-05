@@ -1,0 +1,115 @@
+/* Rendered by caelestia into ~/.local/state/caelestia/theme/obsidian.css on
+ * every scheme change. The theme postHook copies it into each vault as the
+ * "caelestia" CSS snippet, which Obsidian reloads when the file changes.
+ * Written for Obsidian's default theme (base colour scale + semantic roles).
+ * body.theme-* outranks app.css's .theme-*; the accent needs !important to
+ * beat the inline style Settings → Appearance → Accent colour puts on body. */
+body.theme-dark,
+body.theme-light {
+    color-scheme: {{ mode }};
+
+    --accent-h: {{ primary.hue }} !important;
+    --accent-s: {{ primary.saturation }}% !important;
+    --accent-l: {{ primary.lightness }}% !important;
+    --color-accent: #{{ primary.hex }};
+    --color-accent-1: #{{ primary.hex }};
+    --color-accent-2: #{{ primaryFixedDim.hex }};
+    --text-on-accent: #{{ onPrimary.hex }};
+    --text-on-accent-inverted: #{{ onPrimary.hex }};
+
+    --color-base-00: #{{ surface.hex }};
+    --color-base-05: #{{ surfaceContainerLowest.hex }};
+    --color-base-10: #{{ surfaceContainerLow.hex }};
+    --color-base-20: #{{ surfaceContainer.hex }};
+    --color-base-25: #{{ surfaceContainerHigh.hex }};
+    --color-base-30: #{{ surfaceContainerHighest.hex }};
+    --color-base-35: #{{ outlineVariant.hex }};
+    --color-base-40: #{{ outlineVariant.hex }};
+    --color-base-50: #{{ outline.hex }};
+    --color-base-60: #{{ onSurfaceVariant.hex }};
+    --color-base-70: #{{ onSurfaceVariant.hex }};
+    --color-base-100: #{{ onSurface.hex }};
+
+    --color-red-rgb: {{ red.red }}, {{ red.green }}, {{ red.blue }};
+    --color-red: #{{ red.hex }};
+    --color-orange-rgb: {{ peach.red }}, {{ peach.green }}, {{ peach.blue }};
+    --color-orange: #{{ peach.hex }};
+    --color-yellow-rgb: {{ yellow.red }}, {{ yellow.green }}, {{ yellow.blue }};
+    --color-yellow: #{{ yellow.hex }};
+    --color-green-rgb: {{ green.red }}, {{ green.green }}, {{ green.blue }};
+    --color-green: #{{ green.hex }};
+    --color-cyan-rgb: {{ teal.red }}, {{ teal.green }}, {{ teal.blue }};
+    --color-cyan: #{{ teal.hex }};
+    --color-blue-rgb: {{ blue.red }}, {{ blue.green }}, {{ blue.blue }};
+    --color-blue: #{{ blue.hex }};
+    --color-purple-rgb: {{ mauve.red }}, {{ mauve.green }}, {{ mauve.blue }};
+    --color-purple: #{{ mauve.hex }};
+    --color-pink-rgb: {{ pink.red }}, {{ pink.green }}, {{ pink.blue }};
+    --color-pink: #{{ pink.hex }};
+
+    /* Editor on the surface, sidebars and chrome one container step off it
+     * (lighter in dark mode, darker in light mode, as Obsidian does). */
+    --background-primary: #{{ surface.hex }};
+    --background-primary-alt: #{{ surfaceContainerLow.hex }};
+    --background-secondary: #{{ surfaceContainer.hex }};
+    --background-secondary-alt: #{{ surfaceContainerHigh.hex }};
+    --background-modifier-border: #{{ outlineVariant.hex }};
+    --background-modifier-border-hover: #{{ outline.hex }};
+    --background-modifier-border-focus: #{{ primary.hex }};
+    --background-modifier-form-field: #{{ surfaceContainerHighest.hex }};
+    --background-modifier-hover: rgba({{ onSurface.red }}, {{ onSurface.green }}, {{ onSurface.blue }}, 0.08);
+    --background-modifier-active-hover: rgba({{ primary.red }}, {{ primary.green }}, {{ primary.blue }}, 0.15);
+    --background-modifier-error: #{{ error.hex }};
+    --background-modifier-error-hover: #{{ error.hex }};
+    --background-modifier-success: #{{ success.hex }};
+
+    --interactive-normal: #{{ surfaceContainerHigh.hex }};
+    --interactive-hover: #{{ surfaceContainerHighest.hex }};
+    --interactive-accent: #{{ primary.hex }};
+    --interactive-accent-hover: #{{ primaryFixedDim.hex }};
+
+    --text-normal: #{{ onSurface.hex }};
+    --text-muted: #{{ onSurfaceVariant.hex }};
+    --text-faint: #{{ outline.hex }};
+    --text-accent: #{{ primary.hex }};
+    --text-accent-hover: #{{ tertiary.hex }};
+    --text-error: #{{ error.hex }};
+    --text-success: #{{ success.hex }};
+    --text-selection: rgba({{ primary.red }}, {{ primary.green }}, {{ primary.blue }}, 0.3);
+    --text-highlight-bg-rgb: {{ tertiary.red }}, {{ tertiary.green }}, {{ tertiary.blue }};
+    --text-highlight-bg: rgba({{ tertiary.red }}, {{ tertiary.green }}, {{ tertiary.blue }}, 0.3);
+
+    --caret-color: #{{ primary.hex }};
+    --link-color: #{{ primary.hex }};
+    --link-color-hover: #{{ tertiary.hex }};
+    --link-external-color: #{{ secondary.hex }};
+    --link-external-color-hover: #{{ tertiary.hex }};
+    --link-unresolved-color: #{{ onSurfaceVariant.hex }};
+
+    --h1-color: #{{ primary.hex }};
+    --h2-color: #{{ secondary.hex }};
+    --h3-color: #{{ tertiary.hex }};
+    --h4-color: #{{ primary.hex }};
+    --h5-color: #{{ secondary.hex }};
+    --h6-color: #{{ tertiary.hex }};
+
+    --code-background: #{{ surfaceContainerLow.hex }};
+    --code-normal: #{{ onSurface.hex }};
+    --blockquote-border-color: #{{ primary.hex }};
+    --checkbox-color: #{{ primary.hex }};
+    --checkbox-color-hover: #{{ primaryFixedDim.hex }};
+    --checkbox-marker-color: #{{ onPrimary.hex }};
+    --tag-color: #{{ onSecondaryContainer.hex }};
+    --tag-background: #{{ secondaryContainer.hex }};
+    --tag-background-hover: #{{ secondaryContainer.hex }};
+
+    --titlebar-background: #{{ surfaceContainer.hex }};
+    --titlebar-background-focused: #{{ surfaceContainerHigh.hex }};
+    --ribbon-background: #{{ surfaceContainer.hex }};
+    --tab-background-active: #{{ surface.hex }};
+    --graph-node: #{{ onSurfaceVariant.hex }};
+    --graph-node-focused: #{{ primary.hex }};
+    --graph-node-tag: #{{ tertiary.hex }};
+    --graph-node-attachment: #{{ secondary.hex }};
+    --graph-line: #{{ outlineVariant.hex }};
+}

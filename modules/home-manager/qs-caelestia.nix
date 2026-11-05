@@ -12,8 +12,23 @@ let
   # dark/light) once the templates are rendered, to make the apps pick them up.
   themeHook = pkgs.writeShellApplication {
     name = "caelestia-theme-hook";
-    runtimeInputs = [ pkgs.coreutils pkgs.procps pkgs.tmux pkgs.pywalfox-native ];
+    runtimeInputs = [ pkgs.coreutils pkgs.diffutils pkgs.jq pkgs.procps pkgs.tmux pkgs.pywalfox-native ];
     text = ''
+      # Obsidian only live-reloads snippets inside a vault (a symlink out of
+      # the vault isn't watched), so copy the CSS into every known vault. The
+      # snippet still has to be enabled once per vault: Settings → Appearance
+      # → CSS snippets → caelestia, with the base theme set to "Adapt to system".
+      obsidianVaults="${config.xdg.configHome}/obsidian/obsidian.json"
+      if [ -f "$obsidianVaults" ]; then
+        jq -r '.vaults[].path' "$obsidianVaults" | while IFS= read -r vault; do
+          snippet="$vault/.obsidian/snippets/caelestia.css"
+          if [ -d "$vault/.obsidian" ] && ! cmp -s "${themeDir}/obsidian.css" "$snippet"; then
+            mkdir -p "$vault/.obsidian/snippets"
+            cp "${themeDir}/obsidian.css" "$snippet" || true
+          fi
+        done
+      fi
+
       # Spotify reads spicetify.css (see spicetify.nix); use this mode's mapping.
       ln -sfn "spicetify-''${SCHEME_MODE:-dark}.css" "${themeDir}/spicetify.css"
 

@@ -1,0 +1,633 @@
+diff --git a/modules/bar/BarWrapper.qml b/modules/bar/BarWrapper.qml
+index af527b3..882a3f9 100644
+--- a/modules/bar/BarWrapper.qml
++++ b/modules/bar/BarWrapper.qml
+@@ -22,9 +22,9 @@ Item {
+     readonly property int padding: Math.max(Tokens.padding.small, Config.border.thickness)
+     readonly property int contentWidth: Tokens.sizes.bar.innerWidth + padding * 2
+     readonly property int exclusiveZone: !disabled && (Config.bar.persistent || screenState.bar) ? contentWidth : Config.border.thickness
+-    // Also slide out while dictating so the voxtype indicator is visible with a
++    // Also slide out while dictating/recording so the indicators are visible with a
+     // hover-only bar. Visual only: the exclusive zone stays, windows don't move.
+-    readonly property bool shouldBeVisible: !fullscreen && !disabled && (Config.bar.persistent || screenState.bar || isHovered || Voxtype.active)
++    readonly property bool shouldBeVisible: !fullscreen && !disabled && (Config.bar.persistent || screenState.bar || isHovered || Voxtype.active || AudioRecorder.recording)
+     property bool isHovered
+ 
+     function closeTray(): void {
+diff --git a/modules/bar/components/StatusIcons.qml b/modules/bar/components/StatusIcons.qml
+index 3b40625..2ca93de 100644
+--- a/modules/bar/components/StatusIcons.qml
++++ b/modules/bar/components/StatusIcons.qml
+@@ -57,7 +57,20 @@ StyledRect {
+ 
+         spacing: 0
+ 
+-        // Not a config entry: only takes up space while dictating, above the rest
++        // Not config entries: only take up space while recording/dictating, above the rest
++        AudioRecorderStatus {
++            property real gap: AudioRecorder.recording && (Voxtype.active || root.firstPresent >= 0) ? root.spacing / 2 : 0
++
++            Layout.alignment: Qt.AlignHCenter
++            Layout.bottomMargin: Math.round(gap)
++
++            Behavior on gap {
++                Anim {
++                    type: Anim.SlowEffects
++                }
++            }
++        }
++
+         VoxtypeStatus {
+             property real gap: Voxtype.active && root.firstPresent >= 0 ? root.spacing / 2 : 0
+ 
+diff --git a/modules/bar/components/status/AudioRecorderStatus.qml b/modules/bar/components/status/AudioRecorderStatus.qml
+new file mode 100644
+index 0000000..c95d081
+--- /dev/null
++++ b/modules/bar/components/status/AudioRecorderStatus.qml
+@@ -0,0 +1,59 @@
++import QtQuick
++import Caelestia.Config
++import qs.components
++import qs.services
++
++// Audio recording indicator: grows in while `voice-record` records, cycling
++// through the recording GIFs, and collapses to nothing otherwise.
++// Left click saves, right click discards.
++Item {
++    id: root
++
++    // Read by the bar to pick the hover popout
++    readonly property string name: "audiorecorder"
++    readonly property int gifSize: Math.round(Tokens.sizes.bar.innerWidth * 0.8)
++
++    property real shownHeight: AudioRecorder.recording ? gifSize : 0
++
++    implicitWidth: gifSize
++    implicitHeight: Math.round(shownHeight)
++
++    Behavior on shownHeight {
++        Anim {
++            type: Anim.SlowEffects
++        }
++    }
++
++    AnimatedImage {
++        anchors.centerIn: parent
++        width: root.gifSize
++        height: root.gifSize
++
++        source: AudioRecorder.gif
++        fillMode: AnimatedImage.PreserveAspectFit
++        smooth: true
++        mipmap: true
++        playing: AudioRecorder.recording
++        visible: opacity > 0
++        opacity: AudioRecorder.recording ? 1 : 0
++        scale: AudioRecorder.recording ? 1 : 0.5
++
++        Behavior on opacity {
++            Anim {
++                type: Anim.DefaultEffects
++            }
++        }
++
++        Behavior on scale {
++            Anim {}
++        }
++    }
++
++    MouseArea {
++        anchors.fill: parent
++        enabled: AudioRecorder.recording
++        acceptedButtons: Qt.LeftButton | Qt.RightButton
++        cursorShape: Qt.PointingHandCursor
++        onClicked: event => event.button === Qt.RightButton ? AudioRecorder.cancel() : AudioRecorder.stop()
++    }
++}
+diff --git a/modules/bar/components/status/VoxtypeStatus.qml b/modules/bar/components/status/VoxtypeStatus.qml
+index d32e720..13d4c6d 100644
+--- a/modules/bar/components/status/VoxtypeStatus.qml
++++ b/modules/bar/components/status/VoxtypeStatus.qml
+@@ -1,8 +1,10 @@
+ import QtQuick
++import Quickshell
++import Caelestia.Config
+ import qs.components
+ import qs.services
+ 
+-// Dictation indicator: grows in while voxtype records (pulsing red mic) or
++// Dictation indicator: grows in while voxtype records (the writing girl) or
+ // transcribes (spinner), and collapses to nothing otherwise.
+ // Left click stops and transcribes, right click discards.
+ Item {
+@@ -11,10 +13,11 @@ Item {
+     required property color colour
+     // Read by the bar to pick the hover popout
+     readonly property string name: "voxtype"
++    readonly property int gifSize: Math.round(Tokens.sizes.bar.innerWidth * 0.8)
+ 
+-    property real shownHeight: Voxtype.active ? icon.implicitHeight : 0
++    property real shownHeight: Voxtype.recording ? gifSize : Voxtype.active ? icon.implicitHeight : 0
+ 
+-    implicitWidth: icon.implicitWidth
++    implicitWidth: gifSize
+     implicitHeight: Math.round(shownHeight)
+ 
+     Behavior on shownHeight {
+@@ -23,66 +26,62 @@ Item {
+         }
+     }
+ 
+-    // Separate from the icon so the pulse doesn't fight its show/hide fade
+-    Item {
+-        id: pulse
+-
+-        anchors.fill: parent
+-
+-        MaterialIcon {
+-            id: icon
++    AnimatedImage {
++        anchors.centerIn: parent
++        width: root.gifSize
++        height: root.gifSize
++
++        source: Qt.resolvedUrl(`${Quickshell.shellDir}/assets/gifs/writing.gif`)
++        fillMode: AnimatedImage.PreserveAspectFit
++        smooth: true
++        mipmap: true
++        playing: Voxtype.recording
++        visible: opacity > 0
++        opacity: Voxtype.recording ? 1 : 0
++        scale: Voxtype.recording ? 1 : 0.5
++
++        Behavior on opacity {
++            Anim {
++                type: Anim.DefaultEffects
++            }
++        }
+ 
+-            anchors.centerIn: parent
++        Behavior on scale {
++            Anim {}
++        }
++    }
+ 
+-            scale: Voxtype.active ? 1 : 0.5
+-            opacity: Voxtype.active ? 1 : 0
++    MaterialIcon {
++        id: icon
+ 
+-            // No `animate`: its text fade would force opacity back to 1 while hidden.
+-            // Idle shows the spinner so it fades out as it was after transcribing.
+-            text: Voxtype.recording ? "mic" : "progress_activity"
+-            color: Voxtype.recording ? Colours.palette.m3error : root.colour
+-            fill: 1
+-            grade: 25
++        anchors.centerIn: parent
+ 
+-            Behavior on opacity {
+-                Anim {
+-                    type: Anim.DefaultEffects
+-                }
+-            }
++        scale: Voxtype.transcribing ? 1 : 0.5
++        opacity: Voxtype.transcribing ? 1 : 0
+ 
+-            Behavior on scale {
+-                Anim {}
+-            }
++        // No `animate`: its text fade would force opacity back to 1 while hidden.
++        text: "progress_activity"
++        color: root.colour
++        fill: 1
++        grade: 25
+ 
+-            RotationAnimation on rotation {
+-                running: Voxtype.transcribing
+-                loops: Animation.Infinite
+-                from: 0
+-                to: 360
+-                duration: 1000
+-                onRunningChanged: if (!running) icon.rotation = 0
++        Behavior on opacity {
++            Anim {
++                type: Anim.DefaultEffects
+             }
+         }
+-    }
+ 
+-    SequentialAnimation {
+-        running: Voxtype.recording
+-        loops: Animation.Infinite
+-        onRunningChanged: if (!running) pulse.opacity = 1
+-
+-        NumberAnimation {
+-            target: pulse
+-            property: "opacity"
+-            to: 0.35
+-            duration: 700
+-            easing.type: Easing.InOutSine
++        Behavior on scale {
++            Anim {}
+         }
+-        NumberAnimation {
+-            target: pulse
+-            property: "opacity"
+-            to: 1
+-            duration: 700
+-            easing.type: Easing.InOutSine
++
++        RotationAnimation on rotation {
++            running: Voxtype.transcribing
++            loops: Animation.Infinite
++            from: 0
++            to: 360
++            duration: 1000
++            onRunningChanged: if (!running) icon.rotation = 0
+         }
+     }
+ 
+diff --git a/modules/bar/popouts/AudioRecorderPopout.qml b/modules/bar/popouts/AudioRecorderPopout.qml
+new file mode 100644
+index 0000000..53222dc
+--- /dev/null
++++ b/modules/bar/popouts/AudioRecorderPopout.qml
+@@ -0,0 +1,19 @@
++import QtQuick.Layouts
++import Caelestia.Config
++import Caelestia.I18n
++import qs.components
++import qs.services
++
++ColumnLayout {
++    spacing: Tokens.spacing.small
++
++    StyledText {
++        text: AudioRecorder.recording ? Tr.tr("Recording · %1").arg(AudioRecorder.formatElapsed(AudioRecorder.elapsed)) : Tr.tr("Not recording")
++    }
++
++    StyledText {
++        visible: AudioRecorder.recording
++        text: Tr.tr("Click to save to ~/Music/Recordings, right click to discard")
++        color: Colours.palette.m3onSurfaceVariant
++    }
++}
+diff --git a/modules/bar/popouts/Content.qml b/modules/bar/popouts/Content.qml
+index 37ae703..d3a4a81 100644
+--- a/modules/bar/popouts/Content.qml
++++ b/modules/bar/popouts/Content.qml
+@@ -119,6 +119,11 @@ Item {
+             sourceComponent: KbLayout {}
+         }
+ 
++        Popout {
++            name: "audiorecorder"
++            sourceComponent: AudioRecorderPopout {}
++        }
++
+         Popout {
+             name: "voxtype"
+             sourceComponent: VoxtypePopout {}
+diff --git a/modules/dictation/Content.qml b/modules/dictation/Content.qml
+index df6c240..48df5db 100644
+--- a/modules/dictation/Content.qml
++++ b/modules/dictation/Content.qml
+@@ -1,77 +1,159 @@
+ pragma ComponentBehavior: Bound
+ 
+ import QtQuick
++import Quickshell
+ import Caelestia.Config
+ import qs.components
+ import qs.services
+ 
+-// Mic + scrolling level bars while recording; a slow wave and a spinner while
+-// transcribing.
++// Dictation: the writing girl + scrolling level bars while recording; a slow
++// wave and a spinner while transcribing.
++// Audio recording: the cycling recording GIF and the elapsed time.
+ Item {
+     id: root
+ 
+     readonly property int barWidth: 4
+     readonly property int barGap: 3
+     readonly property int barsHeight: 28
++    readonly property int gifSize: 48
+     property real phase
+ 
+-    implicitWidth: row.implicitWidth + Tokens.padding.extraLarge * 2
+-    implicitHeight: row.implicitHeight + Tokens.padding.large * 2
++    implicitWidth: column.implicitWidth + Tokens.padding.extraLarge * 2
++    implicitHeight: column.implicitHeight + Tokens.padding.large * 2
+ 
+     FrameAnimation {
+         running: Voxtype.transcribing
+         onTriggered: root.phase += frameTime * 5
+     }
+ 
+-    Row {
+-        id: row
++    Column {
++        id: column
+ 
+         anchors.centerIn: parent
+         spacing: Tokens.spacing.medium
+ 
+-        MaterialIcon {
+-            id: icon
++        Row {
++            id: recordingRow
++
++            anchors.horizontalCenter: parent.horizontalCenter
++            visible: AudioRecorder.recording
++            spacing: Tokens.spacing.medium
++
++            AnimatedImage {
++                anchors.verticalCenter: parent.verticalCenter
++                width: root.gifSize
++                height: root.gifSize
++
++                source: AudioRecorder.gif
++                fillMode: AnimatedImage.PreserveAspectFit
++                smooth: true
++                mipmap: true
++                playing: AudioRecorder.recording
++            }
++
++            StyledRect {
++                id: dot
+ 
+-            anchors.verticalCenter: parent.verticalCenter
++                anchors.verticalCenter: parent.verticalCenter
++                implicitWidth: 10
++                implicitHeight: 10
++                radius: 5
++                color: Colours.palette.m3error
+ 
+-            text: Voxtype.transcribing ? "progress_activity" : "mic"
+-            color: Voxtype.transcribing ? Colours.palette.m3secondary : Colours.palette.m3error
+-            fill: 1
+-            fontStyle: Tokens.font.icon.medium
++                SequentialAnimation on opacity {
++                    running: AudioRecorder.recording
++                    loops: Animation.Infinite
++                    onRunningChanged: if (!running) dot.opacity = 1
+ 
+-            RotationAnimation on rotation {
+-                running: Voxtype.transcribing
+-                loops: Animation.Infinite
+-                from: 0
+-                to: 360
+-                duration: 1000
+-                onRunningChanged: if (!running) icon.rotation = 0
++                    NumberAnimation {
++                        to: 0.3
++                        duration: 700
++                        easing.type: Easing.InOutSine
++                    }
++                    NumberAnimation {
++                        to: 1
++                        duration: 700
++                        easing.type: Easing.InOutSine
++                    }
++                }
++            }
++
++            StyledText {
++                anchors.verticalCenter: parent.verticalCenter
++                text: AudioRecorder.formatElapsed(AudioRecorder.elapsed)
++                font: Tokens.font.mono.medium
+             }
+         }
+ 
+         Row {
+-            anchors.verticalCenter: parent.verticalCenter
+-            height: root.barsHeight
+-            spacing: root.barGap
++            id: dictationRow
++
++            anchors.horizontalCenter: parent.horizontalCenter
++            visible: Voxtype.active
++            spacing: Tokens.spacing.medium
++
++            Item {
++                anchors.verticalCenter: parent.verticalCenter
++                width: root.gifSize
++                height: root.gifSize
++
++                AnimatedImage {
++                    anchors.fill: parent
++
++                    source: Qt.resolvedUrl(`${Quickshell.shellDir}/assets/gifs/writing.gif`)
++                    fillMode: AnimatedImage.PreserveAspectFit
++                    smooth: true
++                    mipmap: true
++                    playing: Voxtype.recording
++                    visible: Voxtype.recording
++                }
++
++                MaterialIcon {
++                    id: icon
++
++                    anchors.centerIn: parent
++                    visible: Voxtype.transcribing
++
++                    text: "progress_activity"
++                    color: Colours.palette.m3secondary
++                    fill: 1
++                    fontStyle: Tokens.font.icon.medium
++
++                    RotationAnimation on rotation {
++                        running: Voxtype.transcribing
++                        loops: Animation.Infinite
++                        from: 0
++                        to: 360
++                        duration: 1000
++                        onRunningChanged: if (!running) icon.rotation = 0
++                    }
++                }
++            }
++
++            Row {
++                anchors.verticalCenter: parent.verticalCenter
++                height: root.barsHeight
++                spacing: root.barGap
+ 
+-            Repeater {
+-                model: Voxtype.levelCount
++                Repeater {
++                    model: Voxtype.levelCount
+ 
+-                StyledRect {
+-                    required property int index
++                    StyledRect {
++                        required property int index
+ 
+-                    readonly property real value: Voxtype.transcribing ? 0.2 + 0.25 * (0.5 + 0.5 * Math.sin(root.phase - index * 0.45)) : (Voxtype.levels[index] ?? 0)
++                        readonly property real value: Voxtype.transcribing ? 0.2 + 0.25 * (0.5 + 0.5 * Math.sin(root.phase - index * 0.45)) : (Voxtype.levels[index] ?? 0)
+ 
+-                    anchors.verticalCenter: parent.verticalCenter
+-                    implicitWidth: root.barWidth
+-                    implicitHeight: Math.max(root.barWidth, root.barsHeight * value)
+-                    radius: root.barWidth / 2
+-                    color: Voxtype.transcribing ? Colours.palette.m3secondary : Colours.palette.m3primary
++                        anchors.verticalCenter: parent.verticalCenter
++                        implicitWidth: root.barWidth
++                        implicitHeight: Math.max(root.barWidth, root.barsHeight * value)
++                        radius: root.barWidth / 2
++                        color: Voxtype.transcribing ? Colours.palette.m3secondary : Colours.palette.m3primary
+ 
+-                    Behavior on implicitHeight {
+-                        NumberAnimation {
+-                            duration: 90
+-                            easing.type: Easing.OutQuad
++                        Behavior on implicitHeight {
++                            NumberAnimation {
++                                duration: 90
++                                easing.type: Easing.OutQuad
++                            }
+                         }
+                     }
+                 }
+diff --git a/modules/dictation/Wrapper.qml b/modules/dictation/Wrapper.qml
+index 55d4c8b..bfee37e 100644
+--- a/modules/dictation/Wrapper.qml
++++ b/modules/dictation/Wrapper.qml
+@@ -6,7 +6,7 @@ import Caelestia.Config
+ import qs.components
+ import qs.services
+ 
+-// Bottom-centre pill while voxtype dictates, where the launcher opens, so it's
++// Bottom-centre pill while voxtype dictates or voice-record records, where the launcher opens, so it's
+ // in view while looking at the text you're dictating into. Only on the focused
+ // screen, and it makes way for the launcher.
+ Item {
+@@ -15,7 +15,7 @@ Item {
+     required property ShellScreen screen
+     required property ScreenState screenState
+ 
+-    readonly property bool shouldBeActive: Voxtype.active && !screenState.launcher && ShellState.isActiveScreen(screen)
++    readonly property bool shouldBeActive: (Voxtype.active || AudioRecorder.recording) && !screenState.launcher && ShellState.isActiveScreen(screen)
+     property real offsetScale: shouldBeActive ? 0 : 1
+ 
+     visible: offsetScale < 1
+diff --git a/services/AudioRecorder.qml b/services/AudioRecorder.qml
+new file mode 100644
+index 0000000..f1a40ab
+--- /dev/null
++++ b/services/AudioRecorder.qml
+@@ -0,0 +1,113 @@
++pragma Singleton
++
++import QtQuick
++import Quickshell
++import Quickshell.Io
++
++// Audio recording state from the `voice-record` script (modules/home-manager/
++// voice-record.nix), which runs pw-record as the transient voice-recording user
++// unit. The script pings `ipc call audiorecorder refresh` on every start and stop,
++// so nothing here polls.
++Singleton {
++    id: root
++
++    property bool recording
++    // Epoch ms the recording started, so a restarted shell shows the right time
++    property real startedAt
++    property int elapsed // seconds
++
++    // Cycled while recording; each recording starts on the next one
++    readonly property list<string> gifs: ["rec-puppy-girl", "rec-ahri", "rec-puppy-dancing", "rec-winnie"].map(g => gifPath(g))
++    property int gifIndex
++    readonly property string gif: gifs[gifIndex % gifs.length]
++
++    function gifPath(name: string): string {
++        return Qt.resolvedUrl(`${Quickshell.shellDir}/assets/gifs/${name}.gif`);
++    }
++
++    function formatElapsed(secs: int): string {
++        const h = Math.floor(secs / 3600);
++        const m = Math.floor(secs / 60) % 60;
++        const s = String(secs % 60).padStart(2, "0");
++        return h > 0 ? `${h}:${String(m).padStart(2, "0")}:${s}` : `${m}:${s}`;
++    }
++
++    // A ping that lands mid-query reruns it, so the last state always wins
++    property bool refreshPending
++
++    function refresh(): void {
++        if (query.running)
++            refreshPending = true;
++        else
++            query.running = true;
++    }
++
++    function stop(): void {
++        Quickshell.execDetached(["voice-record", "stop"]);
++    }
++
++    function cancel(): void {
++        Quickshell.execDetached(["voice-record", "cancel"]);
++    }
++
++    onRecordingChanged: {
++        if (recording)
++            gifIndex = (gifIndex + 1) % gifs.length;
++        updateElapsed();
++    }
++
++    function updateElapsed(): void {
++        elapsed = recording && startedAt > 0 ? Math.max(0, Math.floor((Date.now() - startedAt) / 1000)) : 0;
++    }
++
++    Component.onCompleted: refresh()
++
++    IpcHandler {
++        function refresh(): void {
++            root.refresh();
++        }
++
++        target: "audiorecorder"
++    }
++
++    Process {
++        id: query
++
++        command: ["systemctl", "--user", "show", "voice-recording", "--timestamp=unix", "--property=ActiveState,ActiveEnterTimestamp"]
++        stdout: StdioCollector {
++            onStreamFinished: {
++                const props = {};
++                for (const line of text.split("\n")) {
++                    const eq = line.indexOf("=");
++                    if (eq > 0)
++                        props[line.slice(0, eq)] = line.slice(eq + 1);
++                }
++                const active = props.ActiveState === "active" || props.ActiveState === "activating";
++                const since = parseInt((props.ActiveEnterTimestamp ?? "").replace("@", ""), 10);
++                root.startedAt = active ? (since > 0 ? since * 1000 : Date.now()) : 0;
++                root.recording = active;
++                root.updateElapsed();
++            }
++        }
++        onExited: { // qmllint disable signal-handler-parameters
++            if (root.refreshPending) {
++                root.refreshPending = false;
++                query.running = true;
++            }
++        }
++    }
++
++    Timer {
++        interval: 1000
++        repeat: true
++        running: root.recording
++        onTriggered: root.updateElapsed()
++    }
++
++    Timer {
++        interval: 6000
++        repeat: true
++        running: root.recording
++        onTriggered: root.gifIndex = (root.gifIndex + 1) % root.gifs.length
++    }
++}
