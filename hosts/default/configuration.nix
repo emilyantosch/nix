@@ -294,6 +294,7 @@
     hypridle
     zathura
     godot_4
+    blender
     aseprite
     sshpass
     foot
