@@ -12,6 +12,7 @@
     ./../../modules/nixos/proton.nix
     ./../../modules/nixos/sddm.nix
     ./../../modules/nixos/smb.nix
+    ./../../modules/nixos/data-drive.nix
     ./../../modules/nixos/niri.nix
     ./../../modules/nixos/kanata.nix
     ./../../modules/nixos/services.nix
