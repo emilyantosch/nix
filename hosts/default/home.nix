@@ -37,6 +37,7 @@
     ./../../modules/home-manager/ghostty.nix
     ./../../modules/home-manager/voxtype.nix
     ./../../modules/home-manager/voice-record.nix
+    ./../../modules/home-manager/clipse.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should

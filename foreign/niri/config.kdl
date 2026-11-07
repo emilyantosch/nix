@@ -520,6 +520,14 @@ window-rule {
     match title="Syncthing Tray"
     open-floating true
 }
+// clipse clipboard history (Super+V): a centred floating popup.
+window-rule {
+    match title="^clipse$"
+    open-floating true
+    open-focused true
+    default-column-width { fixed 900; }
+    default-window-height { fixed 620; }
+}
 window-rule {
     match is-window-cast-target=true
     focus-ring {
@@ -846,7 +854,10 @@ binds {
     Alt+Shift+F { switch-focus-between-floating-and-tiling; }
     // Ctrl+Alt+Tab { toggle-column-tabbed-display; }
 
-    Super+V { fullscreen-window; }
+    // Clipboard history (clipse TUI, modules/home-manager/clipse.nix): Enter
+    // copies the entry and closes it; pressing Super+V again closes it too.
+    Super+V { spawn "clipse-toggle"; }
+    Super+F { fullscreen-window; }
     Alt+Return { maximize-column; }
     Super+Ctrl+Return { move-window-to-monitor-next; }
 

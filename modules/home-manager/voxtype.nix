@@ -9,6 +9,20 @@ let
     sha256 = "1fc70f774d38eb169993ac391eea357ef47c88757ef72ee5943879b7e8e2bc69";
   };
 
+  # output.post_process hook: passes the transcript through unchanged, but also
+  # copies it, so it lands in the clipboard and clipse's history (clipse.nix)
+  # on top of being typed. wl-copy forks to serve the selection; its stdout
+  # goes to /dev/null so the fork doesn't hold voxtype's pipe open.
+  copyTranscript = pkgs.writeShellApplication {
+    name = "voxtype-copy-transcript";
+    runtimeInputs = [ pkgs.wl-clipboard ];
+    text = ''
+      text=$(cat)
+      printf '%s' "$text" | wl-copy >/dev/null 2>&1 || true
+      printf '%s' "$text"
+    '';
+  };
+
   settings = {
     state_file = "auto"; # caelestia's bar indicator follows this
 
@@ -38,6 +52,10 @@ let
         on_recording_start = false;
         on_recording_stop = false;
         on_transcription = false; # the bar indicator shows progress
+      };
+      post_process = {
+        command = lib.getExe copyTranscript;
+        timeout_ms = 2000;
       };
     };
 
