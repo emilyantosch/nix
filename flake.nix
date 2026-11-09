@@ -37,6 +37,10 @@
     };
     copyparty.url = "github:9001/copyparty";
     sops-nix.url = "github:Mic92/sops-nix";
+    qylock = {
+      url = "github:Darkkal44/qylock";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -70,6 +74,7 @@
         };
         modules = [
           copyparty.nixosModules.default
+          inputs.qylock.nixosModules.default
           {
             nixpkgs.overlays = [
               inputs.bacon.outputs.overlay.x86_64-linux

@@ -1,0 +1,8 @@
+[SddmGreeterTheme]
+Name=girl-coffee-custom
+Description=Girl Coffee background with the Pixel Emerald HUD
+Author=Darkkal44
+Type=sddm-theme
+MainScript=Main.qml
+ConfigFile=theme.conf
+QtVersion=6
