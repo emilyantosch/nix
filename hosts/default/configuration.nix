@@ -312,6 +312,7 @@
     typst
     lazydocker
     lazygit
+    delta
     pandoc
     uv
     jdk

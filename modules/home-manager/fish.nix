@@ -47,6 +47,7 @@
 
       ## nvim bindings
       va = "aws-sso exec -p ai-coding.tools -- nvim";
+      athena = "NVIM_APPNAME=athena nvim";
 
       ## pi bindings
       po =
