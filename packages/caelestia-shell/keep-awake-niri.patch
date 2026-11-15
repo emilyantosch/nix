@@ -1,0 +1,22 @@
+--- a/modules/IdleMonitors.qml	2026-11-10 10:01:51.226774073 +0100
++++ b/modules/IdleMonitors.qml	2026-11-10 10:03:29.405727718 +0100
+@@ -8,6 +8,8 @@
+ import Caelestia.Config
+ import Caelestia.Services
+ import qs.services
++// Quickshell.Wayland's IdleInhibitor type shadows the singleton of the same name
++import qs.services as Services
+ 
+ Scope {
+     id: root
+@@ -63,6 +65,10 @@
+             enabled: {
+                 if (!root.enabled || !(modelData.enabled ?? true))
+                     return false;
++                // Keep awake: niri ignores the shell's wayland idle inhibitor (its
++                // 0x0 surface is never shown), so honour the toggle here directly.
++                if (Services.IdleInhibitor.enabled && respectInhibitors)
++                    return false;
+                 if (modelData.inhibitWhenAudio && root.hasPlayer)
+                     return false;
+                 if (modelData.inhibitWhenCharging && root.isCharging)

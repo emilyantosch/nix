@@ -1,4 +1,4 @@
-{pkgs, inputs, config, ...}:
+{pkgs, lib, inputs, config, ...}:
   let
     system = "x86_64-linux";
     # Rendered by caelestia on every scheme change (qs-caelestia.nix).
@@ -33,4 +33,21 @@
     user_pref("zen.view.window.scheme", 2);
   '';
   home.file.".zen/${zenProfile}/chrome/userChrome.css".source = ../../foreign/zen/userChrome.css;
+
+  # Zen is the default browser for web links and HTML files.
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = lib.genAttrs [
+      "x-scheme-handler/http"
+      "x-scheme-handler/https"
+      "x-scheme-handler/chrome"
+      "text/html"
+      "application/xhtml+xml"
+      "application/x-extension-htm"
+      "application/x-extension-html"
+      "application/x-extension-shtml"
+      "application/x-extension-xhtml"
+      "application/x-extension-xht"
+    ] (_: "zen.desktop");
+  };
 }

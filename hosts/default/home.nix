@@ -111,6 +111,19 @@
   #
   home.sessionVariables = { EDITOR = "nvim"; };
 
+  # Home Manager owns mimeapps.list, so apps can no longer register handlers in
+  # it at runtime; they have to be listed here. Browser defaults live in
+  # modules/home-manager/zen-browser.nix.
+  xdg.mimeApps.defaultApplications = {
+    "x-scheme-handler/discord" = "vesktop.desktop";
+    "x-scheme-handler/discord-1216669957799018608" = "discord-1216669957799018608.desktop";
+    "x-scheme-handler/wootwoot" = "wootility.desktop";
+    "x-scheme-handler/web+wootwoot" = "wootility.desktop";
+    "x-scheme-handler/claude-cli" = "claude-code-url-handler.desktop";
+    # Claude Desktop's OAuth callback lands on claude://.
+    "x-scheme-handler/claude" = "com.anthropic.Claude.desktop";
+  };
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }

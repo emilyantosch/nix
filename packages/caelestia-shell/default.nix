@@ -34,6 +34,10 @@ inputs.qs-caelestia-shell.packages.${system}.default.overrideAttrs (old: {
     # bottom pill, cycling through the recording GIFs; the writing girl replaces
     # the dictation mic. Upstream's Recorder is the screen recorder, hence AudioRecorder.
     ./recorder-gifs.patch
+    # "Keep awake" did nothing on niri: it only honours a wayland idle inhibitor
+    # whose surface is on screen, and the shell's is a 0x0 window. Make the
+    # toggle switch off the shell's own idle timeouts (lock, monitors, suspend).
+    ./keep-awake-niri.patch
   ];
 
   # Background-free, trimmed copies of the GIFs, read from assets/gifs/

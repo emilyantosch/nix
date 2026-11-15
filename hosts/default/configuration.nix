@@ -219,6 +219,10 @@
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
     backupFileExtension = "bak";
+    # Install home.packages into /etc/profiles/per-user so services with a
+    # fixed XDG_DATA_DIRS (the desktop portal) can see their .desktop files.
+    # Otherwise the portal can't find zen.desktop and opens links in Chromium.
+    useUserPackages = true;
     users = { "emmi" = import ./home.nix; };
   };
 
@@ -295,6 +299,21 @@
     zathura
     godot_4
     blender
+    # Electron doesn't recognise niri, so it skips gnome-keyring and can't keep
+    # the login between restarts. The launcher reads CLAUDE_PASSWORD_STORE.
+    (pkgs.symlinkJoin {
+      name = "claude-desktop";
+      paths = [ inputs.claude-desktop.packages.${system}.claude-desktop-fhs ];
+      nativeBuildInputs = [ pkgs.makeWrapper ];
+      postBuild = ''
+        wrapProgram $out/bin/claude-desktop \
+          --set-default CLAUDE_PASSWORD_STORE gnome-libsecret
+      '';
+    })
+    # Also installed by modules/home-manager/zen-browser.nix, but Claude Desktop
+    # runs xdg-open with a PATH that only has /run/current-system/sw/bin. Without
+    # zen there, xdg-open falls back to Chromium for the sign-in page.
+    inputs.zen-browser.packages.${system}.specific
     aseprite
     sshpass
     foot
