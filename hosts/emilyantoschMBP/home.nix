@@ -23,7 +23,7 @@
     ./../../modules/home-manager/lazygit.nix
     ./../../modules/home-manager/bacon.nix
     ./../../modules/home-manager/fish.nix
-    ./../../modules/home-manager/claude-code/default.nix
+    ./../../modules/home-manager/claude-code/work.nix
     inputs.sops-nix.homeManagerModules.sops
   ];
 
