@@ -24,6 +24,7 @@
     ./../../modules/home-manager/bacon.nix
     ./../../modules/home-manager/fish.nix
     ./../../modules/home-manager/claude-code/work.nix
+    ./../../modules/home-manager/pi/default.nix
     inputs.sops-nix.homeManagerModules.sops
   ];
 

@@ -15,6 +15,7 @@
     ./../../modules/home-manager/yazi.nix
     ./../../modules/home-manager/nushell.nix
     ./../../modules/home-manager/claude-code/personal.nix
+    ./../../modules/home-manager/pi/personal.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should
