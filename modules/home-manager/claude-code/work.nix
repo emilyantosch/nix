@@ -1,4 +1,4 @@
-# Work Mac (emilyantoschMBP): Bedrock setup layered on default.nix.
+# Work Mac (emilyantoschMBP): layered on default.nix.
 { lib, config, ... }:
 let
   peon = "${config.home.homeDirectory}/.claude/hooks/peon-ping/peon.sh";
@@ -23,14 +23,6 @@ in
 
     settings = {
       autoMemoryEnabled = true;
-      env = {
-        AWS_REGION = "eu-central-1";
-        ANTHROPIC_DEFAULT_OPUS_MODEL = "eu.anthropic.claude-opus-4-6-v1";
-        ANTHROPIC_DEFAULT_SONNET_MODEL = "eu.anthropic.claude-sonnet-4-6";
-        ANTHROPIC_DEFAULT_HAIKU_MODEL = "eu.anthropic.claude-haiku-4-5-20251001-v1:0";
-        CLAUDE_CODE_USE_BEDROCK = "1";
-      };
-
       attribution = {
         commit = "";
         pr = "";

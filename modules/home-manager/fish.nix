@@ -40,18 +40,11 @@
       hl = "gh run list";
 
       ## claude bindings
-      ca = "aws-sso exec -p ai-coding.tools -- claude";
-      cA = "aws-sso exec -p ai-coding.tools -- claude --continue";
       cl = "claude";
       cc = "claude --continue";
 
       ## nvim bindings
-      va = "aws-sso exec -p ai-coding.tools -- nvim";
       athena = "NVIM_APPNAME=athena nvim";
-
-      ## pi bindings
-      po =
-        "aws-sso exec -p ai-coding.tools -- pi --provider amazon-bedrock --model eu.anthropic.claude-opus-4-6-v1";
 
       # jira bindings
       jl =

@@ -1,5 +1,5 @@
 # Personal machines only (NixOS desktop, emmiMBP): default to the OpenAI Codex
-# subscription. The work Mac picks Bedrock per invocation via its fish aliases.
+# subscription.
 { ... }:
 {
   imports = [ ./default.nix ];
