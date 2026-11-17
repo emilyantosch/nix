@@ -42,7 +42,6 @@ in
         ];
         packages = [
           "git:https://github.com/hasit/pi-community-themes"
-          "npm:@ifi/oh-pi-themes"
           "npm:@aliou/pi-guardrails"
           "npm:pi-ponytail"
           "npm:@juicesharp/rpiv-ask-user-question"
