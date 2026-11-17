@@ -1,0 +1,421 @@
+{
+  "$schema": "https://unpkg.com/@aliou/pi-guardrails@0.19.0/schema.json",
+  "features": {
+    "permissionGate": true,
+    "policies": true,
+    "pathAccess": false
+  },
+  "permissionGate": {
+    "patterns": [
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*git(?:\\s+(?:-[Cc]\\s+\\S+|--[\\w-]+(?:=\\S+)?))*\\s+reset\\b[^;&|\\n]*--hard",
+        "description": "git reset --hard (discards changes)",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*git(?:\\s+(?:-[Cc]\\s+\\S+|--[\\w-]+(?:=\\S+)?))*\\s+clean\\b[^;&|\\n]*\\s-[a-zA-Z]*f",
+        "description": "git clean -f (deletes untracked files)",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*git(?:\\s+(?:-[Cc]\\s+\\S+|--[\\w-]+(?:=\\S+)?))*\\s+checkout\\b[^;&|\\n]*\\s(?:--(?=\\s|$)|\\.(?=\\s|$|[;&|]))",
+        "description": "git checkout -- / . (discards changes)",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*git(?:\\s+(?:-[Cc]\\s+\\S+|--[\\w-]+(?:=\\S+)?))*\\s+restore\\b(?:(?![^;&|\\n]*(?:--staged|\\s-S\\b))|(?=[^;&|\\n]*(?:--worktree|\\s-W\\b)))",
+        "description": "git restore of working tree (discards changes)",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*git(?:\\s+(?:-[Cc]\\s+\\S+|--[\\w-]+(?:=\\S+)?))*\\s+branch\\b[^;&|\\n]*\\s-[a-zA-Z]*D\\b",
+        "description": "git branch -D (force delete branch)",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*git(?:\\s+(?:-[Cc]\\s+\\S+|--[\\w-]+(?:=\\S+)?))*\\s+stash\\s+(?:drop|clear)\\b",
+        "description": "git stash drop/clear",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*git(?:\\s+(?:-[Cc]\\s+\\S+|--[\\w-]+(?:=\\S+)?))*\\s+push\\b[^;&|\\n]*(?:--force-with-lease|--delete\\b|\\s-d\\b|\\s:[^\\s;&|]+)",
+        "description": "git push with lease-force or remote branch delete",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*git(?:\\s+(?:-[Cc]\\s+\\S+|--[\\w-]+(?:=\\S+)?))*\\s+filter-(?:branch|repo)\\b",
+        "description": "git history rewrite",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*git(?:\\s+(?:-[Cc]\\s+\\S+|--[\\w-]+(?:=\\S+)?))*\\s+reflog\\s+(?:expire|delete)\\b",
+        "description": "git reflog expire/delete",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*git(?:\\s+(?:-[Cc]\\s+\\S+|--[\\w-]+(?:=\\S+)?))*\\s+gc\\b[^;&|\\n]*--prune",
+        "description": "git gc --prune",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*git(?:\\s+(?:-[Cc]\\s+\\S+|--[\\w-]+(?:=\\S+)?))*\\s+commit\\b[^;&|\\n]*\\s-[a-zA-Z]*n[a-zA-Z]*\\b",
+        "description": "git commit -n (bypasses hooks, MOIA policy)",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*git(?:\\s+(?:-[Cc]\\s+\\S+|--[\\w-]+(?:=\\S+)?))*\\s+remote\\s+(?:add|set-url)\\b",
+        "description": "git remote change (MOIA: remotes must be MOIA orgs)",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*gh\\s+(?:pr\\s+(?:merge|close)|issue\\s+(?:close|delete)|repo\\s+(?:delete|archive|rename|edit)|release\\s+delete|run\\s+(?:cancel|delete)|(?:secret|variable)\\s+(?:set|delete|remove)|workflow\\s+(?:run|disable)|auth\\s+token)\\b",
+        "description": "gh destructive/deploying/secret operation",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*gh\\s+api\\b(?!\\s+graphql)(?![^;&|\\n]*(?:-X|--method)[=\\s]*(?:GET|get)\\b)[^;&|\\n]*(?:\\s(?:-X|--method)[=\\s]*(?:POST|PUT|PATCH|DELETE|post|put|patch|delete)\\b|\\s(?:-f|-F|--field|--raw-field|--input)[=\\s])",
+        "description": "gh api write request",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*gh\\s+api\\s+graphql\\b[^;&|\\n]*mutation",
+        "description": "gh api graphql mutation",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*aws(?:\\s+--[\\w-]+(?:[=\\s]+(?!-)[^\\s;&|]+)?)*\\s+[\\w-]+\\s+(?!(?:describe|get|list|ls|head|wait|filter|lookup|search|query|scan|batch-get|tail|help)\\b)[a-z][\\w-]*",
+        "description": "aws non-read operation",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*aws(?:\\s+--[\\w-]+(?:[=\\s]+(?!-)[^\\s;&|]+)?)*\\s+(?:secretsmanager\\s+get-secret-value|ssm\\s+get-parameters?(?:-by-path)?\\b[^;&|\\n]*--with-decryption|configure\\s+export-credentials)\\b",
+        "description": "aws secret read",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*kubectl\\b[^;&|\\n]*\\s(?:apply|create|delete|edit|patch|replace|scale|drain|cordon|uncordon|taint|label|annotate|set|exec|cp|port-forward|run|debug|attach|autoscale|expose)\\b",
+        "description": "kubectl mutation/exec",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*kubectl\\b[^;&|\\n]*\\srollout\\s+(?:restart|undo)\\b",
+        "description": "kubectl rollout restart/undo",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*kubectl\\b[^;&|\\n]*\\sget\\b[^;&|\\n]*\\bsecrets?\\b",
+        "description": "kubectl get secret (exposes secrets)",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*helm\\b[^;&|\\n]*\\s(?:install|upgrade|uninstall|delete|rollback)\\b",
+        "description": "helm release change",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*(?:npx\\s+|pnpm\\s+(?:exec\\s+)?|npm\\s+(?:run|exec)\\s+)?cdk\\b[^;&|\\n]*\\s(?:deploy|destroy|bootstrap)\\b",
+        "description": "cdk deploy/destroy/bootstrap",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*(?:terraform|tofu)\\b[^;&|\\n]*\\s(?:apply|destroy|import|state|taint)\\b",
+        "description": "terraform state change",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*(?:just|make)\\b[^;&|\\n]*\\bdeploy\\b",
+        "description": "deploy recipe",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*docker\\b[^;&|\\n]*\\s(?:rm|rmi|prune|push|login|inspect|run)\\b",
+        "description": "docker destructive/publish/run/inspect",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*docker(?:-compose|\\s+compose)\\b[^;&|\\n]*\\s(?:up|run)\\b",
+        "description": "docker compose up/run",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*docker(?:-compose|\\s+compose)\\b[^;&|\\n]*\\sdown\\b[^;&|\\n]*(?:\\s-[a-zA-Z]*v\\b|--volumes)",
+        "description": "docker compose down -v (deletes volumes)",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*(?:aws)?curl\\b[^;&|\\n]*(?:\\s(?:-X|--request)[=\\s]*(?!GET\\b)[A-Za-z]+|\\s-[a-zA-Z]*[dFT]\\b|\\s--(?:data[\\w-]*|form[\\w-]*|upload-file|json)\\b)",
+        "description": "curl non-GET / upload",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*wget\\b[^;&|\\n]*\\s--(?:post-(?:data|file)|method|body-(?:data|file))",
+        "description": "wget non-GET / upload",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*(?:curl|wget)\\b[^\\n]*\\|\\s*(?:sudo\\s+)?(?:ba|z|da)?sh\\b",
+        "description": "pipe download into shell",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*(?:ba|z)?sh\\b[^\\n]*(?:\\$\\(|<\\()\\s*(?:curl|wget)\\b",
+        "description": "run downloaded script",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*brew\\s+(?:install|reinstall|uninstall|remove|rm|upgrade|tap\\s+(?=[a-zA-Z])|untap|bundle(?!\\s+(?:check|list)))\\b",
+        "description": "brew install/remove",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*(?:npm|pnpm|yarn)\\b[^;&|\\n]*\\s(?:publish|unpublish|deprecate)\\b",
+        "description": "package publish",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*(?:npm|pnpm)\\s+(?:i|install|add|update|uninstall|remove|rm|link)\\b[^;&|\\n]*\\s(?:-g|--global)\\b",
+        "description": "global npm install",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*cargo\\s+(?:install(?!\\s+--list)|publish|yank|owner|login)\\b",
+        "description": "cargo install/publish",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*(?:python3?\\s+-m\\s+)?pip3?\\s+install\\b",
+        "description": "pip install (outside uv)",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*jira\\b[^;&|\\n]*\\s(?:create|delete|edit|assign|move|transition|link|unlink|clone|add|remove)\\b",
+        "description": "jira write",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*(?:printenv\\b|env\\s*(?:$|[;&|\\n])|security\\s+find-(?:generic|internet)-password)",
+        "description": "prints secrets/env",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*find\\b[^;&|\\n]*\\s-(?:delete\\b|exec(?:dir)?\\s+rm\\b)",
+        "description": "find -delete / -exec rm",
+        "regex": true
+      },
+      {
+        "pattern": "\\|\\s*xargs(?:\\s+-\\S+)*\\s+rm\\b",
+        "description": "xargs rm",
+        "regex": true
+      }
+    ],
+    "requireConfirmation": true,
+    "autoDenyPatterns": [
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*git(?:\\s+(?:-[Cc]\\s+\\S+|--[\\w-]+(?:=\\S+)?))*\\s+(?:commit|push|merge|rebase|am|cherry-pick|pull)\\b[^;&|\\n]*--no-verify",
+        "description": "MOIA policy: do not bypass git hooks (--no-verify)",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*git(?:\\s+(?:-[Cc]\\s+\\S+|--[\\w-]+(?:=\\S+)?))*\\s+push\\b(?![^;&|\\n]*--force-with-lease)[^;&|\\n]*(?:--force(?![\\w-])|\\s-[a-zA-Z]*f\\b|\\s\\+[^\\s;&|]+)",
+        "description": "force push without --force-with-lease",
+        "regex": true
+      },
+      {
+        "pattern": "(?:^|[;&|({`\\n]|\\$\\(|\\s-c\\s+[\\\"'])\\s*(?:(?:[A-Za-z_]\\w*=\\S*|sudo|command|exec|nohup|time|then|do|else|!|env|timeout\\s+\\S+|xargs(?:\\s+-\\S+)*)\\s+)*gh\\s+repo\\s+(?:create\\b[^;&|\\n]*--public|edit\\b[^;&|\\n]*--visibility[=\\s]+public)",
+        "description": "MOIA policy: public repos need security sign-off",
+        "regex": true
+      }
+    ]
+  },
+  "version": "0.19.0",
+  "applyBuiltinDefaults": true,
+  "onboarding": {
+    "completed": true,
+    "completedAt": "2026-04-11T20:15:28.699Z",
+    "version": "0.9.0-20260327"
+  },
+  "policies": {
+    "rules": [
+      {
+        "id": "example-secret-env-files",
+        "name": "Secret env files",
+        "description": "Block .env files and variants",
+        "patterns": [
+          {
+            "pattern": ".env"
+          },
+          {
+            "pattern": ".env.*"
+          }
+        ],
+        "allowedPatterns": [
+          {
+            "pattern": ".env.example"
+          },
+          {
+            "pattern": "*.sample.env"
+          }
+        ],
+        "protection": "noAccess",
+        "onlyIfExists": true,
+        "enabled": true
+      },
+      {
+        "id": "example-log-files",
+        "name": "Log files",
+        "description": "Treat log files as read-only",
+        "patterns": [
+          {
+            "pattern": "*.log"
+          },
+          {
+            "pattern": "*.out"
+          }
+        ],
+        "protection": "readOnly",
+        "onlyIfExists": true,
+        "enabled": true
+      },
+      {
+        "id": "example-regex-env",
+        "name": "Regex env files",
+        "description": "Regex example for env files",
+        "patterns": [
+          {
+            "pattern": "^\\.env(\\..+)?$",
+            "regex": true
+          }
+        ],
+        "allowedPatterns": [
+          {
+            "pattern": "^\\.env\\.example$",
+            "regex": true
+          }
+        ],
+        "protection": "noAccess",
+        "onlyIfExists": true,
+        "enabled": true
+      },
+      {
+        "id": "example-ssh-keys",
+        "name": "SSH keys",
+        "description": "Block SSH private key files",
+        "patterns": [
+          {
+            "pattern": "*.pem"
+          },
+          {
+            "pattern": "*_rsa"
+          },
+          {
+            "pattern": "*_ed25519"
+          }
+        ],
+        "allowedPatterns": [
+          {
+            "pattern": "*.pub"
+          }
+        ],
+        "protection": "noAccess",
+        "onlyIfExists": true,
+        "enabled": true
+      },
+      {
+        "id": "example-aws-credentials",
+        "name": "AWS credentials",
+        "description": "Block AWS credentials and config files",
+        "patterns": [
+          {
+            "pattern": ".aws/credentials"
+          },
+          {
+            "pattern": ".aws/config"
+          }
+        ],
+        "protection": "noAccess",
+        "onlyIfExists": true,
+        "enabled": true
+      },
+      {
+        "id": "example-database-files",
+        "name": "Database files",
+        "description": "Protect database files from modification",
+        "patterns": [
+          {
+            "pattern": "*.db"
+          },
+          {
+            "pattern": "*.sqlite"
+          },
+          {
+            "pattern": "*.sqlite3"
+          }
+        ],
+        "protection": "readOnly",
+        "onlyIfExists": true,
+        "enabled": true
+      },
+      {
+        "id": "example-k8s-secrets",
+        "name": "Kubernetes secrets",
+        "description": "Block kubectl config and secrets",
+        "patterns": [
+          {
+            "pattern": ".kube/config"
+          },
+          {
+            "pattern": "*kubeconfig*"
+          }
+        ],
+        "protection": "noAccess",
+        "onlyIfExists": true,
+        "enabled": true
+      },
+      {
+        "id": "example-certificates",
+        "name": "Certificates",
+        "description": "Block certificate and key files",
+        "patterns": [
+          {
+            "pattern": "*.crt"
+          },
+          {
+            "pattern": "*.key"
+          },
+          {
+            "pattern": "*.p12"
+          }
+        ],
+        "allowedPatterns": [
+          {
+            "pattern": "*.csr"
+          }
+        ],
+        "protection": "noAccess",
+        "onlyIfExists": true,
+        "enabled": true
+      }
+    ]
+  },
+  "pathAccess": {
+    "mode": "ask",
+    "allowedPaths": [
+      {
+        "kind": "file",
+        "path": "~/.pi"
+      },
+      {
+        "kind": "file",
+        "path": "/dev/null"
+      },
+      {
+        "kind": "file",
+        "path": "/tmp/**"
+      },
+      {
+        "kind": "file",
+        "path": "~/.cargo/**"
+      }
+    ]
+  }
+}

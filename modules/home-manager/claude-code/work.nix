@@ -1,8 +1,5 @@
-# Work Mac (emilyantoschMBP): layered on default.nix.
-{ lib, config, ... }:
-let
-  peon = "${config.home.homeDirectory}/.claude/hooks/peon-ping/peon.sh";
-in
+# Work Mac (emilyantoschMBP): MOIA setup layered on default.nix.
+{ lib, ... }:
 {
   imports = [ ./default.nix ];
 
@@ -10,7 +7,6 @@ in
     skills = {
       local-review = ./skills/local-review.md;
       commit-push-pr = ./skills/commit-push-pr.md;
-      test-driven-development = ./skills/test-driven-development.md;
     };
 
     rules = {
@@ -22,7 +18,10 @@ in
     };
 
     settings = {
+      # Provider (MOIA AI gateway: apiKeyHelper, env, marketplace) is merged
+      # into settings.json by /opt/moia/claude-code/managed.cue, not here.
       autoMemoryEnabled = true;
+
       attribution = {
         commit = "";
         pr = "";
@@ -30,6 +29,7 @@ in
 
       permissions = {
         allow = [
+          "ToolSearch"
           "mcp__plugin_context7_context7__query-docs"
           "mcp__ide__getDiagnostics"
           "mcp__plugin_context7_context7__resolve-library-id"
@@ -54,79 +54,14 @@ in
         ];
       };
 
-      hooks = {
-        SessionStart = [
-          {
-            hooks = [
-              {
-                type = "command";
-                command = peon;
-                timeout = 10;
-                async = true;
-              }
-            ];
-          }
-        ];
-        PermissionRequest = [
-          {
-            hooks = [
-              {
-                type = "command";
-                command = peon;
-                timeout = 10;
-                async = true;
-              }
-            ];
-          }
-        ];
-        SessionEnd = [
-          {
-            hooks = [
-              {
-                type = "command";
-                command = peon;
-                timeout = 10;
-                async = true;
-              }
-            ];
-          }
-        ];
-        PreToolUse = [
-          {
-            hooks = [
-              {
-                type = "command";
-                command = "npx -y ccstatusline@latest --hook";
-              }
-            ];
-            matcher = "Skill";
-          }
-        ];
-        UserPromptSubmit = [
-          {
-            hooks = [
-              {
-                type = "command";
-                command = "npx -y ccstatusline@latest --hook";
-              }
-              {
-                type = "command";
-                command = peon;
-                timeout = 10;
-                async = true;
-              }
-            ];
-          }
-        ];
-      };
       enabledPlugins = {
         "context7@claude-plugins-official" = true;
-        "rust-analyzer-lsp@claude-plugins-official" = lib.mkForce true;
       };
       voiceEnabled = false;
+      # Wins over MOIA's ai-gateway-budget-statusline on every switch.
       statusLine = lib.mkForce {
         type = "command";
-        command = "npx -y ccstatusline@latest";
+        command = "bash ${./statusline-command.sh}";
         padding = 0;
       };
     };

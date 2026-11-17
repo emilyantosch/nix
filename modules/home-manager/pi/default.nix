@@ -2,7 +2,7 @@
 #
 # Not using home-manager's programs.pi-coding-agent: it links settings.json
 # read-only, and pi writes to it (lastChangelogVersion, /settings changes).
-# Instead each file in `pi.files` is merged into a writable copy on activation,
+# Instead each JSON file in `pi.files` is merged into a writable copy on activation,
 # the same way programs.claude-code.mutableSettings does it: declared keys win
 # on every switch, anything else pi writes is kept.
 #
@@ -31,8 +31,19 @@ in
       "settings.json" = {
         defaultThinkingLevel = "xhigh";
         theme = "gruvbox-dark-hard";
+        collapseChangelog = true;
+        quietStartup = true;
+        powerline = "compact";
+        tuiMode = "fullscreen";
+        compaction.enabled = false;
+        extensions = [
+          "-extensions/pi-gondolin/index.ts"
+          "-builtin:mcp"
+        ];
         packages = [
           "git:https://github.com/hasit/pi-community-themes"
+          "npm:@ifi/oh-pi-themes"
+          "npm:@aliou/pi-guardrails"
           "npm:pi-ponytail"
           "npm:@juicesharp/rpiv-ask-user-question"
           "npm:pi-web-access"
@@ -42,52 +53,14 @@ in
         ];
       };
 
-      "extensions/guardrails.json" = {
-        "$schema" = "https://unpkg.com/@aliou/pi-guardrails@0.15.0/schema.json";
-        applyBuiltinDefaults = true;
-        version = "0.13.0-20260619";
-        onboarding = {
-          completed = true;
-          version = "0.13.0-20260619";
-        };
-        features = {
-          permissionGate = true;
-          policies = true;
-        };
-        permissionGate.patterns = [
-          {
-            pattern = "curl";
-            description = "WebAccess (curl)";
-            regex = true;
-          }
-          {
-            pattern = "wget";
-            description = "WebAccess (wget)";
-            regex = true;
-          }
-          {
-            pattern = "rm -rf";
-            description = "Recursive deletion";
-            regex = true;
-          }
-        ];
-        policies.rules = [
-          {
-            id = "secret-files";
-            name = "Secret files";
-            description = "";
-            patterns = [
-              {
-                pattern = ".env";
-                regex = true;
-              }
-            ];
-            protection = "readOnly";
-            onlyIfExists = true;
-            enabled = true;
-          }
-        ];
-      };
+      "extensions/guardrails.json" = lib.importJSON ./guardrails.json;
+    };
+
+    # Read-only for pi, so plain links. Prompts are shared with the Claude skills.
+    home.file = {
+      ".pi/agent/APPEND_SYSTEM.md".source = ./APPEND_SYSTEM.md;
+      ".pi/agent/prompts/commit-push-pr.md".source = ../claude-code/skills/commit-push-pr.md;
+      ".pi/agent/prompts/local-review.md".source = ../claude-code/skills/local-review.md;
     };
 
     home.activation.piConfig = lib.hm.dag.entryAfter [ "linkGeneration" ] (

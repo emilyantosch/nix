@@ -21,6 +21,33 @@ in
       model = "opus";
       theme = "auto";
       editorMode = "vim";
+      tui = "fullscreen";
+      spinnerVerbs = {
+        mode = "replace";
+        verbs = [
+          "Rolling for Initative"
+          "Long Resting"
+          "Casting Fireball"
+          "Journeying"
+          "Roleplaying"
+          "Blessing"
+          "Receiving Guidance"
+          "Seducing a Dragon"
+          "Action Surging"
+          "Rolling a Death Save"
+          "Being Lethargic"
+          "Critting"
+          "Rolling with Advantage"
+          "Active Perception Check"
+          "Nat20'ing"
+          "Writing a Session Recap"
+          "Not taking notes"
+          "Snacking"
+          "Forgetting my Dice"
+          "Failing a Dexterity Check"
+          "Critcially Failing"
+        ];
+      };
       alwaysThinkingEnabled = false;
       autoCompactEnabled = false;
       idleCompaction = false;

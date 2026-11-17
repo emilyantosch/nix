@@ -1,39 +1,16 @@
 ---
 name: commit-push-pr
-desc: Commit all changes, push to remote and open draft PR using gh
+description: Stage tracked changes only, commit them, push the current branch, and create a draft GitHub PR when no open PR exists. Use when the user asks to commit current tracked work and ensure it has a PR.
 ---
-# Commit-Push-PR
 
-Current Git Status: !`git status`
-Recent commits: !`git log --oneline -5`
-Current branch: !`git branch --show-current`
+# Commit tracked changes and ensure a PR
 
-DO NOT, UNDER ANY CIRCUMSTANCES, MENTION IN ANY MESSAGE THAT THIS COMMIT OR PR HAS BEEN COAUTHORED BY AI. THIS WILL BE MADE TRANSPARENT THROUGH DIFFERENT MEANS.
-
-## Committing
-
-1. Review all staged and unstaged changes with `sem diff` and `sem diff --format json`
-2. Group related changes into logical commits (split where it makes sense)
-3. Stage files with `git add` as needed
-4. Commit using conventional commits format: `type(scope): description`
-   - Types: feat, fix, refactor, docs, test, chore, style, perf, build, ci
-   - Keep messages under 60 characters
-   - Do NOT add any AI-generated remarks, footers, or co-author lines
-5. Push to origin: `git push origin {branch_name}`
-6. If the push is rejected, because of any problems with the remote, report back to the user and stop execution.
-
-## Creating PR
-
-1. Check if there is already a PR for the current branch. If yes, you are done and can stop execution.
-2. Extract ticket number from branch name (the part before the first `/`)
-3. Create draft PR with `gh pr create`:
-   - Title: `[ticket_number] Short description of changes`
-   - Body: Brief summary of what the PR contains (2-3 sentences max). Do not use misdirection, just type the string as is (no EOF and pipes).
-   - Always use `--draft` flag
-
-## Example
-
-Branch: `ABC-123/add-user-auth`
-Commit: `feat(auth): add login endpoint`
-PR Title: `[ABC-123] Add user authentication`
-PR Body: `Adds login endpoint with JWT token generation. Includes basic validation.`
+1. Confirm this is a Git repository on a named, non-default branch.
+2. Inspect `git status --short`, `git diff`, and recent commit subjects. Do not stage untracked files.
+3. Run `git add -u`, review `git diff --cached`, and infer a concise commit message using conventional commit format.
+4. Commit with these trailers:
+   - `Co-Authored-By: $1 via Pi <noreply@anthropic.com>`
+   - `AI-Assisted-By: $1`
+5. Check for an open PR for the current branch with `gh pr list --head <branch> --state open`.
+6. Before any push or PR creation, verify the push remote URL belongs to one of these GitHub organizations: `moia-dev`, `moia-oss`, `moia-playground`, `moia-test`, `moia-challenges`, or `vw-admt`. Refuse if it does not, or if ownership is ambiguous. Do not add or rewrite remotes.
+7. Push the branch to its verified remote. If no PR exists, run `gh pr create --draft --fill` and report the new URL.

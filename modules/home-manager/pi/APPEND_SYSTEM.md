@@ -1,0 +1,1 @@
+- Prefer the most minimal change at all times. If there is nothing to do, do nothing. Every code, document or other artifact is a tech debt.
