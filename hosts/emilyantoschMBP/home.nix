@@ -25,6 +25,7 @@
     ./../../modules/home-manager/fish.nix
     ./../../modules/home-manager/claude-code/work.nix
     ./../../modules/home-manager/pi/work.nix
+    ./../../modules/home-manager/agent-skills/default.nix
     inputs.sops-nix.homeManagerModules.sops
   ];
 

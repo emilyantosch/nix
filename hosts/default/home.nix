@@ -40,6 +40,7 @@
     ./../../modules/home-manager/clipse.nix
     ./../../modules/home-manager/claude-code/personal.nix
     ./../../modules/home-manager/pi/personal.nix
+    ./../../modules/home-manager/agent-skills/default.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should
