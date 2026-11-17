@@ -59,6 +59,7 @@
       "postgresql@18"
       "googleworkspace-cli"
       "tuicr"
+      "preiter93/wireman/wireman"
     ];
 
     casks = [
@@ -82,6 +83,10 @@
       "raycast"
       "spotify"
       "handy"
+      "localsend"
+      "obs"
+      "terminal-browser"
+      "intellij-idea"
     ];
   };
 }

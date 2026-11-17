@@ -369,7 +369,8 @@
 
             function eksenv
             	export KUBECONFIG="$HOME/.kube/moia-01-$argv"
-            	aws-sso exec -p "k8s.$argv.eu-central-1" -- fish
+            	aws sso login --profile "k8s.$argv.eu-central-1"
+            	AWS_PROFILE="k8s.$argv.eu-central-1" fish
             end
 
     '';

@@ -22,11 +22,11 @@
         autohide = true;
         show-recents = false; # disable recent apps
 
-        # customize Hot Corners
-        # wvous-tl-corner = 2;  # top-left - Mission Control
-        # wvous-tr-corner = 13;  # top-right - Lock Screen
-        wvous-bl-corner = 3; # bottom-left - Application Windows
-        wvous-br-corner = 4; # bottom-right - Desktop
+        # disable Hot Corners (1 = no action)
+        wvous-tl-corner = 1;
+        wvous-tr-corner = 1;
+        wvous-bl-corner = 1;
+        wvous-br-corner = 1;
       };
 
       # customize finder
