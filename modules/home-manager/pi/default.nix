@@ -29,7 +29,7 @@ in
   config = {
     pi.files = {
       "settings.json" = {
-        defaultThinkingLevel = "xhigh";
+        defaultThinkingLevel = "high";
         theme = "gruvbox-dark-hard";
         collapseChangelog = true;
         quietStartup = true;

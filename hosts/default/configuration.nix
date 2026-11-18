@@ -334,7 +334,7 @@
     delta
     pandoc
     uv
-    jdk
+    jdk25 # jdtls (neovim) needs Java 25+
     starship
     tuicr
     zplug
@@ -364,6 +364,7 @@
     pass-wayland
     zsh
     gcc13
+    gnumake # athena (neovim) builds LuaSnip's jsregexp with it
     clipse
     wl-clipboard
     zoxide
@@ -375,6 +376,7 @@
     cudaPackages.cudatoolkit
     cudaPackages.cuda_opencl
     p7zip
+    unzip # mason.nvim unpacks .zip releases with it
     cudaPackages.cudnn
     thunar
     cudaPackages.libnpp

@@ -6,9 +6,8 @@
 
   pi.files = {
     "settings.json" = {
-      defaultProvider = "openai-codex";
-      defaultModel = "gpt-5.6-sol";
+      defaultProvider = "anthropic";
+      defaultModel = "claude-opus-5-5";
     };
-    "automode.json".autoMode.classifierModel = "openai-codex/gpt-5.6-luna";
   };
 }

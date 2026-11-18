@@ -38,6 +38,10 @@ inputs.qs-caelestia-shell.packages.${system}.default.overrideAttrs (old: {
     # whose surface is on screen, and the shell's is a 0x0 window. Make the
     # toggle switch off the shell's own idle timeouts (lock, monitors, suspend).
     ./keep-awake-niri.patch
+    # Bar entry "wallhaven": hover opens a browser for wallhaven.cc's top 4K
+    # wallpapers filtered by tag chips; clicking one downloads it to
+    # ~/Pictures/Wallpapers/wallhaven and sets it (all screens, theme hook runs).
+    ./wallhaven-browser.patch
   ];
 
   # Background-free, trimmed copies of the GIFs, read from assets/gifs/

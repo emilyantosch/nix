@@ -28,6 +28,8 @@
   # services.xserver.libinput.enable = true;
 
   programs.zsh.enable = true;
+  programs.fish.enable = true;
+  environment.shells = [ pkgs.fish ];
 
   users.users.emmi = {
     name = "emmi";

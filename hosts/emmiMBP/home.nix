@@ -14,6 +14,7 @@
     ./../../modules/home-manager/ghostty.nix
     ./../../modules/home-manager/yazi.nix
     ./../../modules/home-manager/nushell.nix
+    ./../../modules/home-manager/fish.nix
     ./../../modules/home-manager/claude-code/personal.nix
     ./../../modules/home-manager/pi/personal.nix
     ./../../modules/home-manager/agent-skills/default.nix

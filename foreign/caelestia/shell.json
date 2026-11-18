@@ -101,6 +101,10 @@
                 "enabled": true
             },
             {
+                "id": "wallhaven",
+                "enabled": true
+            },
+            {
                 "id": "clock",
                 "enabled": true
             },

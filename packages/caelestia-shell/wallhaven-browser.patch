@@ -1,0 +1,498 @@
+diff --git a/modules/bar/Bar.qml b/modules/bar/Bar.qml
+index 1ceb9b6..6518a66 100644
+--- a/modules/bar/Bar.qml
++++ b/modules/bar/Bar.qml
+@@ -68,6 +68,10 @@ ColumnLayout {
+                 popouts.hasCurrent = false;
+                 tray.expanded = true;
+             }
++        } else if (id === "wallhaven") {
++            popouts.currentName = "wallhaven";
++            popouts.currentCenter = Qt.binding(() => ch.mapToItem(root, 0, ch.implicitHeight / 2).y);
++            popouts.hasCurrent = true;
+         } else if (id === "activeWindow" && Config.bar.popouts.activeWindow && Config.bar.activeWindow.showOnHover) {
+             popouts.currentName = id.toLowerCase();
+             popouts.currentCenter = (ch.item as Item).mapToItem(root, 0, (ch.item as Item).implicitHeight / 2).y ?? 0;
+@@ -171,6 +175,14 @@ ColumnLayout {
+                     }
+                 }
+             }
++            DelegateChoice {
++                roleValue: "wallhaven"
++                delegate: EntryWrapper {
++                    WallhavenButton {
++                        objectName: "taskbarWallhaven"
++                    }
++                }
++            }
+             DelegateChoice {
+                 roleValue: "power"
+                 delegate: EntryWrapper {
+diff --git a/modules/bar/components/WallhavenButton.qml b/modules/bar/components/WallhavenButton.qml
+new file mode 100644
+index 0000000..14fecd8
+--- /dev/null
++++ b/modules/bar/components/WallhavenButton.qml
+@@ -0,0 +1,32 @@
++import QtQuick
++import Caelestia.Config
++import qs.components
++import qs.services
++
++// Bar entry "wallhaven": hover opens the wallhaven browser popout. Spins while
++// a picked wallpaper downloads.
++Item {
++    id: root
++
++    implicitWidth: icon.implicitHeight + Tokens.padding.small
++    implicitHeight: icon.implicitHeight
++
++    MaterialIcon {
++        id: icon
++
++        anchors.centerIn: parent
++
++        text: Wallhaven.downloading ? "progress_activity" : "wallpaper"
++        color: Colours.palette.m3secondary
++        fontStyle: Tokens.font.icon.builders.small.weight(Font.Bold).build()
++
++        RotationAnimation on rotation {
++            running: Wallhaven.downloading !== ""
++            loops: Animation.Infinite
++            from: 0
++            to: 360
++            duration: 1000
++            onRunningChanged: if (!running) icon.rotation = 0
++        }
++    }
++}
+diff --git a/modules/bar/popouts/Content.qml b/modules/bar/popouts/Content.qml
+index d3a4a81..c7fddc2 100644
+--- a/modules/bar/popouts/Content.qml
++++ b/modules/bar/popouts/Content.qml
+@@ -129,6 +129,11 @@ Item {
+             sourceComponent: VoxtypePopout {}
+         }
+ 
++        Popout {
++            name: "wallhaven"
++            sourceComponent: WallhavenPopout {}
++        }
++
+         Popout {
+             name: "lockstatus"
+             sourceComponent: LockStatus {}
+diff --git a/modules/bar/popouts/WallhavenPopout.qml b/modules/bar/popouts/WallhavenPopout.qml
+new file mode 100644
+index 0000000..0bcc0f0
+--- /dev/null
++++ b/modules/bar/popouts/WallhavenPopout.qml
+@@ -0,0 +1,238 @@
++pragma ComponentBehavior: Bound
++
++import QtQuick
++import QtQuick.Layouts
++import Caelestia.Config
++import Caelestia.I18n
++import qs.components
++import qs.components.controls
++import qs.services
++
++// Browse wallhaven's top wallpapers by tag; click one to download and apply it.
++ColumnLayout {
++    id: root
++
++    readonly property int columns: 3
++    readonly property int thumbWidth: 200
++    readonly property int thumbHeight: Math.round(thumbWidth * 9 / 16)
++    readonly property int gap: Tokens.spacing.small
++    readonly property int visibleRows: 4
++
++    spacing: Tokens.spacing.medium
++
++    Component.onCompleted: Wallhaven.ensureLoaded()
++
++    RowLayout {
++        Layout.fillWidth: true
++        spacing: Tokens.spacing.small
++
++        MaterialIcon {
++            text: "wallpaper"
++            color: Colours.palette.m3primary
++            fontStyle: Tokens.font.icon.medium
++        }
++
++        StyledText {
++            Layout.fillWidth: true
++            text: Tr.tr("Wallhaven")
++            font: Tokens.font.title.small
++        }
++
++        Repeater {
++            model: Wallhaven.ranges
++
++            Chip {
++                required property var modelData
++
++                text: modelData.label
++                selected: Wallhaven.range === modelData.id
++                onClicked: Wallhaven.setRange(modelData.id)
++            }
++        }
++    }
++
++    Flow {
++        Layout.fillWidth: true
++        Layout.preferredWidth: grid.width
++        spacing: Tokens.spacing.small
++
++        Repeater {
++            model: Wallhaven.tags
++
++            Chip {
++                required property string modelData
++
++                text: modelData
++                selected: Wallhaven.selectedTags.includes(modelData)
++                onClicked: Wallhaven.toggleTag(modelData)
++            }
++        }
++    }
++
++    Item {
++        implicitWidth: grid.width
++        implicitHeight: grid.height
++
++        GridView {
++            id: grid
++
++            width: root.columns * cellWidth
++            height: root.visibleRows * cellHeight - root.gap
++            cellWidth: root.thumbWidth + root.gap
++            cellHeight: root.thumbHeight + root.gap
++            clip: true
++            boundsBehavior: Flickable.StopAtBounds
++            opacity: Wallhaven.loading ? 0.4 : 1
++
++            model: Wallhaven.results
++
++            delegate: Thumb {}
++
++            Behavior on opacity {
++                Anim {
++                    type: Anim.DefaultEffects
++                }
++            }
++        }
++
++        LoadingIndicator {
++            anchors.centerIn: parent
++            implicitSize: 48
++            visible: Wallhaven.loading
++        }
++
++        StyledText {
++            anchors.centerIn: parent
++            visible: !Wallhaven.loading && (Wallhaven.error || Wallhaven.results.length === 0)
++            text: Wallhaven.error || Tr.tr("No wallpapers match all selected tags")
++            color: Colours.palette.m3onSurfaceVariant
++        }
++    }
++
++    RowLayout {
++        Layout.fillWidth: true
++        spacing: Tokens.spacing.small
++
++        StyledText {
++            Layout.fillWidth: true
++            text: Wallhaven.total > 0 ? Tr.tr("%1 results · page %2 of %3").arg(Wallhaven.total).arg(Wallhaven.page).arg(Wallhaven.lastPage) : ""
++            color: Colours.palette.m3onSurfaceVariant
++            font: Tokens.font.body.small
++        }
++
++        IconButton {
++            type: IconButton.Text
++            icon: "chevron_left"
++            disabled: Wallhaven.loading || Wallhaven.page <= 1
++            onClicked: Wallhaven.setPage(Wallhaven.page - 1)
++        }
++
++        IconButton {
++            type: IconButton.Text
++            icon: "chevron_right"
++            disabled: Wallhaven.loading || Wallhaven.page >= Wallhaven.lastPage
++            onClicked: Wallhaven.setPage(Wallhaven.page + 1)
++        }
++    }
++
++    component Chip: StyledRect {
++        id: chip
++
++        property alias text: label.text
++        property bool selected
++
++        signal clicked
++
++        implicitWidth: label.implicitWidth + Tokens.padding.medium * 2
++        implicitHeight: label.implicitHeight + Tokens.padding.extraSmall * 2
++        radius: Tokens.rounding.full
++        color: selected ? Colours.palette.m3secondaryContainer : "transparent"
++        border.width: selected ? 0 : 1
++        border.color: Colours.palette.m3outlineVariant
++
++        StateLayer {
++            color: chip.selected ? Colours.palette.m3onSecondaryContainer : Colours.palette.m3onSurface
++            onClicked: chip.clicked()
++        }
++
++        StyledText {
++            id: label
++
++            anchors.centerIn: parent
++            color: chip.selected ? Colours.palette.m3onSecondaryContainer : Colours.palette.m3onSurfaceVariant
++            font: Tokens.font.label.medium
++        }
++    }
++
++    component Thumb: Item {
++        id: thumb
++
++        required property var modelData
++        readonly property bool isDownloading: Wallhaven.downloading === modelData.id
++        readonly property bool isCurrent: Wallpapers.actualCurrent === Wallhaven.localPath(modelData)
++
++        width: root.thumbWidth
++        height: root.thumbHeight
++
++        StyledClippingRect {
++            anchors.fill: parent
++            radius: Tokens.rounding.medium
++            color: Colours.tPalette.m3surfaceContainerHigh
++            border.width: thumb.isCurrent ? 2 : 0
++            border.color: Colours.palette.m3primary
++
++            Image {
++                anchors.fill: parent
++                source: thumb.modelData.thumbs.small
++                sourceSize.width: root.thumbWidth * 1.5
++                fillMode: Image.PreserveAspectCrop
++                asynchronous: true
++                opacity: status === Image.Ready ? 1 : 0
++
++                Behavior on opacity {
++                    Anim {
++                        type: Anim.DefaultEffects
++                    }
++                }
++            }
++
++            // Resolution and favourites on hover
++            StyledRect {
++                anchors.left: parent.left
++                anchors.right: parent.right
++                anchors.bottom: parent.bottom
++                implicitHeight: info.implicitHeight + Tokens.padding.extraSmall * 2
++                color: Qt.alpha(Colours.palette.m3scrim, 0.6)
++                opacity: area.containsMouse || thumb.isDownloading ? 1 : 0
++
++                Behavior on opacity {
++                    Anim {
++                        type: Anim.DefaultEffects
++                    }
++                }
++
++                StyledText {
++                    id: info
++
++                    anchors.centerIn: parent
++                    text: thumb.isDownloading ? Tr.tr("Downloading…") : `${thumb.modelData.resolution}  ♥ ${thumb.modelData.favorites}`
++                    color: "white"
++                    font: Tokens.font.label.small
++                }
++            }
++
++            LoadingIndicator {
++                anchors.centerIn: parent
++                implicitSize: 36
++                visible: thumb.isDownloading
++            }
++
++            StateLayer {
++                id: area
++
++                disabled: Wallhaven.downloading !== ""
++                onClicked: Wallhaven.apply(thumb.modelData)
++            }
++        }
++    }
++}
+diff --git a/services/Wallhaven.qml b/services/Wallhaven.qml
+new file mode 100644
+index 0000000..e42ccc1
+--- /dev/null
++++ b/services/Wallhaven.qml
+@@ -0,0 +1,164 @@
++pragma Singleton
++
++import QtQuick
++import Quickshell
++import Quickshell.Io
++import Caelestia.I18n
++import qs.services
++import qs.utils
++
++// Popular wallpapers from wallhaven.cc for the bar's wallhaven popout. Search
++// state lives here rather than in the popout, which is unloaded whenever the
++// mouse leaves it, so a pick keeps downloading and the results stay put.
++Singleton {
++    id: root
++
++    // Picked in the popout; all selected tags must match (wallhaven ANDs them).
++    // Multi-word tags are quoted in the query.
++    readonly property list<string> tags: ["anime", "landscape", "nature", "digital art", "city", "space", "minimalism", "pixel art", "cyberpunk", "fantasy art", "sunset", "mountains"]
++    // sorting=toplist with topRange, or "favorites" for all-time most favourited
++    readonly property var ranges: [
++        {
++            id: "1M",
++            label: Tr.tr("Month")
++        },
++        {
++            id: "1y",
++            label: Tr.tr("Year")
++        },
++        {
++            id: "all",
++            label: Tr.tr("All time")
++        }
++    ]
++
++    // Both screens are 4K (one rotated; the shell crops it), so nothing smaller
++    readonly property string minResolution: "3840x2160"
++    readonly property string allowedRatios: "16x9,16x10"
++    readonly property string downloadDir: `${Paths.pictures}/Wallpapers/wallhaven`
++
++    property list<string> selectedTags: []
++    property string range: "1M"
++    property int page: 1
++    property int lastPage: 1
++    property int total: 0
++    property var results: []
++    property bool loading
++    property string error
++    // Query the current results were fetched for, so reopening doesn't refetch
++    property string loadedQuery
++
++    // wallhaven id being downloaded
++    property string downloading
++
++    readonly property string query: {
++        const q = selectedTags.map(t => t.includes(" ") ? `+"${t}"` : `+${t}`).join(" ");
++        const params = {
++            q: q,
++            categories: "110", // general + anime, no people
++            purity: "100", // SFW only (anything else needs an API key)
++            atleast: minResolution,
++            ratios: allowedRatios,
++            page: page
++        };
++        if (range === "all") {
++            params.sorting = "favorites";
++        } else {
++            params.sorting = "toplist";
++            params.topRange = range;
++        }
++        return Object.keys(params).map(k => `${k}=${encodeURIComponent(params[k])}`).join("&");
++    }
++
++    function toggleTag(tag: string): void {
++        selectedTags = selectedTags.includes(tag) ? selectedTags.filter(t => t !== tag) : [...selectedTags, tag];
++        page = 1;
++        search();
++    }
++
++    function setRange(r: string): void {
++        if (range === r)
++            return;
++        range = r;
++        page = 1;
++        search();
++    }
++
++    function setPage(p: int): void {
++        if (p < 1 || p > lastPage || p === page)
++            return;
++        page = p;
++        search();
++    }
++
++    // Called when the popout opens; only hits the API if nothing is loaded yet
++    function ensureLoaded(): void {
++        if (loadedQuery !== query && !loading)
++            search();
++    }
++
++    function search(): void {
++        const q = query;
++        const xhr = new XMLHttpRequest();
++        loading = true;
++        error = "";
++        xhr.onreadystatechange = () => {
++            if (xhr.readyState !== XMLHttpRequest.DONE)
++                return;
++            // A newer search was started meanwhile; let that one win
++            if (q !== root.query)
++                return;
++            root.loading = false;
++            if (xhr.status !== 200) {
++                root.error = xhr.status === 429 ? Tr.tr("Rate limited, try again in a bit") : Tr.tr("wallhaven unreachable (%1)").arg(xhr.status || "offline");
++                return;
++            }
++            try {
++                const res = JSON.parse(xhr.responseText);
++                root.results = res.data;
++                root.lastPage = Math.max(1, res.meta.last_page);
++                root.total = res.meta.total;
++                root.loadedQuery = q;
++            } catch (e) {
++                root.error = Tr.tr("Unexpected response from wallhaven");
++            }
++        };
++        xhr.open("GET", `https://wallhaven.cc/api/v1/search?${q}`);
++        xhr.send();
++    }
++
++    function localPath(wall: var): string {
++        const ext = wall.path.slice(wall.path.lastIndexOf("."));
++        return `${downloadDir}/wallhaven-${wall.id}${ext}`;
++    }
++
++    // Download (skipped if already on disk) and set as the wallpaper. The shell
++    // shows one wallpaper on every screen, and `caelestia wallpaper` runs the
++    // postHook, so the curated theme follows as with any other pick.
++    function apply(wall: var): void {
++        if (downloadProc.running)
++            return;
++        downloading = wall.id;
++        downloadProc.wallId = wall.id;
++        downloadProc.target = localPath(wall);
++        downloadProc.command = ["sh", "-c", 'mkdir -p "$1" && { [ -s "$2" ] || { curl -fsSL --retry 2 -o "$2.part" "$3" && mv "$2.part" "$2"; }; }', "sh", downloadDir, downloadProc.target, wall.path];
++        downloadProc.running = true;
++    }
++
++    Process {
++        id: downloadProc
++
++        property string wallId
++        property string target
++
++        onExited: code => {
++            root.downloading = "";
++            if (code === 0) {
++                Wallpapers.setWallpaper(target);
++            } else {
++                Quickshell.execDetached(["rm", "-f", `${target}.part`]);
++                root.error = Tr.tr("Download failed");
++            }
++        }
++    }
++}
