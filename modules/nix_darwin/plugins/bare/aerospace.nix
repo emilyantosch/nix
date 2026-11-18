@@ -19,10 +19,6 @@ let
   '';
 in
 {
-  homebrew.casks = [
-    "nikitabobko/tap/aerospace"
-  ];
-
   services.aerospace = {
     enable = true;
 

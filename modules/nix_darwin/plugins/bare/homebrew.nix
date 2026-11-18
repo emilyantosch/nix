@@ -70,7 +70,6 @@
       "sioyek"
       "utm"
       "helium-browser"
-      "claude-code@latest"
       "microsoft-teams"
       "microsoft-powerpoint"
       "microsoft-outlook"
