@@ -8,8 +8,8 @@ in
   programs.claude-code = {
     enable = true;
 
-    # Claude Code is installed natively (auto-updating) on Linux and via the
-    # package in hosts/emmiMBP/configuration.nix on the Mac; only manage config.
+    # Claude Code is installed natively (auto-updating) on every host;
+    # only manage config here.
     package = null;
 
     # Merge the declared settings into a writable settings.json during

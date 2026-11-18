@@ -35,7 +35,7 @@
   };
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.allowUnfreePrediacte = (_: true);
+  nixpkgs.config.allowUnfreePredicate = (_: true);
 
   environment.systemPackages = with pkgs; [
     sqlite
@@ -49,8 +49,7 @@
     python313
     bun
     deno
-    inputs.nyx.packages.${pkgs.system}.core
-    (callPackage ./../../packages/home-manager/claude-code/default.nix { })
+    inputs.nyx.packages.${pkgs.stdenv.hostPlatform.system}.core
     gh
     rustup
     clang
