@@ -87,7 +87,7 @@ new file mode 100644
 index 0000000..0bcc0f0
 --- /dev/null
 +++ b/modules/bar/popouts/WallhavenPopout.qml
-@@ -0,0 +1,238 @@
+@@ -0,0 +1,244 @@
 +pragma ComponentBehavior: Bound
 +
 +import QtQuick
@@ -264,12 +264,10 @@ index 0000000..0bcc0f0
 +        width: root.thumbWidth
 +        height: root.thumbHeight
 +
-+        StyledClippingRect {
++        ClipRect {
 +            anchors.fill: parent
 +            radius: Tokens.rounding.medium
 +            color: Colours.tPalette.m3surfaceContainerHigh
-+            border.width: thumb.isCurrent ? 2 : 0
-+            border.color: Colours.palette.m3primary
 +
 +            Image {
 +                anchors.fill: parent
@@ -323,6 +321,14 @@ index 0000000..0bcc0f0
 +                disabled: Wallhaven.downloading !== ""
 +                onClicked: Wallhaven.apply(thumb.modelData)
 +            }
++        }
++
++        StyledRect {
++            anchors.fill: parent
++            radius: Tokens.rounding.medium
++            color: "transparent"
++            border.width: thumb.isCurrent ? 2 : 0
++            border.color: Colours.palette.m3primary
 +        }
 +    }
 +}
