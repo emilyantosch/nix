@@ -28,7 +28,6 @@
 
         background-opacity = 0.95;
         background-blur = true;
-        alpha-blending = "native";
 
         window-decoration = false;
         confirm-close-surface = false;
