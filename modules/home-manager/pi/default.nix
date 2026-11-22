@@ -36,6 +36,7 @@ in
         powerline = "compact";
         tuiMode = "fullscreen";
         compaction.enabled = false;
+        defaultTools = [ "+codemode" ];
         extensions = [
           "-extensions/pi-gondolin/index.ts"
           "-builtin:mcp"
