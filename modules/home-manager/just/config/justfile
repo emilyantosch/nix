@@ -1,0 +1,20 @@
+# The global justfile: recipes that are the same in every project, run from inside one as
+# `just -g <recipe>`. Managed by Nix (modules/home-manager/just in the NixOS config): edit it
+# there, not in ~/.config/just.
+
+# List the recipes
+default:
+    @{{ just_executable() }} --global-justfile --list
+
+# Work through the tickets in a directory of the project, each in a Claude Code session of its
+# own that starts with a clear context, by Fable 5.2 on high effort, then power the machine off
+# (`just -g loop docs/prologue/issues`; `just -g loop docs/prologue/issues no` leaves it on).
+# Each session is the implement skill on its ticket. The sessions ask nothing: they take the
+# answer they would recommend and write the questions into result.md beside the tickets. A last
+# session, the retro skill, appends its suggestions for the whole loop there. Started on main or
+# master, it commits on a branch of its own (see loop/loop.sh beside this file).
+
+# Work through a directory of tickets overnight, each in a Claude Code session of its own
+[no-cd]
+loop tickets poweroff="yes":
+    @sh {{ quote(source_directory() / "loop" / "loop.sh") }} {{ quote(tickets) }} {{ quote(poweroff) }}
