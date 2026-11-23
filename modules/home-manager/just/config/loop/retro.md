@@ -24,6 +24,10 @@ of severity:
     1. **<the suggestion>** (<its category>) — <what happened in which session, with the
        ticket's name, and what the change would be: the file, the check, the pointer>
 
+The session runs in auto mode, which refuses an action it takes for too risky instead of
+asking. Do not try a refused action again; go on without it if you can, and if you cannot,
+write into the result file what was refused and end the session.
+
 Ask nobody, and change nothing but the result file: no edits to the repo, no commits, no
 skills or settings. Emily takes up the suggestions she wants in the morning. Leave no stray
 files behind.

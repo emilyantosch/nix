@@ -27,6 +27,19 @@ would have offered choices, take the one you would have recommended; where you w
 asked leave, take it as given. Go on with it, and write the question and the answer you took
 into the result file, so that she can overrule it in the morning. Never stop to wait.
 
+## When auto mode refuses
+
+The session runs in auto mode: nothing waits for a permission prompt, and an action the mode
+takes for too risky is refused instead. A refusal stands: do not try the same action again,
+reworded or by another tool.
+
+- See whether the ticket can go on without the refused action, by leaving that step out or by
+  reaching its end in a way the mode has no objection to. If it can, go on.
+- If it cannot, abort: stop working on the ticket, commit what is whole and passes the
+  project's checks, leave the ticket's Status as it is, finish your section of the result file
+  and end the session. The loop goes on with the next ticket.
+- Either way, write the refusal into the result file, as the section below says.
+
 ## Commits
 
 - Commit the ticket's work on the current branch, in one commit or a few, in the style of the
@@ -45,13 +58,16 @@ over breakfast:
 
     ## <the ticket's title>
 
-    **Outcome:** done | partly done | not done
+    **Outcome:** done | partly done | not done | aborted
 
     **Commits:** <short hash> <subject>, one a line
 
     **Questions, and the answers taken:**
     1. <the question as you would have asked it> — <the answer you went on with, and where in
        the code or data it shows, so it is easy to change>
+
+    **Refused by auto mode:** <the command or tool call that was refused, what you wanted it
+    for, and whether you went on without it or aborted; or "nothing">
 
     **Left over:** <what is not done, what to look at, what surprised you; or "nothing">
 

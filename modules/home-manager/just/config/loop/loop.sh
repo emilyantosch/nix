@@ -11,10 +11,10 @@
 # is taken up again by starting it once more. Each ticket's session is `/implement <ticket>`,
 # the implement skill, with prompt.md appended to its system prompt. Each session is Fable 5.2
 # on high effort, in auto mode (it waits for no permission prompt; what the mode's own check
-# takes for too risky is refused instead) and asks nothing: what it would have asked, it
-# answers itself as prompt.md says and writes into result.md beside the tickets, together with
-# what it did. The loop itself adds a line there for a session that failed or left files it did
-# not commit.
+# takes for too risky is refused instead, and prompt.md says how a session goes on or aborts
+# then) and asks nothing: what it would have asked, it answers itself as prompt.md says and
+# writes into result.md beside the tickets, together with what it did. The loop itself adds a
+# line there for a session that failed or left files it did not commit.
 #
 # After the last ticket, a session of the retro skill (`/retro`, with retro.md appended) looks
 # back over the whole loop, its logs, result.md and commits, and appends its suggestions to
