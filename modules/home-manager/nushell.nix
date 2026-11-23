@@ -62,7 +62,7 @@
       $env.AWS_DEFAUT_REGION = "eu-central-1"
       $env.CARGO_NET_GIT_FETCH_WITH_CLI = "true"
       $env.SCIPOPTDIR = "/opt/homebrew/opt/scip"
-      $env.editor = "nvim"
+      $env.editor = "athena"
       ${pkgs.zoxide}/bin/zoxide init nushell | save -f ~/.zoxide.nu
       $env.DISPLAY = ":0"
       $env.MOIA_USERNAME = "emilylucia.antosch@moia.io"
@@ -155,8 +155,8 @@
     '';
     configFile.text = ''
             $env.config.show_banner = false
-            $env.config.buffer_editor = "nvim"
-            $env.EDITOR = "nvim"
+            $env.config.buffer_editor = "athena"
+            $env.EDITOR = "athena"
               source ~/.zoxide.nu
               source $"($nu.cache-dir)/carapace.nu"
       def "parse vars" [] {

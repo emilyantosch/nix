@@ -23,6 +23,7 @@
     ./../../modules/home-manager/lazygit.nix
     ./../../modules/home-manager/bacon.nix
     ./../../modules/home-manager/fish.nix
+    ./../../modules/home-manager/athena.nix
     ./../../modules/home-manager/claude-code/work.nix
     ./../../modules/home-manager/pi/work.nix
     ./../../modules/home-manager/agent-skills/default.nix
@@ -36,10 +37,6 @@
   home = {
     username = "emilylucia.antosch";
     homeDirectory = "/Users/emilylucia.antosch";
-    sessionVariables = {
-      EDITOR = "nvim";
-    };
-
     stateVersion = "25.05";
   };
   # This value determines the Home Manager release that your configuration is

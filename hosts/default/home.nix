@@ -16,6 +16,7 @@
     ./../../modules/home-manager/niri/default.nix
     ./../../modules/home-manager/zen-browser.nix
     ./../../modules/home-manager/fish.nix
+    ./../../modules/home-manager/athena.nix
     ./../../modules/home-manager/rofi/default.nix
     # ponytail: Caelestia owns locking and idle handling; do not start a second locker.
     ./../../modules/home-manager/tidal.nix
@@ -112,8 +113,6 @@
   #
   #  /etc/profiles/per-user/emmi/etc/profile.d/hm-session-vars.sh
   #
-  home.sessionVariables = { EDITOR = "nvim"; };
-
   # Home Manager owns mimeapps.list, so apps can no longer register handlers in
   # it at runtime; they have to be listed here. Browser defaults live in
   # modules/home-manager/zen-browser.nix.
