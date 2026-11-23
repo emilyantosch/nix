@@ -12,9 +12,13 @@ default:
 # Each session is the implement skill on its ticket. The sessions ask nothing: they take the
 # answer they would recommend and write the questions into result.md beside the tickets. A last
 # session, the retro skill, appends its suggestions for the whole loop there. Started on main or
-# master, it commits on a branch of its own (see loop/loop.sh beside this file).
+# master, it commits on a branch of its own. With `--stack` (`just -g loop docs/prologue/issues
+# --stack`, `just -g loop docs/prologue/issues no --stack`) every ticket becomes a pull request
+# of its own instead, pushed and opened as a draft by the loop, each stacked on the one of the
+# ticket before it, the lowest ticket at the bottom (see loop/loop.sh beside this file).
 
 # Work through a directory of tickets overnight, each in a Claude Code session of its own
 [no-cd]
-loop tickets poweroff="yes":
-    @sh {{ quote(source_directory() / "loop" / "loop.sh") }} {{ quote(tickets) }} {{ quote(poweroff) }}
+[positional-arguments]
+loop tickets *options:
+    @sh {{ quote(source_directory() / "loop" / "loop.sh") }} "$@"
