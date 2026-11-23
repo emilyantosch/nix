@@ -10,6 +10,7 @@ in
     terminal = "tmux-256color";
     historyLimit = 10000;
     baseIndex = 1;
+    keyMode = "vi"; # hjkl etc. in copy mode
     extraConfig = ''
       set -g mouse on
 
@@ -21,6 +22,11 @@ in
       bind l select-pane -R
       bind j select-pane -D
       bind k select-pane -U
+      unbind [
+      bind-key v copy-mode
+      bind-key -T copy-mode-vi v send-keys -X begin-selection
+      bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
+      bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
       bind-key x kill-pane # skip "kill-pane 1? (y/n)" prompt
       set -g detach-on-destroy off  # don't exit from tmux when closing a session
       set -g extended-keys on # pi coding agent modified enter
