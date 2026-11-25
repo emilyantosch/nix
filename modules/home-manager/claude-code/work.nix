@@ -30,33 +30,9 @@
       permissions = {
         allow = [
           "ToolSearch"
-          "mcp__plugin_context7_context7__query-docs"
-          "mcp__ide__getDiagnostics"
-          "mcp__plugin_context7_context7__resolve-library-id"
-          "Bash(grep:*)"
-          "Bash(cargo audit:*)"
-          "WebFetch"
-          "Read"
-          "Bash(find:*)"
-          "Bash(ls:*)"
-          "Bash(cp:*)"
-          "Bash(cd:*)"
-          "Bash(cargo build:*)"
-          "Bash(cargo check:*)"
-          "Bash(cargo test:*)"
-          "Bash(cargo nextest:*)"
-          "Bash(cargo tree:*)"
-          "Bash(cargo clippy:*)"
-          "Bash(cargo doc:*)"
-          "Bash(just)"
-          "Bash(just fmt:*)"
-          "Bash(just lint:*)"
         ];
       };
 
-      enabledPlugins = {
-        "context7@claude-plugins-official" = true;
-      };
       voiceEnabled = false;
       # Wins over MOIA's ai-gateway-budget-statusline on every switch.
       statusLine = lib.mkForce {
